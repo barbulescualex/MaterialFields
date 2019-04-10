@@ -96,6 +96,12 @@ class EntryField: UIView, UIGestureRecognizerDelegate {
         }
     }
     
+    public var isSecureTextEntry : Bool = false {
+        didSet{
+            textField.isSecureTextEntry = isSecureTextEntry
+        }
+    }
+    
     //MARK:- VARS
     weak var delegate : EntryFieldDelegate?
     var tag2 = 0
