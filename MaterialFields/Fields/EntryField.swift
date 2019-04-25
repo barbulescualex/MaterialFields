@@ -1,9 +1,9 @@
 //
 //  EntryField.swift
-//  FinTrax
+//  MaterialFields
 //
 //  Created by Alex Barbulescu on 2019-02-01.
-//  Copyright © 2019 RCAF Innovation. All rights reserved.
+//  Copyright © 2019 Alex Barbulescu. All rights reserved.
 //
 
 import UIKit
@@ -32,7 +32,7 @@ class EntryField: UIView, UIGestureRecognizerDelegate {
             placeholderLabel.text = placeholder
         }
     }
-
+    
     //setter ONLY, don't try to read from EntryField object, use delegate methods to interface with the real textfield directly
     public var text: String? {
         get{
@@ -49,9 +49,81 @@ class EntryField: UIView, UIGestureRecognizerDelegate {
         }
     }
     
+    //COLORS
+    public var borderColor: UIColor = UIColor.lightGray {
+        didSet{
+            if !isActive && !hasError {
+                updateBorderColor(with: borderColor)
+            }
+        }
+    }
+    
+    public var borderHighlightColor: UIColor = UIColor.babyBlue {
+        didSet{
+            if isActive {
+                updateBorderColor(with: borderHighlightColor)
+            }
+        }
+    }
+    
+    public var borderErrorColor: UIColor = UIColor.red {
+        didSet{
+            if hasError {
+                updateBorderColor(with: borderErrorColor)
+            }
+        }
+    }
+    
+    public var textColor: UIColor = UIColor.black {
+        didSet{
+            textField.textColor = textColor
+        }
+    }
+    
+    public var errorTextColor: UIColor = UIColor.red {
+        didSet{
+            errorLabel.textColor = errorTextColor
+        }
+    }
+    
+    public var placeholderDownColor: UIColor = UIColor.gray {
+        didSet{
+            if !placeholderUp {
+                placeholderLabel.textColor = placeholderDownColor
+            }
+        }
+    }
+    
+    public var placeholderUpColor: UIColor = UIColor.black {
+        didSet{
+            if placeholderUp {
+                placeholderLabel.textColor = placeholderUpColor
+            }
+        }
+    }
+    
+    public var cursorColor: UIColor = UIColor.black.withAlphaComponent(0.5) {
+        didSet{
+            textField.tintColor = cursorColor
+        }
+    }
+    
+    public var monetaryColor: UIColor = UIColor.lightGray {
+        didSet{
+            dollarLabel.textColor = monetaryColor
+        }
+    }
+    
+    public var unitColor: UIColor = UIColor.lightGray {
+        didSet{
+            unitLabel.textColor = unitColor
+        }
+    }
+    
+    //OPTIONALS
     public var unit: String? {
         didSet{
-           unitLabel.text = unit
+            unitLabel.text = unit
         }
     }
     
@@ -66,16 +138,12 @@ class EntryField: UIView, UIGestureRecognizerDelegate {
     public var isOptional : Bool = false {
         didSet{
             if let placeholder = placeholder {
-                 placeholderLabel.text = placeholder + " (Optional)"
+                placeholderLabel.text = placeholder + " (Optional)"
             }
         }
     }
     
-    public var isTextFieldInteractable : Bool = true {
-        didSet{
-            textField.isUserInteractionEnabled = isTextFieldInteractable
-        }
-    }
+    public var shakes : Bool = true
     
     public var keyboardType: UIKeyboardType? {
         didSet{
@@ -102,6 +170,12 @@ class EntryField: UIView, UIGestureRecognizerDelegate {
         }
     }
     
+    public var isTextFieldInteractable : Bool = true {
+        didSet{
+            textField.isUserInteractionEnabled = isTextFieldInteractable
+        }
+    }
+    
     //MARK:- VARS
     weak var delegate : EntryFieldDelegate?
     var tag2 = 0
@@ -109,8 +183,9 @@ class EntryField: UIView, UIGestureRecognizerDelegate {
     private var placeholderYAnchorConstraint: NSLayoutConstraint!
     private(set) var hasError = false
     private var placeholderUp = false
-
+    
     private var beginUp = false
+    private var isActive = false
     
     //MARK:- VIEW COMPONENTS
     private let stackView : UIStackView = {
@@ -177,7 +252,7 @@ class EntryField: UIView, UIGestureRecognizerDelegate {
     
     private let borderTop : UIView = {
         let view = UIView()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = UIColor.lightGray
         view.translatesAutoresizingMaskIntoConstraints = false
         view.heightAnchor.constraint(equalToConstant: 1).isActive = true
         return view
@@ -213,11 +288,6 @@ class EntryField: UIView, UIGestureRecognizerDelegate {
         addSubview(stackView)
         addSubview(placeholderLabel)
         
-        //unit label
-        addSubview(unitLabel)
-        unitLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 8).isActive = true
-        unitLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5).isActive = true
-        
         //text field stack
         let textFieldStack = UIStackView()
         textFieldStack.axis = .horizontal
@@ -225,10 +295,15 @@ class EntryField: UIView, UIGestureRecognizerDelegate {
         textFieldStack.addArrangedSubview(dollarLabel)
         textFieldStack.addArrangedSubview(textField)
         
-        dollarLabel.isHidden = true
-        
         stackView.addArrangedSubview(placeholderPlaceholder)
         stackView.addArrangedSubview(textFieldStack)
+        
+        //unit label
+        textFieldStack.addSubview(unitLabel)
+        unitLabel.centerYAnchor.constraint(equalTo: textFieldStack.centerYAnchor, constant: 0).isActive = true
+        unitLabel.trailingAnchor.constraint(equalTo: textFieldStack.trailingAnchor, constant: -5).isActive = true
+        
+        dollarLabel.isHidden = true
         
         //shadow
         let shadowStack = UIStackView()
@@ -242,7 +317,7 @@ class EntryField: UIView, UIGestureRecognizerDelegate {
         //error label
         stackView.addArrangedSubview(errorLabel)
         errorLabel.isHidden = true
-    
+        
         //stack constraints
         stackView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         stackView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
@@ -263,25 +338,30 @@ class EntryField: UIView, UIGestureRecognizerDelegate {
     //MARK:- FUNCTIONS
     func setError(errorText text: String?){
         hasError = true
-        updateBorderColor(with: .red)
-        textField.textColor = UIColor.red
+        updateBorderColor(with: borderErrorColor)
+        textField.textColor = borderErrorColor
         
         if(!placeholderUp){
-            placeholderLabel.textColor = UIColor.red
+            placeholderLabel.textColor = errorTextColor
         }
         
-        let shake = CABasicAnimation(keyPath: "position")
-        shake.duration = 0.05
-        shake.repeatCount = 2
-        shake.autoreverses = true
-        shake.fromValue = NSValue(cgPoint: CGPoint(x: self.center.x - 10, y: self.center.y))
-        shake.toValue = NSValue(cgPoint: CGPoint(x: self.center.x + 10, y: self.center.y))
-        self.layer.add(shake, forKey: "position")
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+        if shakes {
+            let shake = CABasicAnimation(keyPath: "position")
+            shake.duration = 0.05
+            shake.repeatCount = 2
+            shake.autoreverses = true
+            shake.fromValue = NSValue(cgPoint: CGPoint(x: self.center.x - 10, y: self.center.y))
+            shake.toValue = NSValue(cgPoint: CGPoint(x: self.center.x + 10, y: self.center.y))
+            self.layer.add(shake, forKey: "position")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.errorLabel.text = text
+                self.errorLabel.isHidden = false
+            }
+        } else {
             self.errorLabel.text = text
             self.errorLabel.isHidden = false
         }
+        
     }
     
     @objc func startEditing(_ sender: UIGestureRecognizer){
@@ -290,9 +370,9 @@ class EntryField: UIView, UIGestureRecognizerDelegate {
     
     func removeErrorUI(){
         if(hasError){
-            textField.textColor = .black
-            updateBorderColor(with: .lightGray)
-            placeholderLabel.textColor = UIColor.black
+            textField.textColor = textColor
+            updateBorderColor(with: borderColor)
+            placeholderLabel.textColor = placeholderUpColor
             hasError = false
             errorLabel.text = nil
             errorLabel.isHidden = true
@@ -307,9 +387,9 @@ class EntryField: UIView, UIGestureRecognizerDelegate {
     public func isEditing(showHighlight val: Bool){
         if hasError {return}
         if val {
-            updateBorderColor(with: UIColor.babyBlue)
+            updateBorderColor(with: borderHighlightColor)
         } else {
-            updateBorderColor(with: UIColor.lightGray)
+            updateBorderColor(with: borderColor)
         }
     }
     
@@ -331,10 +411,15 @@ class EntryField: UIView, UIGestureRecognizerDelegate {
 //MARK:- TEXTFIELD DELEGATE
 extension EntryField : UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        return delegate?.entryFieldShouldBeginEditing?(self) ?? true
+        // print("text field should begin editing")
+        let answer = delegate?.entryFieldShouldBeginEditing?(self) ?? true
+        // print("text field should begin editing answer: ", answer)
+        return answer
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        // print("text field did begin editing")
+        isActive = true
         removeErrorUI()
         animatePlaceholder(up: true)
         delegate?.entryFieldDidBeginEditing?(self)
@@ -342,23 +427,34 @@ extension EntryField : UITextFieldDelegate {
     }
     
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        return delegate?.entryFieldShouldEndEditing?(self) ?? true
+        //print("text field should end editing")
+        let answer = delegate?.entryFieldShouldEndEditing?(self) ?? true
+        //print("text field should end editing answer: ", answer)
+        return answer
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
+        //print("text field did end editing")
         if(textField.text.isNotComplete()){
             animatePlaceholder(up: false)
         }
         delegate?.entryFieldDidEndEditing?(self)
         isEditing(showHighlight: false)
+        isActive = false
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        return delegate?.entryFieldShouldReturn?(self) ?? true
+        //print("text field should return")
+        let answer = delegate?.entryFieldShouldReturn?(self) ?? true
+        //print("text field should return answer: ", answer)
+        return answer
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        return delegate?.entryFieldShouldClear?(self) ?? true
+        //print("text field should clear")
+        let answer = delegate?.entryFieldShouldClear?(self) ?? true
+        //print("text field should clear answer: ", answer)
+        return answer
     }
 }
 
@@ -375,7 +471,7 @@ extension EntryField {
                 self.placeholderYAnchorConstraint.isActive = true
                 
                 //Look
-                self.placeholderLabel.textColor = UIColor.black
+                self.placeholderLabel.textColor = self.placeholderUpColor
                 self.placeholderLabel.font = UIFont.systemFont(ofSize: 12)
                 self.placeholderLabel.alpha = 0.7
                 self.layoutIfNeeded()
@@ -391,7 +487,7 @@ extension EntryField {
                 self.placeholderYAnchorConstraint.isActive = true
                 
                 //Look
-                self.placeholderLabel.textColor = UIColor.gray
+                self.placeholderLabel.textColor = self.placeholderDownColor
                 self.placeholderLabel.font = UIFont.systemFont(ofSize: 18)
                 self.placeholderLabel.alpha = 0.5
                 self.layoutIfNeeded()
@@ -410,7 +506,7 @@ extension EntryField {
             self.placeholderYAnchorConstraint.isActive = true
             
             //Look
-            self.placeholderLabel.textColor = UIColor.black
+            self.placeholderLabel.textColor = placeholderUpColor
             self.placeholderLabel.font = UIFont.systemFont(ofSize: 12)
             self.placeholderLabel.alpha = 0.7
             self.layoutIfNeeded()

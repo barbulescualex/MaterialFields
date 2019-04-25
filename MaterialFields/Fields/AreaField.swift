@@ -1,9 +1,9 @@
 //
 //  AreaField.swift
-//  FinTrax
+//  MaterialFields
 //
 //  Created by Alex Barbulescu on 2019-03-29.
-//  Copyright © 2019 RCAF Innovation. All rights reserved.
+//  Copyright © 2019 Alex Barbulescu. All rights reserved.
 //
 
 import UIKit
@@ -29,14 +29,6 @@ class AreaField: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    public var isOptional : Bool = false {
-        didSet{
-            if let placeholder = placeholder {
-                placeholderLabel.text = placeholder + " (Optional)"
-            }
-        }
-    }
-    
     public var text: String? {
         get{
             return textView.text
@@ -51,6 +43,77 @@ class AreaField: UIView, UIGestureRecognizerDelegate {
             }
         }
     }
+    
+    //COLORS
+    public var borderColor: UIColor = UIColor.lightGray {
+        didSet{
+            if !isActive && !hasError {
+                updateBorderColor(with: borderColor)
+            }
+        }
+    }
+    
+    public var borderHighlightColor: UIColor = UIColor.babyBlue {
+        didSet{
+            if isActive {
+                updateBorderColor(with: borderHighlightColor)
+            }
+        }
+    }
+    
+    public var borderErrorColor: UIColor = UIColor.red {
+        didSet{
+            if hasError {
+                updateBorderColor(with: borderErrorColor)
+            }
+        }
+    }
+    
+    public var textColor: UIColor = UIColor.black {
+        didSet{
+            textView.textColor = textColor
+        }
+    }
+    
+    public var errorTextColor: UIColor = UIColor.red {
+        didSet{
+            errorLabel.textColor = errorTextColor
+        }
+    }
+    
+    public var placeholderDownColor: UIColor = UIColor.gray {
+        didSet{
+            if !placeholderUp {
+                placeholderLabel.textColor = placeholderDownColor
+            }
+        }
+    }
+    
+    public var placeholderUpColor: UIColor = UIColor.black {
+        didSet{
+            if placeholderUp {
+                placeholderLabel.textColor = placeholderUpColor
+            }
+        }
+    }
+    
+    public var cursorColor: UIColor = UIColor.black.withAlphaComponent(0.5) {
+        didSet{
+            textView.tintColor = cursorColor
+        }
+    }
+    
+    
+    //OPTIONALS
+    public var isOptional : Bool = false {
+        didSet{
+            if let placeholder = placeholder {
+                placeholderLabel.text = placeholder + " (Optional)"
+            }
+        }
+    }
+    
+    public var shakes : Bool = true
     
     public var isViewAreaInteractable : Bool = true {
         didSet{
@@ -84,6 +147,7 @@ class AreaField: UIView, UIGestureRecognizerDelegate {
     private var placeholderUp = false
     private var beginUp = false
     private(set) var hasError = false
+    private var isActive = true
     
     //MARK:- VIEW COMPONENTS
     private let stackView : UIStackView = {
@@ -215,17 +279,17 @@ class AreaField: UIView, UIGestureRecognizerDelegate {
     fileprivate func isEditing(showHighlight val: Bool){
         if hasError {return}
         if val {
-            updateBorderColor(with: UIColor.babyBlue)
+            updateBorderColor(with: borderHighlightColor)
         } else {
-            updateBorderColor(with: UIColor.lightGray)
+            updateBorderColor(with: borderColor)
         }
     }
     
     func removeErrorUI(){
         if(hasError){
-            textView.textColor = .black
-            textView.layer.shadowColor = UIColor.gray.cgColor
-            placeholderLabel.textColor = UIColor.black
+            textView.textColor = textColor
+            updateBorderColor(with: borderColor)
+            placeholderLabel.textColor = placeholderUpColor
             hasError = false
             errorLabel.text = nil
             errorLabel.isHidden = false
@@ -238,27 +302,30 @@ class AreaField: UIView, UIGestureRecognizerDelegate {
     
     func setError(errorText text: String?){
         hasError = true
-        textView.layer.shadowColor = UIColor.red.cgColor
-        textView.textColor = UIColor.red
+        updateBorderColor(with: borderErrorColor)
+        textView.textColor = borderErrorColor
         
         if(!placeholderUp){
-            placeholderLabel.textColor = UIColor.red
+            placeholderLabel.textColor = errorTextColor
         }
         
-        let shake: CABasicAnimation = CABasicAnimation(keyPath: "position")
-        shake.duration = 0.05
-        shake.repeatCount = 2
-        shake.autoreverses = true
-        shake.fromValue = NSValue(cgPoint: CGPoint(x: self.center.x - 10, y: self.center.y))
-        shake.toValue = NSValue(cgPoint: CGPoint(x: self.center.x + 10, y: self.center.y))
-        self.layer.add(shake, forKey: "position")
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+        if shakes {
+            let shake = CABasicAnimation(keyPath: "position")
+            shake.duration = 0.05
+            shake.repeatCount = 2
+            shake.autoreverses = true
+            shake.fromValue = NSValue(cgPoint: CGPoint(x: self.center.x - 10, y: self.center.y))
+            shake.toValue = NSValue(cgPoint: CGPoint(x: self.center.x + 10, y: self.center.y))
+            self.layer.add(shake, forKey: "position")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.errorLabel.text = text
+                self.errorLabel.isHidden = false
+            }
+        } else {
             self.errorLabel.text = text
             self.errorLabel.isHidden = false
         }
     }
-    
 }
 
 //MARK:- TEXTVIEW DELEGATE
@@ -268,6 +335,7 @@ extension AreaField : UITextViewDelegate {
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
+        isActive = true
         removeErrorUI()
         animatePlaceholder(up: true)
         isEditing(showHighlight: true)
@@ -284,6 +352,7 @@ extension AreaField : UITextViewDelegate {
         }
         delegate?.areaFieldDidEndEditing?(self)
         isEditing(showHighlight: false)
+        isActive = false
     }
 }
 
@@ -292,7 +361,7 @@ extension AreaField {
     func animatePlaceholder(up: Bool) {
         if(up){
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                self.placeholderLabel.textColor = UIColor.black
+                self.placeholderLabel.textColor = self.placeholderUpColor
                 self.placeholderYAnchorConstraint.isActive = false
                 self.placeholderYAnchorConstraint = self.placeholderLabel.centerYAnchor.constraint(equalTo: self.placeholderPlaceholder.centerYAnchor)
                 self.placeholderYAnchorConstraint.isActive = true
@@ -304,7 +373,7 @@ extension AreaField {
             })
         } else {//down
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                self.placeholderLabel.textColor = UIColor.gray
+                self.placeholderLabel.textColor = self.placeholderDownColor
                 self.placeholderYAnchorConstraint.isActive = false
                 self.placeholderYAnchorConstraint = self.placeholderLabel.centerYAnchor.constraint(equalTo: self.textView.centerYAnchor, constant: -1)
                 self.placeholderYAnchorConstraint.isActive = true
@@ -325,7 +394,7 @@ extension AreaField {
             self.placeholderYAnchorConstraint.isActive = true
             
             //Look
-            self.placeholderLabel.textColor = UIColor.black
+            self.placeholderLabel.textColor = placeholderUpColor
             self.placeholderLabel.font = UIFont.systemFont(ofSize: 12)
             self.placeholderLabel.alpha = 0.7
             self.layoutIfNeeded()

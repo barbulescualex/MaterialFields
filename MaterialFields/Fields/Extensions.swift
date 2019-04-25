@@ -3,7 +3,7 @@
 //  MaterialFields
 //
 //  Created by Alex Barbulescu on 2019-04-10.
-//  Copyright © 2019 alex. All rights reserved.
+//  Copyright © 2019 Alex Barbulescu. All rights reserved.
 //
 
 import UIKit

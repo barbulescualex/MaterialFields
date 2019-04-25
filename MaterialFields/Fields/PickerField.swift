@@ -1,9 +1,9 @@
 //
 //  MissionDateProperty.swift
-//  FinTrax
+//  MaterialFields
 //
 //  Created by Alex Barbulescu on 2019-02-01.
-//  Copyright © 2019 RCAF Innovation. All rights reserved.
+//  Copyright © 2019 Alex Barbulescu. All rights reserved.
 //
 
 import UIKit
@@ -28,15 +28,22 @@ class PickerField: UIView{
             if isManualEntryCapable && !manualEntrySet{
                 manualEntrySet = true
                 data.append(manualEntryOptionName)
-                
+                pickerView.reloadAllComponents()
+                return
             }
             if isManualEntryCapable && manualEntrySet {
                 guard let removeIndex = manualEntryIndex else {return}
                 data.remove(at: removeIndex)
                 data.append(manualEntryOptionName)
                 manualEntryIndex = data.count - 1
+                pickerView.reloadAllComponents()
+                return
             }
-            pickerView.reloadAllComponents()
+            if indexSet {
+                entryField.text = data[setIndexTo]
+                pickerView.reloadAllComponents()
+                return
+            }
         }
     }
     
@@ -57,8 +64,22 @@ class PickerField: UIView{
     
     public var setIndexTo : Int = 0 {
         didSet{
+            if setIndexTo < 0 {
+                setIndexTo = 0
+            }
             pickerView.selectRow(setIndexTo, inComponent: 0, animated: true)
             indexSelected = setIndexTo
+            indexSet = true
+        }
+    }
+    
+    private var indexSet = false {
+        didSet{
+            if data.indices.contains(setIndexTo){
+                if !isOnManualEntry{
+                    entryField.text = data[setIndexTo]
+                }
+            }
         }
     }
     
@@ -68,15 +89,14 @@ class PickerField: UIView{
                 manualEntrySet = true
                 data.append(manualEntryOptionName)
                 manualEntryIndex = data.count - 1
-                pickerView.reloadAllComponents()
             } else {
                 manualEntrySet = false
                 guard let index = manualEntryIndex else {return}
                 data.remove(at: index)
                 manualEntryIndex = nil
                 isOnManualEntry = false
-                pickerView.reloadAllComponents()
             }
+            pickerView.reloadAllComponents()
         }
     }
     
@@ -128,7 +148,7 @@ class PickerField: UIView{
     private var isOnManualEntry = false {
         didSet{
             if !isOnManualEntry {
-               _ = entryField.resignFirstResponder()
+                _ = entryField.resignFirstResponder()
             }
         }
     }
@@ -137,6 +157,57 @@ class PickerField: UIView{
         if isManualEntryCapable && manualEntrySet {
             guard let index = manualEntryIndex else {return}
             setIndexTo = index
+        }
+    }
+    
+    //COLORS
+    //entryfield
+    public var borderColor: UIColor = UIColor.lightGray {
+        didSet{
+            entryField.borderColor = borderColor
+        }
+    }
+    
+    public var borderHighlightColor: UIColor = UIColor.babyBlue {
+        didSet{ //NEEDS WORK
+            entryField.borderHighlightColor = borderHighlightColor
+        }
+    }
+    
+    public var textColor: UIColor = UIColor.black {
+        didSet{
+            entryField.textColor = textColor
+        }
+    }
+    
+    public var placeholderDownColor: UIColor = UIColor.gray {
+        didSet{
+            entryField.placeholderDownColor = placeholderDownColor
+        }
+    }
+    
+    public var placeholderUpColor: UIColor = UIColor.black {
+        didSet{
+            entryField.placeholderUpColor = placeholderUpColor
+        }
+    }
+    
+    public var cursorColor: UIColor = UIColor.black.withAlphaComponent(0.5) {
+        didSet{
+            entryField.cursorColor = cursorColor
+        }
+    }
+    
+    //buttons
+    public var clearButtonColor: UIColor = UIColor.babyBlue{
+        didSet{
+            clearButton.backgroundColor = clearButtonColor
+        }
+    }
+    
+    public var doneButtonColor: UIColor = UIColor.babyBlue{
+        didSet{
+            doneButton.backgroundColor = doneButtonColor
         }
     }
     
@@ -185,16 +256,18 @@ class PickerField: UIView{
     }()
     
     //pickerView
-    public var pickerView : UIPickerView = {
+    public lazy var pickerView : UIPickerView = {
         let pickerView = UIPickerView()
         pickerView.showsSelectionIndicator = true
+        pickerView.delegate = self
+        pickerView.dataSource = self
         return pickerView
     }()
     
     //MARK:- INIT
-    override init(frame: CGRect) {
+    required init() {
         self.data = []
-        super.init(frame: frame)
+        super.init(frame: .zero)
         setupView()
     }
     
@@ -207,7 +280,7 @@ class PickerField: UIView{
     
     //MARK: SETUP FUNCTIONS
     private func setupView() {
-        // entry field 
+        // entry field
         entryField.delegate = self
         
         entryField.addSubview(clearButton)
@@ -224,8 +297,6 @@ class PickerField: UIView{
         bringSubviewToFront(doneButton)
         
         // picker view
-        pickerView.delegate = self
-        pickerView.dataSource = self
         pickerView.reloadAllComponents()
         
         // vertical stack
@@ -233,7 +304,6 @@ class PickerField: UIView{
         verticalStack.addArrangedSubview(pickerView)
         
         // default visibility
-        entryField.isHidden = false
         pickerView.isHidden = true
         
         //vertical stack
@@ -242,13 +312,13 @@ class PickerField: UIView{
         verticalStack.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         verticalStack.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         verticalStack.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-
+        
         //Keyboard listener
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         
     }
-
+    
     //MARK:- FUNCTIONS
     @objc func donePressed(_ sender: UIButton?){
         pickerView.isHidden = true
@@ -263,13 +333,37 @@ class PickerField: UIView{
         clearButton.isHidden = !isClearable
     }
     
-    func showPickerView(){
+    private func showPickerView(){
+        if isActive {return}
         doneButton.isHidden = false
         clearButton.isHidden = true
         isActive = true
+        
+        //        if isManualEntryCapable && manualEntrySet {
+        //            //manual entry capable
+        //            if data.count == 1 {
+        //                //manual entry is the only option
+        //                indexSelected = 0
+        //                //self.entryField.text = nil
+        //                _ = entryField.becomeFirstResponder()
+        //            } else if let manualIndex = manualEntryIndex, manualIndex == indexSelected {
+        //                //on manual
+        //                _ = entryField.becomeFirstResponder()
+        //            } else {
+        //                entryField.text = data[indexSelected]
+        //            }
+        //        } else {
+        //            entryField.text = data[indexSelected]
+        //        }
+        if isOnManualEntry {
+            _ = entryField.becomeFirstResponder()
+        } else {
+            entryField.text = data[indexSelected]
+        }
         pickerView.isHidden = false
         entryField.isEditing(showHighlight: true)
     }
+    
     
     @objc func clearPressed(_ sender: UIButton){
         entryField.text = nil
@@ -311,29 +405,36 @@ extension PickerField: UIPickerViewDelegate, UIPickerViewDataSource {
 //MARK:- ENTRY FIELD DELEGATE
 extension PickerField : EntryFieldDelegate {
     func entryFieldShouldBeginEditing(_ view: EntryField) -> Bool {
+        //print("entry field should begin editing")
         if let shouldBegin = delegate?.pickerFieldShouldBeginEditing?(self) {
             if !shouldBegin {
                 return false
             }
         }
         if isOnManualEntry {
-            if !isActive {
-                showPickerView()
-            }
+            // print("IS ON MANUAL ENTRY")
+            showPickerView()
+            // print("entry field should begin editing answer: true")
             return true
         } else {
+            // print("IS NOT ON MANUAL ENTRY")
             UIApplication.shared.sendAction(#selector(resignFirstResponder), to: nil, from: nil, for: nil)
             showPickerView()
+            // print("entry field should begin editing answer: false")
+            return false
         }
+        // print("entry field should begin editing answer: false")
         return false
     }
     
     func entryFieldShouldReturn(_ view: EntryField) -> Bool {
+        // print("entry field should return")
         view.endEditing(true)
         return true
     }
     
     func entryFieldDidEndEditing(_ view: EntryField) {
+        // print("entry field did end editing")
         if isOnManualEntry {
             value = view.text
             donePressed(nil)
@@ -347,7 +448,6 @@ extension PickerField {
     //detect other field opening, means focus was lost on us so close the pickerView
     @objc func keyboardWillShow(_ notification: Notification) {
         if isOnManualEntry && entryField.isFirstResponder {return}
-        pickerView.isHidden = true
         if(isActive){
             donePressed(nil)
         }

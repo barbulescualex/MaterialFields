@@ -1,9 +1,9 @@
 //
-//  MissionDateProperty.swift
-//  FinTrax
+//  DateField.swift
+//  MaterialFields
 //
 //  Created by Alex Barbulescu on 2019-02-01.
-//  Copyright © 2019 RCAF Innovation. All rights reserved.
+//  Copyright © 2019 Alex Barbulescu. All rights reserved.
 //
 
 import UIKit
@@ -16,7 +16,7 @@ import UIKit
 
 class DateField: UIView {
     //MARK: UIDATEPICKER VARS
-    var date : Date? {
+    public var date : Date? {
         didSet{
             if let setDate = date {
                 datePicker.date = setDate
@@ -24,68 +24,126 @@ class DateField: UIView {
                 return
             }
             if let df = dateFormatter {
-                fakeField.text = df.string(from: date!)
+                entryField.text = df.string(from: date!)
             } else {
-                fakeField.text = defaultFormatter.string(from: date!)
+                entryField.text = defaultFormatter.string(from: date!)
             }
-            fakeField.animatePlaceholder(up: true)
+            entryField.animatePlaceholder(up: true)
         }
     }
     
-    var defaultFormatter : DateFormatter = {
+    private let defaultFormatter : DateFormatter = {
         let df = DateFormatter()
         df.dateFormat = "MMM dd,yyyy"
         df.timeZone = TimeZone(abbreviation: "GMT")
         return df
     }()
     
-    var dateFormatter : DateFormatter?
+    public var dateFormatter : DateFormatter?
     
-    var datePickerMode : UIDatePicker.Mode? {
+    public var datePickerMode : UIDatePicker.Mode? {
         didSet{
             datePicker.datePickerMode = datePickerMode!
         }
     }
     
-    var minimumDate : Date? {
+    public var minimumDate : Date? {
         didSet{
             datePicker.minimumDate = minimumDate
         }
     }
     
-    var defualtDate : Date? {
+    public var defaultDate : Date? {
         didSet{
-            if let setDefault = defualtDate {
+            if let setDefault = defaultDate {
                 datePicker.date = setDefault
-                currentDateInPicker = setDefault
+                //currentDateInPicker = setDefault
             }
         }
     }
     
-    var maximumDate : Date? {
+    private var defaultDone = false
+    
+    public var maximumDate : Date? {
         didSet{
             if let date = maximumDate {
                 maxDateSet = true
                 datePicker.maximumDate = date
+            } else {
+                maxDateSet = false
             }
         }
     }
     
     private var maxDateSet = false
     
-    var isClearable = false {
+    public var isClearable = false {
         didSet{
             clearButton.isHidden = !isClearable
         }
     }
     
-    var placeholder : String? {
+    public var placeholder : String? {
         didSet {
-            fakeField.placeholder = placeholder! + " (Zulu)"
+            entryField.placeholder = placeholder! + " (Zulu)"
         }
     }
     
-    var currentDateInPicker : Date = Date()
+    private(set) var currentDateInPicker : Date = Date() {
+        didSet{
+            if let df = dateFormatter {
+                entryField.text = df.string(from: currentDateInPicker)
+            } else {
+                entryField.text = defaultFormatter.string(from: currentDateInPicker)
+            }
+        }
+    }
+    
+    //COLORS
+    //entryfield
+    public var borderColor: UIColor = UIColor.lightGray {
+        didSet{
+            entryField.borderColor = borderColor
+        }
+    }
+    
+    public var borderHighlightColor: UIColor = UIColor.babyBlue {
+        didSet{ //NEEDS WORK
+            entryField.borderHighlightColor = borderHighlightColor
+        }
+    }
+    
+    public var textColor: UIColor = UIColor.black {
+        didSet{
+            entryField.textColor = textColor
+        }
+    }
+    
+    public var placeholderDownColor: UIColor = UIColor.gray {
+        didSet{
+            entryField.placeholderDownColor = placeholderDownColor
+        }
+    }
+    
+    public var placeholderUpColor: UIColor = UIColor.black {
+        didSet{
+            entryField.placeholderUpColor = placeholderUpColor
+        }
+    }
+    
+    //buttons
+    public var clearButtonColor: UIColor = UIColor.babyBlue{
+        didSet{
+            clearButton.backgroundColor = clearButtonColor
+        }
+    }
+    
+    public var doneButtonColor: UIColor = UIColor.babyBlue{
+        didSet{
+            doneButton.backgroundColor = doneButtonColor
+        }
+    }
+    
     
     //MARK:- VARS
     private var isActive = false
@@ -101,7 +159,7 @@ class DateField: UIView {
         return stackView
     }()
     
-    private lazy var fakeField = EntryField()
+    private lazy var entryField = EntryField()
     
     private lazy var clearButton : UIButton = {
         let button = UIButton()
@@ -150,18 +208,18 @@ class DateField: UIView {
     }
     
     //MARK: SETUP FUNCTIONS
-    fileprivate func setupView() {
+    private func setupView() {
         //fake field
-        fakeField.delegate = self
+        entryField.delegate = self
         
-        fakeField.addSubview(clearButton)
-        clearButton.centerYAnchor.constraint(equalTo: fakeField.centerYAnchor, constant: 5).isActive = true
-        clearButton.trailingAnchor.constraint(equalTo: fakeField.trailingAnchor, constant: 0).isActive = true
+        entryField.addSubview(clearButton)
+        clearButton.centerYAnchor.constraint(equalTo: entryField.centerYAnchor, constant: 5).isActive = true
+        clearButton.trailingAnchor.constraint(equalTo: entryField.trailingAnchor, constant: 0).isActive = true
         clearButton.isHidden = true
         
-        fakeField.addSubview(doneButton)
-        doneButton.centerYAnchor.constraint(equalTo: fakeField.centerYAnchor, constant: 5).isActive = true
-        doneButton.trailingAnchor.constraint(equalTo: fakeField.trailingAnchor, constant: 0).isActive = true
+        entryField.addSubview(doneButton)
+        doneButton.centerYAnchor.constraint(equalTo: entryField.centerYAnchor, constant: 5).isActive = true
+        doneButton.trailingAnchor.constraint(equalTo: entryField.trailingAnchor, constant: 0).isActive = true
         doneButton.isHidden = true
         
         //keeps it over text
@@ -169,7 +227,7 @@ class DateField: UIView {
         bringSubviewToFront(clearButton)
         
         //vertical stack
-        verticalStack.addArrangedSubview(fakeField)
+        verticalStack.addArrangedSubview(entryField)
         verticalStack.addArrangedSubview(datePicker)
         datePicker.isHidden = true
         addSubview(verticalStack)
@@ -180,24 +238,26 @@ class DateField: UIView {
         setupLayout()
     }
     
-    fileprivate func setupLayout(){
+    private func setupLayout(){
         verticalStack.topAnchor.constraint(equalTo: topAnchor).isActive = true
         verticalStack.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         verticalStack.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         verticalStack.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
     }
     
-    @objc fileprivate func dateChanged(_ sender: UIDatePicker){
+    @objc private func dateChanged(_ sender: UIDatePicker){
+        defaultDone = true
         currentDateInPicker = sender.date
     }
     
     //MARK: FUNCTIONS
-    func showDatePicker(){
+    private func showDatePicker(){
+        if let defaultDate = defaultDate, !defaultDone {
+            currentDateInPicker = defaultDate
+        }
         doneButton.isHidden = false
         clearButton.isHidden = true
-        
-        fakeField.isEditing(showHighlight: true)
-        
+        entryField.isEditing(showHighlight: true)
         if !maxDateSet {
             datePicker.maximumDate = Date()
         }
@@ -207,11 +267,11 @@ class DateField: UIView {
         }
         datePicker.isHidden = false
     }
-
+    
     
     @objc func donePressed(_ sender: UIButton?){
         date = currentDateInPicker
-        fakeField.isEditing(showHighlight: false)
+        entryField.isEditing(showHighlight: false)
         
         datePicker.isHidden = true
         delegate?.dateFieldDidEndEditing(self)
@@ -223,7 +283,7 @@ class DateField: UIView {
     
     
     @objc func clearPressed(_ sender: UIButton){
-        fakeField.text = nil
+        entryField.text = nil
         delegate?.dateFieldCleared?(self)
     }
     
@@ -238,9 +298,7 @@ extension DateField : EntryFieldDelegate {
         if(isActive){
             return false
         }
-        
         UIApplication.shared.sendAction(#selector(UIApplication.resignFirstResponder), to: nil, from: nil, for: nil)
-        
         if let shouldBegin = delegate?.dateFieldShouldBeginEditing?(self) {
             if shouldBegin {
                 showDatePicker()
@@ -248,7 +306,6 @@ extension DateField : EntryFieldDelegate {
         } else { //assuming user wants to show it
             showDatePicker()
         }
-        
         return false
     }
 }
