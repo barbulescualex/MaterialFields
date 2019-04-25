@@ -9,9 +9,11 @@
 import UIKit
 
 @objc protocol DateFieldDelegate : AnyObject {
-    @objc optional func dateFieldShouldBeginEditing(_ dateField: DateField) -> Bool
-    @objc func dateFieldDidEndEditing(_ dateField: DateField)
-    @objc optional func dateFieldCleared(_ dateField: DateField)
+    @objc optional func dateFieldShouldBeginEditing(_ view: DateField) -> Bool
+    
+    @objc func dateFieldDidEndEditing(_ view: DateField)
+    
+    @objc optional func dateFieldCleared(_ view: DateField)
 }
 
 class DateField: UIView {

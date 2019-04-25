@@ -9,9 +9,11 @@
 import UIKit
 
 @objc protocol PickerFieldDelegate : AnyObject {
-    @objc optional func pickerFieldShouldBeginEditing(_ pickerView: PickerField) -> Bool
-    @objc func pickerFieldDidEndEditing(_ pickerView: PickerField)
-    @objc optional func pickerFieldCleared(_ pickerView: PickerField)
+    @objc optional func pickerFieldShouldBeginEditing(_ view: PickerField) -> Bool
+    
+    @objc func pickerFieldDidEndEditing(_ view: PickerField)
+    
+    @objc optional func pickerFieldCleared(_ view: PickerField)
 }
 
 class PickerField: UIView{
