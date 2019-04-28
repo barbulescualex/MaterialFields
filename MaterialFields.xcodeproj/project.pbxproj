@@ -13,6 +13,7 @@
 		FA1067E7225E71F700D9A17D /* DateField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1067E3225E71F700D9A17D /* DateField.swift */; };
 		FA1067E8225E71F700D9A17D /* EntryField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1067E4225E71F700D9A17D /* EntryField.swift */; };
 		FA1067EC225E725900D9A17D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1067EB225E725900D9A17D /* Extensions.swift */; };
+		FAF13F5A2276702B00978F3D /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF13F592276702B00978F3D /* Field.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		FA1067E3225E71F700D9A17D /* DateField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateField.swift; sourceTree = "<group>"; };
 		FA1067E4225E71F700D9A17D /* EntryField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryField.swift; sourceTree = "<group>"; };
 		FA1067EB225E725900D9A17D /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		FAF13F592276702B00978F3D /* Field.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Field.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 				FA1067E2225E71F700D9A17D /* PickerField.swift */,
 				FA1067E3225E71F700D9A17D /* DateField.swift */,
 				FA1067EB225E725900D9A17D /* Extensions.swift */,
+				FAF13F592276702B00978F3D /* Field.swift */,
 			);
 			path = Fields;
 			sourceTree = "<group>";
@@ -155,6 +158,7 @@
 			files = (
 				FA1067EC225E725900D9A17D /* Extensions.swift in Sources */,
 				FA1067E7225E71F700D9A17D /* DateField.swift in Sources */,
+				FAF13F5A2276702B00978F3D /* Field.swift in Sources */,
 				FA1067E8225E71F700D9A17D /* EntryField.swift in Sources */,
 				FA1067E6225E71F700D9A17D /* PickerField.swift in Sources */,
 				FA1067E5225E71F700D9A17D /* AreaField.swift in Sources */,

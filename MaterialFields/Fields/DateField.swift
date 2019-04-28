@@ -16,7 +16,7 @@ import UIKit
     @objc optional func dateFieldCleared(_ view: DateField)
 }
 
-class DateField: UIView {
+class DateField: Field {
     //MARK: UIDATEPICKER VARS
     public var date : Date? {
         didSet{

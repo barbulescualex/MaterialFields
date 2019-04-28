@@ -18,7 +18,7 @@ import UIKit
     @objc optional func areaFieldDidEndEditing(_ view: AreaField)
 }
 
-class AreaField: UIView, UIGestureRecognizerDelegate {
+class AreaField: Field, UIGestureRecognizerDelegate {
     //MARK:- TEXTVIEW VARS
     public var placeholder : String? {
         didSet{
@@ -300,7 +300,7 @@ class AreaField: UIView, UIGestureRecognizerDelegate {
         textView.becomeFirstResponder()
     }
     
-    func setError(errorText text: String?){
+    override func setError(withText text: String?) {
         hasError = true
         updateBorderColor(with: borderErrorColor)
         textView.textColor = borderErrorColor

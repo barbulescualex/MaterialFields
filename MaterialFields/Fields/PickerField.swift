@@ -16,7 +16,7 @@ import UIKit
     @objc optional func pickerFieldCleared(_ view: PickerField)
 }
 
-class PickerField: UIView{
+class PickerField: Field {
     //MARK:- UIPICKER VARS
     public var isClearable = false {
         didSet{
@@ -366,6 +366,10 @@ class PickerField: UIView{
         entryField.isEditing(showHighlight: true)
     }
     
+    override func setError(withText text: String?) {
+        if !isActive || !isOnManualEntry { return }
+        entryField.setError(withText: text)
+    }
     
     @objc func clearPressed(_ sender: UIButton){
         entryField.text = nil
@@ -426,7 +430,6 @@ extension PickerField : EntryFieldDelegate {
             return false
         }
         // print("entry field should begin editing answer: false")
-        return false
     }
     
     func entryFieldShouldReturn(_ view: EntryField) -> Bool {

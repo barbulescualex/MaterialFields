@@ -22,7 +22,7 @@ import UIKit
     @objc optional func entryFieldShouldClear(_ view: EntryField) -> Bool
 }
 
-class EntryField: UIView, UIGestureRecognizerDelegate {
+class EntryField: Field, UIGestureRecognizerDelegate {
     //MARK:- TEXTFIELD VARS
     public var placeholder : String?  {
         didSet{
@@ -336,7 +336,7 @@ class EntryField: UIView, UIGestureRecognizerDelegate {
     }
     
     //MARK:- FUNCTIONS
-    func setError(errorText text: String?){
+    override func setError(withText text: String?) {
         hasError = true
         updateBorderColor(with: borderErrorColor)
         textField.textColor = borderErrorColor
@@ -361,7 +361,6 @@ class EntryField: UIView, UIGestureRecognizerDelegate {
             self.errorLabel.text = text
             self.errorLabel.isHidden = false
         }
-        
     }
     
     @objc func startEditing(_ sender: UIGestureRecognizer){
