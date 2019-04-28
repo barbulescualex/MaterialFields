@@ -176,9 +176,21 @@ class PickerField: Field {
         }
     }
     
+    public var borderErrorColor: UIColor = UIColor.red {
+        didSet{
+            entryField.borderErrorColor = borderErrorColor
+        }
+    }
+    
     public var textColor: UIColor = UIColor.black {
         didSet{
             entryField.textColor = textColor
+        }
+    }
+    
+    public var errorTextColor: UIColor = UIColor.red {
+        didSet{
+            entryField.errorTextColor = errorTextColor
         }
     }
     
