@@ -72,8 +72,8 @@
 				FA1067E1225E71F700D9A17D /* AreaField.swift */,
 				FA1067E2225E71F700D9A17D /* PickerField.swift */,
 				FA1067E3225E71F700D9A17D /* DateField.swift */,
-				FA1067EB225E725900D9A17D /* Extensions.swift */,
 				FAF13F592276702B00978F3D /* Field.swift */,
+				FA1067EB225E725900D9A17D /* Extensions.swift */,
 			);
 			path = Fields;
 			sourceTree = "<group>";

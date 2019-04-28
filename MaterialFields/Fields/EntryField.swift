@@ -41,7 +41,6 @@ class EntryField: Field, UIGestureRecognizerDelegate {
         set{
             textField.text = newValue
             if newValue.isComplete() {
-                beginUp = true
                 animatePlaceholder(up: true)
             } else {
                 animatePlaceholder(up: false)
@@ -184,7 +183,6 @@ class EntryField: Field, UIGestureRecognizerDelegate {
     private(set) var hasError = false
     private var placeholderUp = false
     
-    private var beginUp = false
     private var isActive = false
     
     //MARK:- VIEW COMPONENTS
@@ -274,12 +272,6 @@ class EntryField: Field, UIGestureRecognizerDelegate {
     required init?(coder aDecoder: NSCoder){
         super.init(coder: aDecoder)
         setup()
-    }
-    
-    override func didMoveToWindow() {
-        if(beginUp){
-            staticMovePlaceholder(up: true)
-        }
     }
     
     fileprivate func setup(){
@@ -493,24 +485,6 @@ extension EntryField {
             }, completion: { (Bool) in
                 self.placeholderUp = false
             })
-        }
-    }
-    
-    func staticMovePlaceholder(up: Bool){
-        if(up){
-            dollarLabel.isHidden = !isMonetary
-            //Positioning
-            self.placeholderYAnchorConstraint.isActive = false
-            self.placeholderYAnchorConstraint = self.placeholderLabel.centerYAnchor.constraint(equalTo: self.placeholderPlaceholder.centerYAnchor)
-            self.placeholderYAnchorConstraint.isActive = true
-            
-            //Look
-            self.placeholderLabel.textColor = placeholderUpColor
-            self.placeholderLabel.font = UIFont.systemFont(ofSize: 12)
-            self.placeholderLabel.alpha = 0.7
-            self.layoutIfNeeded()
-            
-            self.placeholderUp = true
         }
     }
 }

@@ -36,7 +36,6 @@ class AreaField: Field, UIGestureRecognizerDelegate {
         set{
             textView.text = newValue
             if newValue.isComplete() {
-                beginUp = true
                 animatePlaceholder(up: true)
             } else {
                 animatePlaceholder(up: false)
@@ -145,7 +144,6 @@ class AreaField: Field, UIGestureRecognizerDelegate {
     
     private var placeholderYAnchorConstraint: NSLayoutConstraint!
     private var placeholderUp = false
-    private var beginUp = false
     private(set) var hasError = false
     private var isActive = true
     
@@ -222,12 +220,6 @@ class AreaField: Field, UIGestureRecognizerDelegate {
     required init?(coder aDecoder: NSCoder){
         super.init(coder: aDecoder)
         setup()
-    }
-    
-    override func didMoveToWindow() {
-        if(beginUp){
-            staticMovePlaceholder(up: true)
-        }
     }
     
     func setup(){
@@ -383,23 +375,6 @@ extension AreaField {
             }, completion: { (Bool) in
                 self.placeholderUp = false
             })
-        }
-    }
-    
-    func staticMovePlaceholder(up: Bool){
-        if(up){
-            //Positioning
-            self.placeholderYAnchorConstraint.isActive = false
-            self.placeholderYAnchorConstraint = self.placeholderLabel.centerYAnchor.constraint(equalTo: self.placeholderPlaceholder.centerYAnchor)
-            self.placeholderYAnchorConstraint.isActive = true
-            
-            //Look
-            self.placeholderLabel.textColor = placeholderUpColor
-            self.placeholderLabel.font = UIFont.systemFont(ofSize: 12)
-            self.placeholderLabel.alpha = 0.7
-            self.layoutIfNeeded()
-            
-            self.placeholderUp = true
         }
     }
 }
