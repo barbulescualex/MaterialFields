@@ -16,15 +16,15 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "MaterialFields"
-  spec.version      = "0.0.1"
-  spec.summary      = "iOS textfields and pickers following the Material Design Guidelines."
+  spec.version      = "0.0.5"
+  spec.summary      = "Lightweight library containing UITextFields, UITextViews, UIPickerViews and UIDatePickers following the Material Design Guidelines."
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
   #   * Try to keep it short, snappy and to the point.
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
-  spec.description  = "Lightweight library containing UITextFields, UITextViews, UIPickerViews and UIDatePickers following the Material Design Guidelines."
+  spec.description  = "Lightweight library containing UITextFields, UITextViews, UIPickerViews and UIDatePickers following the Material Design Guidelines. They support colors and individual usability features. All conform to a wrapper Field class allowing for modular and scalable validation layers"
 
   spec.homepage     = "https://github.com/barbulescualex/MaterialFields"
   # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
@@ -37,8 +37,8 @@ Pod::Spec.new do |spec|
   #  Popular ones are 'MIT', 'BSD' and 'Apache License, Version 2.0'.
   #
 
-  spec.license      = "MIT (example)"
-  # spec.license      = { :type => "MIT", :file => "FILE_LICENSE" }
+  # spec.license      = "MIT"
+  spec.license      = { :type => "MIT", :file => "LICENSE" }
 
 
   # ――― Author Metadata  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -89,8 +89,8 @@ Pod::Spec.new do |spec|
   #  Not including the public_header_files will make all headers public.
   #
 
-  spec.source_files  = "Classes", "Classes/**/*.{h,m}"
-  spec.exclude_files = "Classes/Exclude"
+  spec.source_files  = "MaterialFields"
+  # spec.exclude_files = "Classes/Exclude"
 
   # spec.public_header_files = "Classes/**/*.h"
 
