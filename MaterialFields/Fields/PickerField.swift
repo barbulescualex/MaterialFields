@@ -56,11 +56,10 @@ class PickerField: Field {
         }
     }
     
-    // setter for the entry field text
-    public var text: String? {
+    // setter for the entry field text and getter for the value it holds
+    override var text: String? {
         didSet{
             entryField.text = text
-            value = text
         }
     }
     
@@ -129,13 +128,6 @@ class PickerField: Field {
     
     private var manualEntrySet = false
     private var manualEntryIndex : Int?
-    
-    //getter only
-    private(set) var value : String? {
-        didSet{
-            entryField.text = value
-        }
-    }
     
     private(set) var indexSelected : Int = 0 {
         didSet{
@@ -330,14 +322,13 @@ class PickerField: Field {
         //Keyboard listener
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        
     }
     
     //MARK:- FUNCTIONS
     @objc func donePressed(_ sender: UIButton?){
         pickerView.isHidden = true
         if !isOnManualEntry {
-            value = data[indexSelected]
+            text = data[indexSelected]
         }
         entryField.endEditing(true)
         delegate?.pickerFieldDidEndEditing(self)
@@ -353,22 +344,6 @@ class PickerField: Field {
         clearButton.isHidden = true
         isActive = true
         
-        //        if isManualEntryCapable && manualEntrySet {
-        //            //manual entry capable
-        //            if data.count == 1 {
-        //                //manual entry is the only option
-        //                indexSelected = 0
-        //                //self.entryField.text = nil
-        //                _ = entryField.becomeFirstResponder()
-        //            } else if let manualIndex = manualEntryIndex, manualIndex == indexSelected {
-        //                //on manual
-        //                _ = entryField.becomeFirstResponder()
-        //            } else {
-        //                entryField.text = data[indexSelected]
-        //            }
-        //        } else {
-        //            entryField.text = data[indexSelected]
-        //        }
         if isOnManualEntry {
             _ = entryField.becomeFirstResponder()
         } else {
@@ -385,7 +360,6 @@ class PickerField: Field {
     
     @objc func clearPressed(_ sender: UIButton){
         entryField.text = nil
-        value = nil
         delegate?.pickerFieldCleared?(self)
     }
     
@@ -453,9 +427,8 @@ extension PickerField : EntryFieldDelegate {
     func entryFieldDidEndEditing(_ view: EntryField) {
         // print("entry field did end editing")
         if isOnManualEntry {
-            value = view.text
+            text = view.text
             donePressed(nil)
-            delegate?.pickerFieldDidEndEditing(self)
         }
     }
 }

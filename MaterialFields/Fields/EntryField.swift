@@ -24,7 +24,7 @@ import UIKit
 
 class EntryField: Field, UIGestureRecognizerDelegate {
     //MARK:- TEXTFIELD VARS
-    public var placeholder : String?  {
+    public var placeholder : String? {
         didSet{
             if (isOptional && placeholder.isComplete()) {
                 placeholderLabel.text = placeholder! + " (Optional)"
@@ -33,8 +33,7 @@ class EntryField: Field, UIGestureRecognizerDelegate {
         }
     }
     
-    //setter ONLY, don't try to read from EntryField object, use delegate methods to interface with the real textfield directly
-    public var text: String? {
+    override var text: String? {
         get{
             return textField.text
         }

@@ -29,7 +29,7 @@ class AreaField: Field, UIGestureRecognizerDelegate {
         }
     }
     
-    public var text: String? {
+    override var text: String? {
         get{
             return textView.text
         }
