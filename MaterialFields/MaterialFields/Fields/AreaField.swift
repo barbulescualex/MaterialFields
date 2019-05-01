@@ -46,7 +46,7 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
     }
     
     //COLORS
-    public var borderColor: UIColor = UIColor.lightGray {
+    public override var borderColor: UIColor {
         didSet{
             if !isActive && !hasError {
                 updateBorderColor(with: borderColor)
@@ -54,7 +54,7 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
         }
     }
     
-    public var borderHighlightColor: UIColor = UIColor.materialFieldsBlue {
+    public override var borderHighlightColor: UIColor {
         didSet{
             if isActive {
                 updateBorderColor(with: borderHighlightColor)
@@ -62,7 +62,7 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
         }
     }
     
-    public var borderErrorColor: UIColor = UIColor.red {
+    public override var borderErrorColor: UIColor {
         didSet{
             if hasError {
                 updateBorderColor(with: borderErrorColor)
@@ -70,19 +70,19 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
         }
     }
     
-    public var textColor: UIColor = UIColor.black {
+    public override var textColor: UIColor {
         didSet{
             textView.textColor = textColor
         }
     }
     
-    public var errorTextColor: UIColor = UIColor.red {
+    public override var errorTextColor: UIColor {
         didSet{
             errorLabel.textColor = errorTextColor
         }
     }
     
-    public var placeholderDownColor: UIColor = UIColor.gray {
+    public override var placeholderDownColor: UIColor {
         didSet{
             if !placeholderUp {
                 placeholderLabel.textColor = placeholderDownColor
@@ -90,7 +90,7 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
         }
     }
     
-    public var placeholderUpColor: UIColor = UIColor.black {
+    public override var placeholderUpColor: UIColor {
         didSet{
             if placeholderUp {
                 placeholderLabel.textColor = placeholderUpColor
@@ -98,7 +98,7 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
         }
     }
     
-    public var cursorColor: UIColor = UIColor.black.withAlphaComponent(0.5) {
+    public override var cursorColor: UIColor {
         didSet{
             textView.tintColor = cursorColor
         }

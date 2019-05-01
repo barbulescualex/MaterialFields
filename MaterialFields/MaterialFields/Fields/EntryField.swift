@@ -58,11 +58,18 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
             return textField.text
         }
         set{
+            //populate the textfield
             textField.text = newValue
+            
+            //animate the placeholder label
             if newValue.isComplete() {
-                animatePlaceholder(up: true)
+                if !placeholderUp {
+                    animatePlaceholder(up: true)
+                }
             } else {
-                animatePlaceholder(up: false)
+                if placeholderUp {
+                    animatePlaceholder(up: false)
+                }
             }
         }
     }
@@ -138,19 +145,15 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
     }
     
     //COLORS
-    /// Border color
-    /// - Note: Defaults to UIColor.lightGray
-    public var borderColor: UIColor = UIColor.lightGray {
+    public override var borderColor: UIColor {
         didSet{
             if !isActive && !hasError {
                 updateBorderColor(with: borderColor)
             }
         }
     }
-    
-    /// Border color when field is active
-    /// - Note: Defaults to the material field's baby blue
-    public var borderHighlightColor: UIColor = UIColor.materialFieldsBlue {
+
+    public override var borderHighlightColor: UIColor {
         didSet{
             if isActive {
                 updateBorderColor(with: borderHighlightColor)
@@ -158,9 +161,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         }
     }
     
-    /// Border color when there is an error in the field
-    /// - Note: Defaults to UIColor.red
-    public var borderErrorColor: UIColor = UIColor.red {
+    public override var borderErrorColor: UIColor {
         didSet{
             if hasError {
                 updateBorderColor(with: borderErrorColor)
@@ -168,23 +169,20 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         }
     }
     
-    /// Normal text color
-    /// - Note: Defaults to UIColor.black
-    public var textColor: UIColor = UIColor.black {
+
+    public override var textColor: UIColor {
         didSet{
             textField.textColor = textColor
         }
     }
     
-    /// Normal text color
-    /// - Note: Defaults to UIColor.black
-    public var errorTextColor: UIColor = UIColor.red {
+    public override var errorTextColor: UIColor {
         didSet{
             errorLabel.textColor = errorTextColor
         }
     }
     
-    public var placeholderDownColor: UIColor = UIColor.gray {
+    public override var placeholderDownColor: UIColor {
         didSet{
             if !placeholderUp {
                 placeholderLabel.textColor = placeholderDownColor
@@ -192,7 +190,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         }
     }
     
-    public var placeholderUpColor: UIColor = UIColor.black {
+    public override var placeholderUpColor: UIColor {
         didSet{
             if placeholderUp {
                 placeholderLabel.textColor = placeholderUpColor
@@ -200,18 +198,22 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         }
     }
     
-    public var cursorColor: UIColor = UIColor.black.withAlphaComponent(0.5) {
+    public override var cursorColor: UIColor {
         didSet{
             textField.tintColor = cursorColor
         }
     }
     
+    /// Color of the dollar sign if the field is monetary
+    /// - Note: Defualts to UIColor.lightGray
     public var monetaryColor: UIColor = UIColor.lightGray {
         didSet{
             dollarLabel.textColor = monetaryColor
         }
     }
     
+    /// Color of the unit label if the field has a unit label
+    /// - Note: Defualts to UIColor.lightGray
     public var unitColor: UIColor = UIColor.lightGray {
         didSet{
             unitLabel.textColor = unitColor
@@ -219,15 +221,23 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
     }
     
     //MARK:- VARS
+    
+    /// The reciever's delegate
     weak public var delegate : EntryFieldDelegate?
     
+    /// Instance reference to the placeholder's Y constraint (for animation)
     private var placeholderYAnchorConstraint: NSLayoutConstraint!
+    
+    /// Read-only flag to check if the current field has an error in it
     private(set) var hasError = false
+    
+    /// Read-only flag to check if placeholder is up
     private(set) var placeholderUp = false
     
     private var isActive = false
     
     //MARK:- VIEW COMPONENTS
+    /// The stackview that encompasses the whole view
     private let stackView : UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -237,6 +247,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         return stackView
     }()
     
+    /// Invisable placeholder for the placeholder (the "title") above the field
     private let placeholderPlaceholder : UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
@@ -245,6 +256,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         return label
     }()
     
+    /// The placeholder label for the title
     public let placeholderLabel : UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -254,6 +266,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         return label
     }()
     
+    /// The UITextField behind this field class
     public lazy var textField : UITextField = {
         let textField = UITextField()
         textField.borderStyle = .none
@@ -264,6 +277,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         return textField
     }()
     
+    /// The error label under the UITextField that appears on error being set
     private let errorLabel : UILabel = {
         let label = UILabel()
         label.textColor = .red
@@ -272,6 +286,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         return label
     }()
     
+    /// The unit label that appears on the right hand side upon a unit String value being set
     private let unitLabel : UILabel = {
         let label = UILabel()
         label.textColor = .lightGray
@@ -280,6 +295,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         return label
     }()
     
+    /// The dollar sign label that appears upon the field's isMonetary flag being set
     private let dollarLabel : UILabel = {
         let label = UILabel()
         label.textColor = .lightGray
@@ -290,6 +306,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         return label
     }()
     
+    /// Top 1px line of the fake shadow underneath the field
     private let borderTop : UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.lightGray
@@ -298,6 +315,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         return view
     }()
     
+    /// Bottom 1px line of the fake shadow underneath the field
     private let borderBottom : UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
@@ -307,10 +325,17 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
     }()
     
     //MARK:- INIT
+    
+    /**
+    Required initializer if doing programtically. You can manually set the frame after initialization. Otherwise it relies on auto layout and it's intrinsic content size.
+     - Warning: If you want to define a frame for it, make sure the height constant is a minimum of 41.
+    */
     public required init(){
         super.init(frame: .zero)
         setup()
     }
+    
+    /// Interface builder initializer
     required init?(coder aDecoder: NSCoder){
         super.init(coder: aDecoder)
         setup()
@@ -318,6 +343,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
     
     fileprivate func setup(){
         textField.delegate = self
+        
         //textfield and placeholder
         addSubview(stackView)
         addSubview(placeholderLabel)
@@ -397,27 +423,36 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         }
     }
     
+    /// Called from tap gesture recognizer on the field
     @objc func startEditing(_ sender: UIGestureRecognizer){
         textField.becomeFirstResponder()
     }
     
+    /// Removes the error UI.
     func removeErrorUI(){
-        if(hasError){
-            textField.textColor = textColor
-            updateBorderColor(with: borderColor)
-            placeholderLabel.textColor = placeholderUpColor
-            hasError = false
-            errorLabel.text = nil
-            errorLabel.isHidden = true
-        }
+        if !hasError {return}
+        textField.textColor = textColor
+        updateBorderColor(with: borderColor)
+        placeholderLabel.textColor = placeholderUpColor
+        hasError = false
+        errorLabel.text = nil
+        errorLabel.isHidden = true
     }
     
+    /**
+    Updates the border color by creating a gradient for the 1px height lines that make up the border/shadow effect
+     - Parameter color: Color to set the border to
+    */
     fileprivate func updateBorderColor(with color: UIColor){
         borderTop.backgroundColor = color
         borderBottom.backgroundColor = color.withAlphaComponent(0.5)
     }
     
-    public func isEditing(showHighlight val: Bool){
+    /**
+    Sets the editing state on and off by either showing the highlight color or regular color (does not change the state if the field currently has an error
+     - Parameter showHighlight: setter for wether it should show highlight colors
+     */
+    func isEditing(showHighlight val: Bool){
         if hasError {return}
         if val {
             updateBorderColor(with: borderHighlightColor)
@@ -493,6 +528,10 @@ extension EntryField : UITextFieldDelegate {
 
 //MARK:- ANIMATIONS
 extension EntryField {
+    /**
+     Animates the placeholder label upon a value being entered in the field
+     - Parameter up: True will animate the placeholder up, false will animate the placeholder down
+     */
     fileprivate func animatePlaceholder(up: Bool) {
         if(up){
             dollarLabel.isHidden = !isMonetary

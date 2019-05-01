@@ -106,31 +106,31 @@ public class DateField: Field {
     
     //COLORS
     //entryfield
-    public var borderColor: UIColor = UIColor.lightGray {
+    public override var borderColor: UIColor {
         didSet{
             entryField.borderColor = borderColor
         }
     }
     
-    public var borderHighlightColor: UIColor = UIColor.materialFieldsBlue {
+    public override var borderHighlightColor: UIColor {
         didSet{ //NEEDS WORK
             entryField.borderHighlightColor = borderHighlightColor
         }
     }
     
-    public var textColor: UIColor = UIColor.black {
+    public override var textColor: UIColor {
         didSet{
             entryField.textColor = textColor
         }
     }
     
-    public var placeholderDownColor: UIColor = UIColor.gray {
+    public override var placeholderDownColor: UIColor {
         didSet{
             entryField.placeholderDownColor = placeholderDownColor
         }
     }
     
-    public var placeholderUpColor: UIColor = UIColor.black {
+    public override var placeholderUpColor: UIColor {
         didSet{
             entryField.placeholderUpColor = placeholderUpColor
         }

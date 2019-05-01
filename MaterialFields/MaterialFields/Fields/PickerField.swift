@@ -158,49 +158,49 @@ public class PickerField: Field {
     
     //COLORS
     //entryfield
-    public var borderColor: UIColor = UIColor.lightGray {
+    public override var borderColor: UIColor {
         didSet{
             entryField.borderColor = borderColor
         }
     }
     
-    public var borderHighlightColor: UIColor = UIColor.materialFieldsBlue {
+    public override var borderHighlightColor: UIColor {
         didSet{ //NEEDS WORK
             entryField.borderHighlightColor = borderHighlightColor
         }
     }
     
-    public var borderErrorColor: UIColor = UIColor.red {
+    public override var borderErrorColor: UIColor {
         didSet{
             entryField.borderErrorColor = borderErrorColor
         }
     }
     
-    public var textColor: UIColor = UIColor.black {
+    public override var textColor: UIColor {
         didSet{
             entryField.textColor = textColor
         }
     }
     
-    public var errorTextColor: UIColor = UIColor.red {
+    public override var errorTextColor: UIColor {
         didSet{
             entryField.errorTextColor = errorTextColor
         }
     }
     
-    public var placeholderDownColor: UIColor = UIColor.gray {
+    public override var placeholderDownColor: UIColor {
         didSet{
             entryField.placeholderDownColor = placeholderDownColor
         }
     }
     
-    public var placeholderUpColor: UIColor = UIColor.black {
+    public override var placeholderUpColor: UIColor {
         didSet{
             entryField.placeholderUpColor = placeholderUpColor
         }
     }
     
-    public var cursorColor: UIColor = UIColor.black.withAlphaComponent(0.5) {
+    public override var cursorColor: UIColor {
         didSet{
             entryField.cursorColor = cursorColor
         }

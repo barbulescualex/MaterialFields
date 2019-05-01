@@ -23,6 +23,7 @@ class ViewController: UIViewController {
         let field = EntryField()
         field.placeholder = "This is an EntryField"
         field.delegate = self
+        field.textColor = UIColor.blue
         return field
     }()
     
