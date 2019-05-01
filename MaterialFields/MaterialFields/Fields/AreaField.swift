@@ -22,7 +22,7 @@ import UIKit
 
 public class AreaField: Field, UIGestureRecognizerDelegate {
     //MARK:- TEXTVIEW VARS
-    public var placeholder : String? {
+    public override var placeholder : String? {
         didSet{
             if (isOptional && placeholder.isComplete()) {
                 placeholderLabel.text = placeholder! + " (Optional)"
@@ -106,7 +106,7 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
     
     
     //OPTIONALS
-    public var isOptional : Bool = false {
+    public override var isOptional : Bool {
         didSet{
             if let placeholder = placeholder {
                 placeholderLabel.text = placeholder + " (Optional)"
@@ -147,7 +147,6 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
     private var placeholderYAnchorConstraint: NSLayoutConstraint!
     private(set) var placeholderUp = false
     private(set) var hasError = false
-    private var isActive = true
     
     //MARK:- VIEW COMPONENTS
     private let stackView : UIStackView = {

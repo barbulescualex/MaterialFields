@@ -42,8 +42,7 @@ import UIKit
 public class EntryField: Field, UIGestureRecognizerDelegate {
     //MARK:- TEXTFIELD VARS
     
-    /// This is the optional placeholder, or "floating title" of the field
-    public var placeholder : String? {
+    public override var placeholder : String? {
         didSet{
             if (isOptional && placeholder.isComplete()) {
                 placeholderLabel.text = placeholder! + " (Optional)"
@@ -91,8 +90,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         }
     }
     
-    /// Optional setter to append and "(Optional)" tag to the field's placeholder
-    public var isOptional : Bool = false {
+    public override var isOptional : Bool {
         didSet{
             if let placeholder = placeholder {
                 placeholderLabel.text = placeholder + " (Optional)"
@@ -234,7 +232,6 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
     /// Read-only flag to check if placeholder is up
     private(set) var placeholderUp = false
     
-    private var isActive = false
     
     //MARK:- VIEW COMPONENTS
     /// The stackview that encompasses the whole view

@@ -14,6 +14,16 @@ Wrapper class for all fields. Offers wrapper functionality for all text-based fi
      - DateField subclasses this but does not override the text or error function because it holds a Date value type and does not support error setting. DateField supports min and max dates meaning the user should never have the option to make an error.
 */
 public class Field : UIView {
+    /// This is the placeholder, or "floating title" of the field
+    public var placeholder : String?
+    
+    /// Optional setter to append and "(Optional)" tag to the field's placeholder
+    /// - Note: Defualts to false
+    public var isOptional : Bool = false
+    
+    /// Read only flag to check if the field is currently active
+    internal(set) public var isActive : Bool = false
+    
     /// The value in the text-based fields.
     public var text : String?
     

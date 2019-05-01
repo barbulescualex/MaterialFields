@@ -26,7 +26,7 @@ public class PickerField: Field {
         }
     }
     
-    // picker data
+    /// picker data source
     public var data : [String] {
         didSet {
             if isManualEntryCapable && !manualEntrySet{
@@ -51,10 +51,15 @@ public class PickerField: Field {
         }
     }
     
-    // optional placeholder value for the text field
-    public var placeholder : String? {
+    public override var placeholder : String? {
         didSet {
             entryField.placeholder = placeholder!
+        }
+    }
+    
+    public override var isOptional : Bool {
+        didSet{
+            entryField.isOptional = isOptional
         }
     }
     
@@ -221,7 +226,6 @@ public class PickerField: Field {
     
     //MARK: VARS
     weak public var delegate : PickerFieldDelegate?
-    private var isActive = false
     
     //MARK: VIEW COMPONENTS
     // vertical stack for EntryField and UIPickerView

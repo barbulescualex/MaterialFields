@@ -24,13 +24,13 @@ public class DateField: Field {
         didSet{
             if let setDate = date {
                 datePicker.date = setDate
+                if let df = dateFormatter {
+                    entryField.text = df.string(from: date!)
+                } else {
+                    entryField.text = defaultFormatter.string(from: date!)
+                }
             } else {
-                return
-            }
-            if let df = dateFormatter {
-                entryField.text = df.string(from: date!)
-            } else {
-                entryField.text = defaultFormatter.string(from: date!)
+               entryField.text = nil
             }
         }
     }
@@ -98,9 +98,15 @@ public class DateField: Field {
         }
     }
     
-    public var placeholder : String? {
+    public override var placeholder : String? {
         didSet {
             entryField.placeholder = placeholder
+        }
+    }
+    
+    public override var isOptional : Bool {
+        didSet{
+            entryField.isOptional = isOptional
         }
     }
     
@@ -151,7 +157,6 @@ public class DateField: Field {
     
     
     //MARK:- VARS
-    private var isActive = false
     weak public var delegate : DateFieldDelegate?
     
     //MARK:- VIEW COMPONENTS
@@ -285,10 +290,15 @@ public class DateField: Field {
     
     @objc func clearPressed(_ sender: UIButton){
         date = nil
+        entryField.text = nil
         if let defaultDate = defaultDate {
             datePicker.date = defaultDate
         }
         delegate?.dateFieldCleared?(self)
+    }
+    
+    override public func setError(withText text: String?) {
+        entryField.setError(withText: text)
     }
     
     deinit {
