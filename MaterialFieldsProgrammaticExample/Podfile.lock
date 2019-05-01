@@ -1,0 +1,16 @@
+PODS:
+  - MaterialFields (0.0.6)
+
+DEPENDENCIES:
+  - MaterialFields (from `../`)
+
+EXTERNAL SOURCES:
+  MaterialFields:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  MaterialFields: 5d8ea87ba3686d54c669f375279f82531924af1d
+
+PODFILE CHECKSUM: 42620fac39fb100092001ff3113fec3cc68f96f2
+
+COCOAPODS: 1.6.1

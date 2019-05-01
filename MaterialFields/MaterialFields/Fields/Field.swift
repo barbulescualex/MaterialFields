@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Field : UIView {    
+public class Field : UIView {    
     public var text : String?
     public func setError(withText text: String?){
         

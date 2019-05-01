@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objc protocol AreaFieldDelegate : AnyObject {
+@objc public protocol AreaFieldDelegate : AnyObject {
     @objc optional func areaFieldShouldBeginEditing(_ view: AreaField) -> Bool
     
     @objc optional func areaFieldDidBeginEditing(_ view: AreaField)
@@ -16,9 +16,11 @@ import UIKit
     @objc optional func areaFieldShouldEndEditing(_ view: AreaField) -> Bool
     
     @objc optional func areaFieldDidEndEditing(_ view: AreaField)
+    
+    @objc optional func areaFieldShould
 }
 
-class AreaField: Field, UIGestureRecognizerDelegate {
+public class AreaField: Field, UIGestureRecognizerDelegate {
     //MARK:- TEXTVIEW VARS
     public var placeholder : String? {
         didSet{
@@ -29,7 +31,7 @@ class AreaField: Field, UIGestureRecognizerDelegate {
         }
     }
     
-    override var text: String? {
+    override public var text: String? {
         get{
             return textView.text
         }
@@ -140,7 +142,7 @@ class AreaField: Field, UIGestureRecognizerDelegate {
     }
     
     //MARK:- VARS
-    weak var delegate : AreaFieldDelegate?
+    weak public var delegate : AreaFieldDelegate?
     
     private var placeholderYAnchorConstraint: NSLayoutConstraint!
     private var placeholderUp = false
@@ -213,7 +215,7 @@ class AreaField: Field, UIGestureRecognizerDelegate {
     }()
     
     //MARK:- INIT
-    override init(frame: CGRect){
+    public required init(){
         super.init(frame: .zero)
         setup()
     }
@@ -292,7 +294,7 @@ class AreaField: Field, UIGestureRecognizerDelegate {
         textView.becomeFirstResponder()
     }
     
-    override func setError(withText text: String?) {
+    override public func setError(withText text: String?) {
         hasError = true
         updateBorderColor(with: borderErrorColor)
         textView.textColor = borderErrorColor
@@ -322,11 +324,11 @@ class AreaField: Field, UIGestureRecognizerDelegate {
 
 //MARK:- TEXTVIEW DELEGATE
 extension AreaField : UITextViewDelegate {
-    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+    public func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         return delegate?.areaFieldShouldBeginEditing?(self) ?? true
     }
     
-    func textViewDidBeginEditing(_ textView: UITextView) {
+    public func textViewDidBeginEditing(_ textView: UITextView) {
         isActive = true
         removeErrorUI()
         animatePlaceholder(up: true)
@@ -334,17 +336,21 @@ extension AreaField : UITextViewDelegate {
         delegate?.areaFieldDidBeginEditing?(self)
     }
     
-    func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+    public func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
         return delegate?.areaFieldShouldEndEditing?(self) ?? true
     }
     
-    func textViewDidEndEditing(_ textView: UITextView) {
+    public func textViewDidEndEditing(_ textView: UITextView) {
         if(textView.text.isNotComplete()){
             animatePlaceholder(up: false)
         }
         delegate?.areaFieldDidEndEditing?(self)
         isEditing(showHighlight: false)
         isActive = false
+    }
+    
+    public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        
     }
 }
 

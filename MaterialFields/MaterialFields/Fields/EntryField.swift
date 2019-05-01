@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objc protocol EntryFieldDelegate : AnyObject {
+@objc public protocol EntryFieldDelegate : AnyObject {
     @objc optional func entryFieldShouldBeginEditing(_ view: EntryField) -> Bool
     
     @objc optional func entryFieldDidBeginEditing(_ view: EntryField)
@@ -22,7 +22,7 @@ import UIKit
     @objc optional func entryFieldShouldClear(_ view: EntryField) -> Bool
 }
 
-class EntryField: Field, UIGestureRecognizerDelegate {
+public class EntryField: Field, UIGestureRecognizerDelegate {
     //MARK:- TEXTFIELD VARS
     public var placeholder : String? {
         didSet{
@@ -33,7 +33,7 @@ class EntryField: Field, UIGestureRecognizerDelegate {
         }
     }
     
-    override var text: String? {
+    override public var text: String? {
         get{
             return textField.text
         }
@@ -175,7 +175,7 @@ class EntryField: Field, UIGestureRecognizerDelegate {
     }
     
     //MARK:- VARS
-    weak var delegate : EntryFieldDelegate?
+    weak public var delegate : EntryFieldDelegate?
     var tag2 = 0
     
     private var placeholderYAnchorConstraint: NSLayoutConstraint!
@@ -264,8 +264,8 @@ class EntryField: Field, UIGestureRecognizerDelegate {
     }()
     
     //MARK:- INIT
-    override init(frame: CGRect){
-        super.init(frame: frame)
+    public required init(){
+        super.init(frame: .zero)
         setup()
     }
     required init?(coder aDecoder: NSCoder){
@@ -327,7 +327,7 @@ class EntryField: Field, UIGestureRecognizerDelegate {
     }
     
     //MARK:- FUNCTIONS
-    override func setError(withText text: String?) {
+    override public func setError(withText text: String?) {
         hasError = true
         updateBorderColor(with: borderErrorColor)
         textField.textColor = borderErrorColor
@@ -383,16 +383,16 @@ class EntryField: Field, UIGestureRecognizerDelegate {
         }
     }
     
-    override func resignFirstResponder() -> Bool {
+    override public func resignFirstResponder() -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
-    override func becomeFirstResponder() -> Bool {
+    override public func becomeFirstResponder() -> Bool {
         return textField.becomeFirstResponder()
     }
     
-    override var isFirstResponder: Bool {
+    override public var isFirstResponder: Bool {
         return textField.isFirstResponder
     }
     
@@ -400,14 +400,14 @@ class EntryField: Field, UIGestureRecognizerDelegate {
 
 //MARK:- TEXTFIELD DELEGATE
 extension EntryField : UITextFieldDelegate {
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+    public func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         // print("text field should begin editing")
         let answer = delegate?.entryFieldShouldBeginEditing?(self) ?? true
         // print("text field should begin editing answer: ", answer)
         return answer
     }
     
-    func textFieldDidBeginEditing(_ textField: UITextField) {
+    public func textFieldDidBeginEditing(_ textField: UITextField) {
         // print("text field did begin editing")
         isActive = true
         removeErrorUI()
@@ -416,14 +416,14 @@ extension EntryField : UITextFieldDelegate {
         isEditing(showHighlight: true)
     }
     
-    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+    public func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
         //print("text field should end editing")
         let answer = delegate?.entryFieldShouldEndEditing?(self) ?? true
         //print("text field should end editing answer: ", answer)
         return answer
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
+    public func textFieldDidEndEditing(_ textField: UITextField) {
         //print("text field did end editing")
         if(textField.text.isNotComplete()){
             animatePlaceholder(up: false)
@@ -433,14 +433,14 @@ extension EntryField : UITextFieldDelegate {
         isActive = false
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         //print("text field should return")
         let answer = delegate?.entryFieldShouldReturn?(self) ?? true
         //print("text field should return answer: ", answer)
         return answer
     }
     
-    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+    public func textFieldShouldClear(_ textField: UITextField) -> Bool {
         //print("text field should clear")
         let answer = delegate?.entryFieldShouldClear?(self) ?? true
         //print("text field should clear answer: ", answer)

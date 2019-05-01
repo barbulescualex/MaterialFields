@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objc protocol PickerFieldDelegate : AnyObject {
+@objc public protocol PickerFieldDelegate : AnyObject {
     @objc optional func pickerFieldShouldBeginEditing(_ view: PickerField) -> Bool
     
     @objc func pickerFieldDidEndEditing(_ view: PickerField)
@@ -16,7 +16,7 @@ import UIKit
     @objc optional func pickerFieldCleared(_ view: PickerField)
 }
 
-class PickerField: Field {
+public class PickerField: Field {
     //MARK:- UIPICKER VARS
     public var isClearable = false {
         didSet{
@@ -57,7 +57,7 @@ class PickerField: Field {
     }
     
     // setter for the entry field text and getter for the value it holds
-    override var text: String? {
+    override public var text: String? {
         didSet{
             entryField.text = text
         }
@@ -218,7 +218,7 @@ class PickerField: Field {
     }
     
     //MARK: VARS
-    weak var delegate : PickerFieldDelegate?
+    weak public var delegate : PickerFieldDelegate?
     private var isActive = false
     
     //MARK: VIEW COMPONENTS
@@ -271,7 +271,7 @@ class PickerField: Field {
     }()
     
     //MARK:- INIT
-    required init() {
+    public required init() {
         self.data = []
         super.init(frame: .zero)
         setupView()
@@ -353,7 +353,7 @@ class PickerField: Field {
         entryField.isEditing(showHighlight: true)
     }
     
-    override func setError(withText text: String?) {
+    override public func setError(withText text: String?) {
         if !isActive || !isOnManualEntry { return }
         entryField.setError(withText: text)
     }
@@ -370,19 +370,19 @@ class PickerField: Field {
 
 //MARK:- UIPICKERDELEGATE
 extension PickerField: UIPickerViewDelegate, UIPickerViewDataSource {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+    public func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return data.count
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return data[row]
     }
     
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.entryField.animatePlaceholder(up: true)
         self.indexSelected = row
         if isOnManualEntry {
@@ -396,7 +396,7 @@ extension PickerField: UIPickerViewDelegate, UIPickerViewDataSource {
 
 //MARK:- ENTRY FIELD DELEGATE
 extension PickerField : EntryFieldDelegate {
-    func entryFieldShouldBeginEditing(_ view: EntryField) -> Bool {
+    public func entryFieldShouldBeginEditing(_ view: EntryField) -> Bool {
         //print("entry field should begin editing")
         if let shouldBegin = delegate?.pickerFieldShouldBeginEditing?(self) {
             if !shouldBegin {
@@ -418,13 +418,13 @@ extension PickerField : EntryFieldDelegate {
         // print("entry field should begin editing answer: false")
     }
     
-    func entryFieldShouldReturn(_ view: EntryField) -> Bool {
+    public func entryFieldShouldReturn(_ view: EntryField) -> Bool {
         // print("entry field should return")
         view.endEditing(true)
         return true
     }
     
-    func entryFieldDidEndEditing(_ view: EntryField) {
+    public func entryFieldDidEndEditing(_ view: EntryField) {
         // print("entry field did end editing")
         if isOnManualEntry {
             text = view.text

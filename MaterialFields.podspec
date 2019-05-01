@@ -89,7 +89,9 @@ Pod::Spec.new do |spec|
   #  Not including the public_header_files will make all headers public.
   #
 
-  spec.source_files  = "MaterialFields"
+  spec.source_files  = "MaterialFields/**/*"
+  spec.exclude_files = "MaterialFields/**/*.plist"
+  spec.swift_version = "4.2"
   # spec.exclude_files = "Classes/Exclude"
 
   # spec.public_header_files = "Classes/**/*.h"

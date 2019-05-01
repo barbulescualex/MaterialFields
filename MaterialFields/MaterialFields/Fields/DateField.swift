@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objc protocol DateFieldDelegate : AnyObject {
+@objc public protocol DateFieldDelegate : AnyObject {
     @objc optional func dateFieldShouldBeginEditing(_ view: DateField) -> Bool
     
     @objc func dateFieldDidEndEditing(_ view: DateField)
@@ -16,7 +16,7 @@ import UIKit
     @objc optional func dateFieldCleared(_ view: DateField)
 }
 
-class DateField: Field {
+public class DateField: Field {
     //MARK: UIDATEPICKER VARS
     public var date : Date? {
         didSet{
@@ -36,7 +36,7 @@ class DateField: Field {
     
     private let defaultFormatter : DateFormatter = {
         let df = DateFormatter()
-        df.dateFormat = "MMM dd,yyyy"
+        df.dateFormat = "MMM dd, yyyy"
         df.timeZone = TimeZone(abbreviation: "GMT")
         return df
     }()
@@ -87,7 +87,7 @@ class DateField: Field {
     
     public var placeholder : String? {
         didSet {
-            entryField.placeholder = placeholder! + " (Zulu)"
+            entryField.placeholder = placeholder
         }
     }
     
@@ -149,7 +149,7 @@ class DateField: Field {
     
     //MARK:- VARS
     private var isActive = false
-    weak var delegate : DateFieldDelegate?
+    weak public var delegate : DateFieldDelegate?
     
     //MARK:- VIEW COMPONENTS
     private let verticalStack : UIStackView = {
@@ -198,8 +198,8 @@ class DateField: Field {
         return datePicker
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    public required init() {
+        super.init(frame: .zero)
         setupView()
     }
     
@@ -261,7 +261,7 @@ class DateField: Field {
         clearButton.isHidden = true
         entryField.isEditing(showHighlight: true)
         if !maxDateSet {
-            datePicker.maximumDate = Date()
+           // datePicker.maximumDate = Date()
         }
         isActive = true
         if let lastPickedDate = date {
@@ -296,7 +296,7 @@ class DateField: Field {
 
 //MARK:- ENTRYFIELD DELEGATE
 extension DateField : EntryFieldDelegate {
-    func entryFieldShouldBeginEditing(_ view: EntryField) -> Bool {
+    public func entryFieldShouldBeginEditing(_ view: EntryField) -> Bool {
         if(isActive){
             return false
         }
