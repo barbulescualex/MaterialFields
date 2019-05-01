@@ -92,16 +92,6 @@ public class DateField: Field {
         }
     }
     
-    private(set) var currentDateInPicker : Date = Date() {
-        didSet{
-            if let df = dateFormatter {
-                entryField.text = df.string(from: currentDateInPicker)
-            } else {
-                entryField.text = defaultFormatter.string(from: currentDateInPicker)
-            }
-        }
-    }
-    
     //COLORS
     //entryfield
     public var borderColor: UIColor = UIColor.lightGray {
@@ -249,32 +239,29 @@ public class DateField: Field {
     }
     
     @objc private func dateChanged(_ sender: UIDatePicker){
+        if !defaultDone{
+            defaultDone = true
+        }
+        date = sender.date
         delegate?.dateChanged?(self)
-        defaultDone = true
-        currentDateInPicker = sender.date
     }
     
     //MARK: FUNCTIONS
     private func showDatePicker(){
         if let defaultDate = defaultDate, !defaultDone {
-            currentDateInPicker = defaultDate
+            date = defaultDate
+        } else {
+            date = datePicker.date
         }
         doneButton.isHidden = false
         clearButton.isHidden = true
         entryField.isEditing(showHighlight: true)
-        if !maxDateSet {
-           // datePicker.maximumDate = Date()
-        }
         isActive = true
-        if let lastPickedDate = date {
-            datePicker.setDate(lastPickedDate, animated: false)
-        }
         datePicker.isHidden = false
     }
     
     
     @objc func donePressed(_ sender: UIButton?){
-        date = currentDateInPicker
         entryField.isEditing(showHighlight: false)
         
         datePicker.isHidden = true
@@ -287,7 +274,10 @@ public class DateField: Field {
     
     
     @objc func clearPressed(_ sender: UIButton){
-        entryField.text = nil
+        date = nil
+        if let defaultDate = defaultDate {
+            datePicker.date = defaultDate
+        }
         delegate?.dateFieldCleared?(self)
     }
     

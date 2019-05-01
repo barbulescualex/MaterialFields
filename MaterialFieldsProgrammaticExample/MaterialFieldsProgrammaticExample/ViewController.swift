@@ -72,7 +72,6 @@ class ViewController: UIViewController {
             stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 5),
             stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -5),
             stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5),
-            //stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
         stackView.spacing = 5
         
@@ -103,7 +102,7 @@ class ViewController: UIViewController {
 
 extension ViewController: EntryFieldDelegate {
     func entryFieldDidEndEditing(_ view: EntryField) {
-        print(view.text as Any, " From EntryField!")
+        print(view.text as Any, " from entryField")
     }
     
     func entryFieldShouldReturn(_ view: EntryField) -> Bool {
@@ -115,22 +114,39 @@ extension ViewController: EntryFieldDelegate {
 extension ViewController: PickerFieldDelegate {
     func pickerFieldDidEndEditing(_ view: PickerField) {
         if view.tag == 0 {
-            print(view.text as Any, " From PickerField!")
+            print(view.text as Any, " from pickerField")
         }
         
         if view.tag == 1 {
-            print(view.text as Any, " From PickerFieldManual!")
+            print(view.text as Any, " from pickerFieldManual")
         }
     }
     
     func pickerField(_ view: PickerField, didSelectRow row: Int) {
-        print("value changed in picker: ", view.data[row])
+        if view.tag == 0 {
+            print("value changed in pickerField: ", view.data[row])
+        }
+        
+        if view.tag == 1 {
+            print("value changed in pickerFieldManual: ", view.data[row])
+        }
+       
+    }
+    
+    func pickerFieldCleared(_ view: PickerField) {
+        if view.tag == 0 {
+            print("pickerField cleared:", view.text as Any, " from pickerField")
+        }
+        
+        if view.tag == 1 {
+             print("pickerField cleared:", view.text as Any, " from pickerFieldManual")
+        }
     }
 }
 
 extension ViewController: AreaFieldDelegate{
     func areaFieldDidEndEditing(_ view: AreaField) {
-        print(view.text as Any, " From AreaField!")
+        print(view.text as Any, " from areaField!")
     }
     func areaField(_ view: AreaField, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
@@ -143,10 +159,14 @@ extension ViewController: AreaFieldDelegate{
 
 extension ViewController: DateFieldDelegate {
     func dateFieldDidEndEditing(_ view: DateField) {
-        print(view.date as Any, " From DateField!")
+        print(view.date as Any, " from dateField!")
     }
     
     func dateChanged(_ view: DateField){
-        print("value changed in date picker: ", view.date)
+        print("value changed in dateField: ", view.date)
+    }
+    
+    func dateFieldCleared(_ view: DateField) {
+        print("dateField cleared:", view.text as Any, " from dateField")
     }
 }

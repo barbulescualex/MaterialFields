@@ -361,7 +361,7 @@ public class PickerField: Field {
     }
     
     @objc func clearPressed(_ sender: UIButton){
-        entryField.text = nil
+        text = nil
         delegate?.pickerFieldCleared?(self)
     }
     
