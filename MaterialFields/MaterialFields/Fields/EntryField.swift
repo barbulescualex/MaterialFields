@@ -8,22 +8,41 @@
 
 import UIKit
 
+
+/// EntryFieldDelegate protocol. Forwards all the UITextField delegate methods.
 @objc public protocol EntryFieldDelegate : AnyObject {
+    
+    /// Asks the delegate if editing should begin in the specified EntryField.
+    /// - Parameter view: The EntryField that called the delegate method
     @objc optional func entryFieldShouldBeginEditing(_ view: EntryField) -> Bool
     
+    /// Tells the delegate that editing began in the specified EntryField.
+    /// - Parameter view: The EntryField that called the delegate method
     @objc optional func entryFieldDidBeginEditing(_ view: EntryField)
     
+    /// Asks the delegate if editing should stop in the specified EntryField.
+    /// - Parameter view: The EntryField that called the delegate method
     @objc optional func entryFieldShouldEndEditing(_ view: EntryField) -> Bool
     
+    /// Tells the delegate that editing stopped for the specified EntryField.
+    /// - Parameter view: The EntryField that called the delegate method
     @objc optional func entryFieldDidEndEditing(_ view: EntryField)
     
+    /// Asks the delegate if the EntryField should process the pressing of the return button.
+    /// - Parameter view: The EntryField that called the delegate method
     @objc optional func entryFieldShouldReturn(_ view: EntryField) -> Bool
     
+    /// Asks the delegate if the EntryField’s current contents should be removed.
+    /// - Parameter view: The EntryField that called the delegate method
     @objc optional func entryFieldShouldClear(_ view: EntryField) -> Bool
 }
 
+
+/// Material version of the UITextField (single line, for multiline capability use the AreaField class)
 public class EntryField: Field, UIGestureRecognizerDelegate {
     //MARK:- TEXTFIELD VARS
+    
+    /// This is the optional placeholder, or "floating title" of the field
     public var placeholder : String? {
         didSet{
             if (isOptional && placeholder.isComplete()) {
@@ -33,6 +52,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         }
     }
     
+    /// The string value of the field
     override public var text: String? {
         get{
             return textField.text
@@ -47,7 +67,79 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         }
     }
     
+    //OPTIONALS
+    /// Optional unit label that shows up on the right hand side of the field
+    public var unit: String? {
+        didSet{
+            unitLabel.text = unit
+        }
+    }
+    
+    /// Optional setter to show a dollar sign on the left hand side of the field
+    public var isMonetary : Bool = false {
+        didSet{
+            if placeholderUp {
+                dollarLabel.isHidden = !isMonetary
+            }
+        }
+    }
+    
+    /// Optional setter to append and "(Optional)" tag to the field's placeholder
+    public var isOptional : Bool = false {
+        didSet{
+            if let placeholder = placeholder {
+                placeholderLabel.text = placeholder + " (Optional)"
+            }
+        }
+    }
+    
+    /// Defines if the field should shake upon setError() being called
+    public var shakes : Bool = true
+    
+    /// Defines the type of keyboard that comes up when the field is active
+    /// - Note: Defaults to .asciiCapable
+    public var keyboardType: UIKeyboardType? {
+        didSet{
+            guard let type = keyboardType else {return}
+            textField.keyboardType = type
+        }
+    }
+    
+    /// Defines the auto capitilazation type of the text entered
+    /// - Note: Defaults to none
+    public var autocapitalizationType : UITextAutocapitalizationType = .none {
+        didSet{
+            textField.autocapitalizationType = autocapitalizationType
+        }
+    }
+    
+    /// Defines the autocorrection used on the field
+    /// - Note: Defaults to none
+    public var autocorrectionType : UITextAutocorrectionType = .default {
+        didSet{
+            textField.autocorrectionType = autocorrectionType
+        }
+    }
+    
+    /// Defines if the field needs secure text entry (passwords)
+    /// - Note: Defaults to false
+    public var isSecureTextEntry : Bool = false {
+        didSet{
+            textField.isSecureTextEntry = isSecureTextEntry
+        }
+    }
+    
+    /// Defines if the field is interactable
+    /// - Note: Defaults to true
+    public var isTextFieldInteractable : Bool = true {
+        didSet{
+            textField.isUserInteractionEnabled = isTextFieldInteractable
+        }
+    }
+    
     //COLORS
+    /// Border color
+    /// - Note: Defaults to UIColor.lightGray
     public var borderColor: UIColor = UIColor.lightGray {
         didSet{
             if !isActive && !hasError {
@@ -56,7 +148,9 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         }
     }
     
-    public var borderHighlightColor: UIColor = UIColor.babyBlue {
+    /// Border color when field is active
+    /// - Note: Defaults to the material field's baby blue
+    public var borderHighlightColor: UIColor = UIColor.materialFieldsBlue {
         didSet{
             if isActive {
                 updateBorderColor(with: borderHighlightColor)
@@ -64,6 +158,8 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         }
     }
     
+    /// Border color when there is an error in the field
+    /// - Note: Defaults to UIColor.red
     public var borderErrorColor: UIColor = UIColor.red {
         didSet{
             if hasError {
@@ -72,12 +168,16 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         }
     }
     
+    /// Normal text color
+    /// - Note: Defaults to UIColor.black
     public var textColor: UIColor = UIColor.black {
         didSet{
             textField.textColor = textColor
         }
     }
     
+    /// Normal text color
+    /// - Note: Defaults to UIColor.black
     public var errorTextColor: UIColor = UIColor.red {
         didSet{
             errorLabel.textColor = errorTextColor
@@ -118,65 +218,8 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         }
     }
     
-    //OPTIONALS
-    public var unit: String? {
-        didSet{
-            unitLabel.text = unit
-        }
-    }
-    
-    public var isMonetary : Bool = false {
-        didSet{
-            if placeholderUp {
-                dollarLabel.isHidden = !isMonetary
-            }
-        }
-    }
-    
-    public var isOptional : Bool = false {
-        didSet{
-            if let placeholder = placeholder {
-                placeholderLabel.text = placeholder + " (Optional)"
-            }
-        }
-    }
-    
-    public var shakes : Bool = true
-    
-    public var keyboardType: UIKeyboardType? {
-        didSet{
-            guard let type = keyboardType else {return}
-            textField.keyboardType = type
-        }
-    }
-    
-    public var autocapitalizationType : UITextAutocapitalizationType = .none {
-        didSet{
-            textField.autocapitalizationType = autocapitalizationType
-        }
-    }
-    
-    public var autocorrectionType : UITextAutocorrectionType = .default {
-        didSet{
-            textField.autocorrectionType = autocorrectionType
-        }
-    }
-    
-    public var isSecureTextEntry : Bool = false {
-        didSet{
-            textField.isSecureTextEntry = isSecureTextEntry
-        }
-    }
-    
-    public var isTextFieldInteractable : Bool = true {
-        didSet{
-            textField.isUserInteractionEnabled = isTextFieldInteractable
-        }
-    }
-    
     //MARK:- VARS
     weak public var delegate : EntryFieldDelegate?
-    var tag2 = 0
     
     private var placeholderYAnchorConstraint: NSLayoutConstraint!
     private(set) var hasError = false
@@ -450,8 +493,7 @@ extension EntryField : UITextFieldDelegate {
 
 //MARK:- ANIMATIONS
 extension EntryField {
-    //not private because DateField needs to be able to call this directly
-    func animatePlaceholder(up: Bool) {
+    fileprivate func animatePlaceholder(up: Bool) {
         if(up){
             dollarLabel.isHidden = !isMonetary
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {

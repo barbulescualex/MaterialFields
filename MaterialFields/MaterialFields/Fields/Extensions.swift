@@ -9,15 +9,26 @@
 import UIKit
 
 extension Optional where Wrapped == String {
+    /**
+    Checks if string is not complete meaning nil or ""
+    - Note:
+         - Called on optional string
+    */
     func isNotComplete() -> Bool! {
         return (self ?? "").isEmpty
     }
     
+    /**
+     Checks if string is complete meaning not nil or ""
+     - Note:
+        - Called on optional string
+     */
     func isComplete() -> Bool! {
         return !(self ?? "").isEmpty
     }
 }
 
 extension UIColor {
-    static let babyBlue = UIColor(red: 45/255, green: 123/255, blue: 246/255, alpha: 1)
+    /// Baby blue color used as the defualt color for all Field types
+    static let materialFieldsBlue = UIColor(red: 45/255, green: 123/255, blue: 246/255, alpha: 1)
 }

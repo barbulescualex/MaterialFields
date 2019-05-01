@@ -164,7 +164,7 @@ public class PickerField: Field {
         }
     }
     
-    public var borderHighlightColor: UIColor = UIColor.babyBlue {
+    public var borderHighlightColor: UIColor = UIColor.materialFieldsBlue {
         didSet{ //NEEDS WORK
             entryField.borderHighlightColor = borderHighlightColor
         }
@@ -207,13 +207,13 @@ public class PickerField: Field {
     }
     
     //buttons
-    public var clearButtonColor: UIColor = UIColor.babyBlue{
+    public var clearButtonColor: UIColor = UIColor.materialFieldsBlue{
         didSet{
             clearButton.backgroundColor = clearButtonColor
         }
     }
     
-    public var doneButtonColor: UIColor = UIColor.babyBlue{
+    public var doneButtonColor: UIColor = UIColor.materialFieldsBlue{
         didSet{
             doneButton.backgroundColor = doneButtonColor
         }
@@ -240,7 +240,7 @@ public class PickerField: Field {
     private lazy var clearButton : UIButton = {
         let button = UIButton()
         let attributes = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15), NSAttributedString.Key.foregroundColor : UIColor.white]
-        button.backgroundColor = UIColor.babyBlue
+        button.backgroundColor = UIColor.materialFieldsBlue
         button.setAttributedTitle(NSAttributedString(string: "clear", attributes: attributes), for: .normal)
         button.addTarget(self, action: #selector(clearPressed(_:)), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -253,7 +253,7 @@ public class PickerField: Field {
     private lazy var doneButton : UIButton = {
         let button = UIButton()
         let attributes = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15), NSAttributedString.Key.foregroundColor : UIColor.white]
-        button.backgroundColor = UIColor.babyBlue
+        button.backgroundColor = UIColor.materialFieldsBlue
         button.setAttributedTitle(NSAttributedString(string: "done", attributes: attributes), for: .normal)
         button.addTarget(self, action: #selector(donePressed(_:)), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false

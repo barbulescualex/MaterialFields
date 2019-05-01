@@ -54,7 +54,7 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
         }
     }
     
-    public var borderHighlightColor: UIColor = UIColor.babyBlue {
+    public var borderHighlightColor: UIColor = UIColor.materialFieldsBlue {
         didSet{
             if isActive {
                 updateBorderColor(with: borderHighlightColor)
@@ -369,7 +369,7 @@ extension AreaField : UITextViewDelegate {
 
 //MARK:- ANIMATIONS
 extension AreaField {
-    func animatePlaceholder(up: Bool) {
+    fileprivate func animatePlaceholder(up: Bool) {
         if(up){
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.placeholderLabel.textColor = self.placeholderUpColor
