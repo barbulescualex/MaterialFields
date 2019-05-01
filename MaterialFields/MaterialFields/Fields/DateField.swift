@@ -50,6 +50,18 @@ public class DateField: Field {
         }
     }
     
+    public var timeZone : TimeZone? {
+        didSet{
+            datePicker.timeZone = timeZone
+        }
+    }
+    
+    public var locale : Locale? {
+        didSet{
+            datePicker.locale = locale
+        }
+    }
+    
     public var minimumDate : Date? {
         didSet{
             datePicker.minimumDate = minimumDate
@@ -183,8 +195,6 @@ public class DateField: Field {
     public lazy var datePicker : UIDatePicker = {
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .date
-        datePicker.timeZone = TimeZone(abbreviation: "GMT")
-        datePicker.locale = Locale(identifier: "en_GB")
         datePicker.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
         return datePicker
     }()
