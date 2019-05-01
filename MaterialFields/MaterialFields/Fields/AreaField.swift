@@ -17,7 +17,7 @@ import UIKit
     
     @objc optional func areaFieldDidEndEditing(_ view: AreaField)
     
-    @objc optional func areaFieldShould
+    @objc optional func areaField(_ view: AreaField, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool
 }
 
 public class AreaField: Field, UIGestureRecognizerDelegate {
@@ -320,6 +320,19 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
             self.errorLabel.isHidden = false
         }
     }
+    
+    override public func resignFirstResponder() -> Bool {
+        textView.resignFirstResponder()
+        return true
+    }
+    
+    override public func becomeFirstResponder() -> Bool {
+        return textView.becomeFirstResponder()
+    }
+    
+    override public var isFirstResponder: Bool {
+        return textView.isFirstResponder
+    }
 }
 
 //MARK:- TEXTVIEW DELEGATE
@@ -350,7 +363,7 @@ extension AreaField : UITextViewDelegate {
     }
     
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        
+        return delegate?.areaField?(self, shouldChangeTextIn: range, replacementText: text) ?? true
     }
 }
 
