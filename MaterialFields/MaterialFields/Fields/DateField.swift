@@ -14,6 +14,8 @@ import UIKit
     @objc func dateFieldDidEndEditing(_ view: DateField)
     
     @objc optional func dateFieldCleared(_ view: DateField)
+    
+    @objc optional func dateChanged(_ view: DateField)
 }
 
 public class DateField: Field {
@@ -30,7 +32,6 @@ public class DateField: Field {
             } else {
                 entryField.text = defaultFormatter.string(from: date!)
             }
-            entryField.animatePlaceholder(up: true)
         }
     }
     
@@ -248,6 +249,7 @@ public class DateField: Field {
     }
     
     @objc private func dateChanged(_ sender: UIDatePicker){
+        delegate?.dateChanged?(self)
         defaultDone = true
         currentDateInPicker = sender.date
     }

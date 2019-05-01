@@ -122,6 +122,10 @@ extension ViewController: PickerFieldDelegate {
             print(view.text as Any, " From PickerFieldManual!")
         }
     }
+    
+    func pickerField(_ view: PickerField, didSelectRow row: Int) {
+        print("value changed in picker: ", view.data[row])
+    }
 }
 
 extension ViewController: AreaFieldDelegate{
@@ -140,5 +144,9 @@ extension ViewController: AreaFieldDelegate{
 extension ViewController: DateFieldDelegate {
     func dateFieldDidEndEditing(_ view: DateField) {
         print(view.date as Any, " From DateField!")
+    }
+    
+    func dateChanged(_ view: DateField){
+        print("value changed in date picker: ", view.date)
     }
 }

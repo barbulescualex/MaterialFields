@@ -145,7 +145,7 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
     weak public var delegate : AreaFieldDelegate?
     
     private var placeholderYAnchorConstraint: NSLayoutConstraint!
-    private var placeholderUp = false
+    private(set) var placeholderUp = false
     private(set) var hasError = false
     private var isActive = true
     

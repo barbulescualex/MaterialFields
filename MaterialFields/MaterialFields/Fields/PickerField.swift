@@ -14,6 +14,8 @@ import UIKit
     @objc func pickerFieldDidEndEditing(_ view: PickerField)
     
     @objc optional func pickerFieldCleared(_ view: PickerField)
+    
+    @objc optional func pickerField(_ view: PickerField, didSelectRow row: Int)
 }
 
 public class PickerField: Field {
@@ -383,7 +385,7 @@ extension PickerField: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.entryField.animatePlaceholder(up: true)
+        delegate?.pickerField?(self, didSelectRow: row)
         self.indexSelected = row
         if isOnManualEntry {
             self.entryField.text = nil

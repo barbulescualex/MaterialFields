@@ -180,7 +180,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
     
     private var placeholderYAnchorConstraint: NSLayoutConstraint!
     private(set) var hasError = false
-    private var placeholderUp = false
+    private(set) var placeholderUp = false
     
     private var isActive = false
     
