@@ -54,7 +54,7 @@ class ViewController: UIViewController {
     
     lazy var dateField : DateField = {
         let field = DateField()
-        field.placeholder = "This is a DatePicker"
+        field.placeholder = "This is a DateField"
         field.delegate = self
         field.isClearable = true
         return field
@@ -146,7 +146,7 @@ extension ViewController: PickerFieldDelegate {
 
 extension ViewController: AreaFieldDelegate{
     func areaFieldDidEndEditing(_ view: AreaField) {
-        print(view.text as Any, " from areaField!")
+        print(view.text as Any, " from areaField")
     }
     func areaField(_ view: AreaField, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
@@ -159,11 +159,11 @@ extension ViewController: AreaFieldDelegate{
 
 extension ViewController: DateFieldDelegate {
     func dateFieldDidEndEditing(_ view: DateField) {
-        print(view.date as Any, " from dateField!")
+        print(view.date as Any, " from dateField")
     }
     
     func dateChanged(_ view: DateField){
-        print("value changed in dateField: ", view.date)
+        print("value changed in dateField: ", view.date as Any)
     }
     
     func dateFieldCleared(_ view: DateField) {

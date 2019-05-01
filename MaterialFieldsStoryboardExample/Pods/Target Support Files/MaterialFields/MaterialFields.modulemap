@@ -1,0 +1,6 @@
+framework module MaterialFields {
+  umbrella header "MaterialFields-umbrella.h"
+
+  export *
+  module * { export * }
+}

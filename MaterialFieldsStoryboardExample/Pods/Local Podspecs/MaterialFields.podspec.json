@@ -1,0 +1,24 @@
+{
+  "name": "MaterialFields",
+  "version": "0.0.6",
+  "summary": "Lightweight library containing UITextFields, UITextViews, UIPickerViews and UIDatePickers following the Material Design Guidelines.",
+  "description": "Lightweight library containing UITextFields, UITextViews, UIPickerViews and UIDatePickers following the Material Design Guidelines. They support colors and individual usability features. All conform to a wrapper Field class allowing for modular and scalable validation layers",
+  "homepage": "https://github.com/barbulescualex/MaterialFields",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Alexandru Barbulescu": "alexbarbulescu01@gmail.com"
+  },
+  "platforms": {
+    "ios": "11.0"
+  },
+  "source": {
+    "git": "https://github.com/barbulescualex/MaterialFields.git",
+    "tag": "0.0.6"
+  },
+  "source_files": "MaterialFields/**/*",
+  "exclude_files": "MaterialFields/**/*.plist",
+  "swift_version": "4.2"
+}

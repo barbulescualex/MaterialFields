@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C590A475076158CA4EC29C3F853342DD"
-               BuildableName = "Pods_MaterialFieldsProgrammaticExample.framework"
-               BlueprintName = "Pods-MaterialFieldsProgrammaticExample"
+               BlueprintIdentifier = "637F091121CB422DE29A7B382F4A926B"
+               BuildableName = "Pods_MaterialFieldsStoryboardExample.framework"
+               BlueprintName = "Pods-MaterialFieldsStoryboardExample"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C590A475076158CA4EC29C3F853342DD"
-            BuildableName = "Pods_MaterialFieldsProgrammaticExample.framework"
-            BlueprintName = "Pods-MaterialFieldsProgrammaticExample"
+            BlueprintIdentifier = "637F091121CB422DE29A7B382F4A926B"
+            BuildableName = "Pods_MaterialFieldsStoryboardExample.framework"
+            BlueprintName = "Pods-MaterialFieldsStoryboardExample"
             ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
