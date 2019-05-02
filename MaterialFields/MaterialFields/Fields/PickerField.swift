@@ -396,10 +396,6 @@ extension PickerField: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if hasError {
-            removeErrorUI()
-        }
-        delegate?.pickerField?(self, didSelectRow: row)
         self.indexSelected = row
         if isOnManualEntry {
             text = nil
@@ -407,6 +403,10 @@ extension PickerField: UIPickerViewDelegate, UIPickerViewDataSource {
         } else {
             text = data[row]
         }
+        if hasError {
+            removeErrorUI()
+        }
+        delegate?.pickerField?(self, didSelectRow: row)
     }
 }
 
