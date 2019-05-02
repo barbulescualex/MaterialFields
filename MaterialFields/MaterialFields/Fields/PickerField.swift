@@ -349,7 +349,6 @@ public class PickerField: Field {
         doneButton.isHidden = false
         clearButton.isHidden = true
         isActive = true
-        
         if isOnManualEntry {
             _ = entryField.becomeFirstResponder()
         } else {
@@ -357,11 +356,6 @@ public class PickerField: Field {
         }
         pickerView.isHidden = false
         entryField.isEditing(showHighlight: true)
-    }
-    
-    override public func setError(withText text: String?) {
-        if !isActive || !isOnManualEntry { return }
-        entryField.setError(withText: text)
     }
     
     @objc func clearPressed(_ sender: UIButton){

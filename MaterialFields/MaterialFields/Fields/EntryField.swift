@@ -226,11 +226,11 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
     /// Instance reference to the placeholder's Y constraint (for animation)
     private var placeholderYAnchorConstraint: NSLayoutConstraint!
     
-    /// Read-only flag to check if the current field has an error in it
-    private(set) var hasError = false
-    
     /// Read-only flag to check if placeholder is up
     private(set) var placeholderUp = false
+    
+    /// Read only flag to check if field is currently in an error state
+    private(set) public var hasError : Bool = false
     
     
     //MARK:- VIEW COMPONENTS
@@ -426,7 +426,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
     }
     
     /// Removes the error UI.
-    func removeErrorUI(){
+    internal func removeErrorUI(){
         if !hasError {return}
         textField.textColor = textColor
         updateBorderColor(with: borderColor)

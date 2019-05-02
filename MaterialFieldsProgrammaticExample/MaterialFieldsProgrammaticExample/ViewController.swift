@@ -121,17 +121,17 @@ extension ViewController: PickerFieldDelegate {
         if view.tag == 1 {
             print(view.text as Any, " from pickerFieldManual")
         }
+        
+        pickerField.setError(withText: "error lol")
     }
     
     func pickerField(_ view: PickerField, didSelectRow row: Int) {
         if view.tag == 0 {
             print("value changed in pickerField: ", view.data[row])
         }
-        
         if view.tag == 1 {
             print("value changed in pickerFieldManual: ", view.data[row])
         }
-       
     }
     
     func pickerFieldCleared(_ view: PickerField) {

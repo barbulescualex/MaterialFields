@@ -11,7 +11,7 @@ import UIKit
 /**
 Wrapper class for all fields. Offers wrapper functionality for all text-based fields.
 - Attention:
-     - DateField subclasses this but does not override the text or error function because it holds a Date value type and does not support error setting. DateField supports min and max dates meaning the user should never have the option to make an error.
+     - DateField subclasses this but does not override the text variable as it holds a Date value type
 */
 public class Field : UIView {
     /// This is the placeholder, or "floating title" of the field
