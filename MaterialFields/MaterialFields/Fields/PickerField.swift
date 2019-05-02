@@ -346,6 +346,9 @@ public class PickerField: Field {
     
     private func showPickerView(){
         if isActive {return}
+        if hasError {
+            removeErrorUI()
+        }
         doneButton.isHidden = false
         clearButton.isHidden = true
         isActive = true
@@ -356,6 +359,16 @@ public class PickerField: Field {
         }
         pickerView.isHidden = false
         entryField.isEditing(showHighlight: true)
+    }
+    
+    public override func setError(withText text: String?) {
+        entryField.setError(withText: text)
+        hasError = true
+    }
+    
+    private func removeErrorUI(){
+        entryField.removeErrorUI()
+        hasError = false
     }
     
     @objc func clearPressed(_ sender: UIButton){
@@ -383,13 +396,16 @@ extension PickerField: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if hasError {
+            removeErrorUI()
+        }
         delegate?.pickerField?(self, didSelectRow: row)
         self.indexSelected = row
         if isOnManualEntry {
-            self.entryField.text = nil
+            text = nil
             _ = entryField.becomeFirstResponder()
         } else {
-            self.entryField.text = data[row]
+            text = data[row]
         }
     }
 }

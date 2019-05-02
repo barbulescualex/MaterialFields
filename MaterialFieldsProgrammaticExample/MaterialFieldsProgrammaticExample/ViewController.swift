@@ -121,8 +121,6 @@ extension ViewController: PickerFieldDelegate {
         if view.tag == 1 {
             print(view.text as Any, " from pickerFieldManual")
         }
-        
-        pickerField.setError(withText: "error lol")
     }
     
     func pickerField(_ view: PickerField, didSelectRow row: Int) {
@@ -131,6 +129,9 @@ extension ViewController: PickerFieldDelegate {
         }
         if view.tag == 1 {
             print("value changed in pickerFieldManual: ", view.data[row])
+        }
+        if view.text == "haa" {
+                        view.setError(withText: "lol")
         }
     }
     

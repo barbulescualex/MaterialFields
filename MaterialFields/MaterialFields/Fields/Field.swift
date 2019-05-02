@@ -24,6 +24,9 @@ public class Field : UIView {
     /// Read only flag to check if the field is currently active
     internal(set) public var isActive : Bool = false
     
+    /// Read only flag to check if the field is currently in a error state
+    internal(set) public var hasError : Bool = false
+    
     /// The value in the text-based fields.
     public var text : String?
     

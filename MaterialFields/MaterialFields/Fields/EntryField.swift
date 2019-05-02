@@ -229,9 +229,6 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
     /// Read-only flag to check if placeholder is up
     private(set) var placeholderUp = false
     
-    /// Read only flag to check if field is currently in an error state
-    private(set) public var hasError : Bool = false
-    
     
     //MARK:- VIEW COMPONENTS
     /// The stackview that encompasses the whole view

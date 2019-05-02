@@ -146,7 +146,6 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
     
     private var placeholderYAnchorConstraint: NSLayoutConstraint!
     private(set) var placeholderUp = false
-    private(set) var hasError = false
     
     //MARK:- VIEW COMPONENTS
     private let stackView : UIStackView = {
