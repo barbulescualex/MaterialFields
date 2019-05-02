@@ -8,15 +8,32 @@
 
 import UIKit
 
+/// EntryFieldDelegate protocol. Forwards all UITextView delegate methods.
 @objc public protocol AreaFieldDelegate : AnyObject {
+    
+    ///Asks the delegate if editing should begin in the specified AreaField.
+    /// - Parameter view: The AreaField that called the delegate method.
     @objc optional func areaFieldShouldBeginEditing(_ view: AreaField) -> Bool
     
+    ///Tells the delegate that editing of the specified EntryField has begun.
+    /// - Parameter view: The AreaField that called the delegate method.
     @objc optional func areaFieldDidBeginEditing(_ view: AreaField)
     
+    ///Asks the delegate if editing should stop in the specified EntryField.
+    /// - Parameter view: The AreaField that called the delegate method.
     @objc optional func areaFieldShouldEndEditing(_ view: AreaField) -> Bool
     
+    ///Tells the delegate that editing of the specified EntryField has ended.
+    /// - Parameter view: The AreaField that called the delegate method.
     @objc optional func areaFieldDidEndEditing(_ view: AreaField)
     
+    /**
+    Asks the delegate whether the specified text should be replaced in the EntryField.
+    - Parameters:
+        - view: The AreaField that called the delegate method.
+        - range: The current selection range. If the length of the range is 0, range reflects the current insertion point. If the user presses the Delete key, the length of the range is 1 and an empty string object replaces that single character.
+        - view: The text to insert.
+    */
     @objc optional func areaField(_ view: AreaField, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool
 }
 
@@ -114,37 +131,40 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
         }
     }
     
-    
-    public var isViewAreaInteractable : Bool = true {
+    public override var keyboardType: UIKeyboardType {
         didSet{
-            textView.isUserInteractionEnabled = isViewAreaInteractable
+            textView.keyboardType = keyboardType
         }
     }
     
-    public var keyboardType: UIKeyboardType? {
-        didSet{
-            guard let type = keyboardType else {return}
-            textView.keyboardType = type
-        }
-    }
-    
-    public var autocapitalizationType : UITextAutocapitalizationType = .none {
+    public override var autocapitalizationType : UITextAutocapitalizationType {
         didSet{
             textView.autocapitalizationType = autocapitalizationType
         }
     }
     
-    public var autocorrectionType : UITextAutocorrectionType = .default {
+    public override var autocorrectionType : UITextAutocorrectionType {
         didSet{
             textView.autocorrectionType = autocorrectionType
         }
     }
     
+    public override var isSecureTextEntry: Bool {
+        didSet{
+            textView.isSecureTextEntry = isSecureTextEntry
+        }
+    }
+    
     //MARK:- VARS
+    /// The reciever's delegate
     weak public var delegate : AreaFieldDelegate?
     
+    /// Instance reference to the placeholder's Y constraint (for animation)
     private var placeholderYAnchorConstraint: NSLayoutConstraint!
-    private(set) var placeholderUp = false
+    
+    /// Flag to check if the placeholder is up to avoid unecessary animations
+    private var placeholderUp = false
+    
     
     //MARK:- VIEW COMPONENTS
     private let stackView : UIStackView = {
@@ -221,7 +241,8 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
         setup()
     }
     
-    func setup(){
+    ///Sets up the view
+    fileprivate func setup(){
         translatesAutoresizingMaskIntoConstraints = false
         textView.delegate = self
         
@@ -262,12 +283,20 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
     }
     
     //MARK:- FUNCTIONS
+    /**
+     Updates the border color by creating a gradient for the 1px height lines that make up the border/shadow effect
+     - Parameter color: Color to set the border to
+     */
     fileprivate func updateBorderColor(with color: UIColor){
         borderTop.backgroundColor = color
         borderBottom.backgroundColor = color.withAlphaComponent(0.5)
     }
     
-    fileprivate func isEditing(showHighlight val: Bool){
+    /**
+     Sets the editing state on and off by either showing the highlight color or regular color (does not change the state if the field currently has an error
+     - Parameter showHighlight: setter for wether it should show highlight colors
+     */
+    internal func isEditing(showHighlight val: Bool){
         if hasError {return}
         if val {
             updateBorderColor(with: borderHighlightColor)
@@ -276,7 +305,7 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
         }
     }
     
-    override func removeErrorUI() {
+    public override func removeErrorUI() {
         if !hasError { return }
         textView.textColor = textColor
         updateBorderColor(with: borderColor)
@@ -286,6 +315,7 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
         errorLabel.isHidden = false
     }
     
+    /// Called from tap gesture recognizer on the field
     @objc func startEditing(_ sender: UIGestureRecognizer){
         textView.becomeFirstResponder()
     }
@@ -317,17 +347,37 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
         }
     }
     
+    /**
+     Notifies the field that it has been asked to relinquish its status as first responder in its window.
+     This triggers the end callback from the field and closes the keyboard, removes the editing state.
+     - Note: If it's in an error state it will keep its error UI.
+     - Returns: true
+     */
     override public func resignFirstResponder() -> Bool {
         textView.resignFirstResponder()
+        isEditing(showHighlight: false)
         return true
     }
     
+    /**
+     Asks UIKit to make the field the first responder in its window.
+     - Returns: true if became first responder, false otherwise
+     */
     override public func becomeFirstResponder() -> Bool {
         return textView.becomeFirstResponder()
     }
     
+    /**
+     Asks UIKit to make the EntryField is the first responder.
+     Returns true if it becomes the first responder, false otherwise.
+     */
     override public var isFirstResponder: Bool {
         return textView.isFirstResponder
+    }
+    
+    ///Returns a boolean indicating wether the EntryField can become the first responder
+    public override var canBecomeFirstResponder: Bool {
+        return textView.canBecomeFirstResponder
     }
 }
 
@@ -365,6 +415,10 @@ extension AreaField : UITextViewDelegate {
 
 //MARK:- ANIMATIONS
 extension AreaField {
+    /**
+     Animates the placeholder label upon a value being entered in the field
+     - Parameter up: True will animate the placeholder up, false will animate the placeholder down
+     */
     fileprivate func animatePlaceholder(up: Bool) {
         if(up){
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {

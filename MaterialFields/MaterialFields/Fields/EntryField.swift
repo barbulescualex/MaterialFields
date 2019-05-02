@@ -9,7 +9,7 @@
 import UIKit
 
 
-/// EntryFieldDelegate protocol. Forwards all the UITextField delegate methods.
+/// EntryFieldDelegate protocol. Forwards UITextField delegate methods.
 @objc public protocol EntryFieldDelegate : AnyObject {
     
     /// Asks the delegate if editing should begin in the specified EntryField.
@@ -98,45 +98,27 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         }
     }
 
-    
-    /// Defines the type of keyboard that comes up when the field is active
-    /// - Note: Defaults to .asciiCapable
-    public var keyboardType: UIKeyboardType? {
+    public override var keyboardType: UIKeyboardType {
         didSet{
-            guard let type = keyboardType else {return}
-            textField.keyboardType = type
+            textField.keyboardType = keyboardType
         }
     }
     
-    /// Defines the auto capitilazation type of the text entered
-    /// - Note: Defaults to none
-    public var autocapitalizationType : UITextAutocapitalizationType = .none {
+    public override var autocapitalizationType : UITextAutocapitalizationType {
         didSet{
             textField.autocapitalizationType = autocapitalizationType
         }
     }
     
-    /// Defines the autocorrection used on the field
-    /// - Note: Defaults to none
-    public var autocorrectionType : UITextAutocorrectionType = .default {
+    public override var autocorrectionType : UITextAutocorrectionType {
         didSet{
             textField.autocorrectionType = autocorrectionType
         }
     }
     
-    /// Defines if the field needs secure text entry (passwords)
-    /// - Note: Defaults to false
-    public var isSecureTextEntry : Bool = false {
+    public override var isSecureTextEntry : Bool  {
         didSet{
             textField.isSecureTextEntry = isSecureTextEntry
-        }
-    }
-    
-    /// Defines if the field is interactable
-    /// - Note: Defaults to true
-    public var isTextFieldInteractable : Bool = true {
-        didSet{
-            textField.isUserInteractionEnabled = isTextFieldInteractable
         }
     }
     
@@ -224,8 +206,8 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
     /// Instance reference to the placeholder's Y constraint (for animation)
     private var placeholderYAnchorConstraint: NSLayoutConstraint!
     
-    /// Read-only flag to check if placeholder is up
-    private(set) var placeholderUp = false
+    /// Flag to check if the placeholder is up to avoid unecessary animations
+    private var placeholderUp = false
     
     
     //MARK:- VIEW COMPONENTS
@@ -333,6 +315,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         setup()
     }
     
+    ///Sets up the view
     fileprivate func setup(){
         textField.delegate = self
         
@@ -420,7 +403,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         textField.becomeFirstResponder()
     }
     
-    override func removeErrorUI() {
+    public override func removeErrorUI() {
         if !hasError {return}
         textField.textColor = textColor
         updateBorderColor(with: borderColor)
@@ -443,7 +426,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
     Sets the editing state on and off by either showing the highlight color or regular color (does not change the state if the field currently has an error
      - Parameter showHighlight: setter for wether it should show highlight colors
      */
-    func isEditing(showHighlight val: Bool){
+    internal func isEditing(showHighlight val: Bool){
         if hasError {return}
         if val {
             updateBorderColor(with: borderHighlightColor)
@@ -452,17 +435,37 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         }
     }
     
+    /**
+     Notifies the field that it has been asked to relinquish its status as first responder in its window.
+     This triggers the end callback from the field, closes the keyboard, and removes the editing state.
+     - Note: If it's in an error state it will keep its error UI.
+     - Returns: true
+     */
     override public func resignFirstResponder() -> Bool {
         textField.resignFirstResponder()
+        isEditing(showHighlight: false)
         return true
     }
     
+    /**
+     Asks UIKit to make the field the first responder in its window.
+     - Returns: true if became first responder, false otherwise
+     */
     override public func becomeFirstResponder() -> Bool {
         return textField.becomeFirstResponder()
     }
     
+    /**
+     Asks UIKit to make the EntryField is the first responder.
+     Returns true if it becomes the first responder, false otherwise.
+     */
     override public var isFirstResponder: Bool {
         return textField.isFirstResponder
+    }
+    
+    ///Returns a boolean indicating wether the EntryField can become the first responder
+    public override var canBecomeFirstResponder: Bool {
+        return textField.canBecomeFirstResponder
     }
     
 }

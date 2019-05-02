@@ -8,25 +8,37 @@
 
 import UIKit
 
+/// PickerFieldDelegate protocol. Forwards some UIPickerView delegate methods and a method to notify you if the field has been cleared (only is isClearable = true).
 @objc public protocol PickerFieldDelegate : AnyObject {
+    
+    /// Asks the delegate if editing should begin in the specified PickerField.
+    /// - Parameter view: The PickerField that called the delegate method.
     @objc optional func pickerFieldShouldBeginEditing(_ view: PickerField) -> Bool
     
+    /// Tells the delegate editing ended in the specified PickerField.
+    /// - Parameter view: The PickerField that called the delegate method.
     @objc func pickerFieldDidEndEditing(_ view: PickerField)
     
+    /// Tells the delegate that the contents have been cleared in the specified PickerField.
+    /// - Parameter view: The PickerField that called the delegate method.
     @objc optional func pickerFieldCleared(_ view: PickerField)
     
+    /// Tells the delegate that a row was selected in the specified PickerField.
+    /// - Parameter view: The PickerField that called the delegate method.
+    /// - Parameter row: The row that was selected.
     @objc optional func pickerField(_ view: PickerField, didSelectRow row: Int)
 }
 
 public class PickerField: Field {
     //MARK:- UIPICKER VARS
+    /// Setter for showing a clear button to eliminate the contents of the field.
     public var isClearable = false {
         didSet{
             clearButton.isHidden = !isClearable
         }
     }
     
-    /// picker data source
+    /// Picker data source.
     public var data : [String] {
         didSet {
             if isManualEntryCapable && !manualEntrySet{
@@ -63,13 +75,13 @@ public class PickerField: Field {
         }
     }
     
-    // setter for the entry field text and getter for the value it holds
     override public var text: String? {
         didSet{
             entryField.text = text
         }
     }
     
+    /// Changes index in PickerField. If value is below 0, it defualts to 0.
     public var setIndexTo : Int = 0 {
         didSet{
             if setIndexTo < 0 {
@@ -81,6 +93,7 @@ public class PickerField: Field {
         }
     }
     
+    /// Private flag to check if the index has been set
     private var indexSet = false {
         didSet{
             if data.indices.contains(setIndexTo){
@@ -91,6 +104,7 @@ public class PickerField: Field {
         }
     }
     
+    /// Specifies if the PickerField supports manual entry which will show up as the last option in the picker.
     public var isManualEntryCapable : Bool = false {
         didSet{
             if isManualEntryCapable {
@@ -108,18 +122,31 @@ public class PickerField: Field {
         }
     }
     
-    public var keyboardTypeForManualEntry : UIKeyboardType = .asciiCapable {
+    public override var keyboardType: UIKeyboardType {
         didSet{
-            entryField.keyboardType = keyboardTypeForManualEntry
+            entryField.keyboardType = keyboardType
         }
     }
     
-    public var autocapitalizationTypeForManualEntry : UITextAutocapitalizationType = .none {
+    public override var autocapitalizationType : UITextAutocapitalizationType {
         didSet{
-            entryField.autocapitalizationType = autocapitalizationTypeForManualEntry
+            entryField.autocapitalizationType = autocapitalizationType
         }
     }
     
+    public override var autocorrectionType : UITextAutocorrectionType {
+        didSet{
+            entryField.autocorrectionType = autocorrectionType
+        }
+    }
+    
+    public override var isSecureTextEntry: Bool {
+        didSet{
+            entryField.isSecureTextEntry = isSecureTextEntry
+        }
+    }
+    /// Specifies the manual entry option name if isManualEntryCapable is set to true
+    /// - Note: Defaults to "Manual Entry".
     public var manualEntryOptionName = "Manual Entry" {
         didSet {
             if manualEntrySet {
@@ -132,10 +159,13 @@ public class PickerField: Field {
             }
         }
     }
-    
+    /// Flag to check if the manual entry has been set
     private var manualEntrySet = false
+    
+    /// Index of manual entry row in picker
     private var manualEntryIndex : Int?
     
+    /// Read-only integer value for the current index the picker is on
     private(set) var indexSelected : Int = 0 {
         didSet{
             if let manualEntryIndex = manualEntryIndex, indexSelected == manualEntryIndex {
@@ -146,6 +176,7 @@ public class PickerField: Field {
         }
     }
     
+    /// Flag to check if the picker is currently on manual entry
     private var isOnManualEntry = false {
         didSet{
             if !isOnManualEntry {
@@ -154,6 +185,7 @@ public class PickerField: Field {
         }
     }
     
+    /// Setter function to set the PickerField to its manaul entry row
     public func setIndexToManual(){
         if isManualEntryCapable && manualEntrySet {
             guard let index = manualEntryIndex else {return}
@@ -225,6 +257,8 @@ public class PickerField: Field {
     }
     
     //MARK: VARS
+    
+    /// The reciever's delegate
     weak public var delegate : PickerFieldDelegate?
     
     public override var shakes: Bool {
@@ -337,7 +371,8 @@ public class PickerField: Field {
     }
     
     //MARK:- FUNCTIONS
-    @objc func donePressed(_ sender: UIButton?){
+    /// Callback for the done button being pressed. Is also called manaully. Closes the picker and keyboard if it was on manual entry and resets the state to normal unless it is in an error state.
+    @objc internal func donePressed(_ sender: UIButton?){
         pickerView.isHidden = true
         if !isOnManualEntry {
             text = data[indexSelected]
@@ -350,6 +385,7 @@ public class PickerField: Field {
         clearButton.isHidden = !isClearable
     }
     
+    /// Opens the picker. Clears any error state. If it was last on manual entry it opens the keyboard.
     private func showPickerView(){
         if isActive {return}
         if hasError {
@@ -372,11 +408,12 @@ public class PickerField: Field {
         hasError = true
     }
     
-    override func removeErrorUI() {
+    public override func removeErrorUI() {
         entryField.removeErrorUI()
         hasError = false
     }
     
+    /// Callback for the clear button being pressed if isClearable is set to true.
     @objc func clearPressed(_ sender: UIButton){
         text = nil
         if hasError {
@@ -385,6 +422,44 @@ public class PickerField: Field {
         delegate?.pickerFieldCleared?(self)
     }
     
+    /**
+     Notifies the field that it has been asked to relinquish its status as first responder in its window.
+     This triggers the end callback from the field, closes the picker, and removes the editing state.
+     - Note: If it's in an error state it will keep its error UI.
+     - Returns: true
+     */
+    override public func resignFirstResponder() -> Bool {
+        donePressed(nil)
+        return true
+    }
+    
+    /**
+     Opens the picker or the PickerField is on manual entry it will open the keyboard.
+     - Returns: true
+     */
+    override public func becomeFirstResponder() -> Bool {
+        showPickerView()
+        return true
+    }
+    
+    ///Asks to see if the field is the first responder. If it is on manual entry it asks the entryField if it is the responder otherwise it returns its isActive flag
+    override public var isFirstResponder: Bool {
+        if isOnManualEntry {
+            return entryField.isFirstResponder
+        } else {
+            return isActive
+        }
+    }
+    
+    /**
+    Returns a boolean indicating wether the field can become the first responder by asking the entryField if it can become the first responder
+    - Note: Only use this if your PickerField is manualEntryCapable
+    */
+    public override var canBecomeFirstResponder: Bool {
+        return entryField.canBecomeFirstResponder
+    }
+    
+    /// Removes observers.
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -460,8 +535,8 @@ extension PickerField : EntryFieldDelegate {
 
 //MARK:- KEYBOARD LISTENER
 extension PickerField {
-    //detect other field opening, means focus was lost on us so close the pickerView
-    @objc func keyboardWillShow(_ notification: Notification) {
+    /// Detects other fields opening, means focus was lost on us so it closes itself and triggers the endEditing callback.
+    @objc private func keyboardWillShow(_ notification: Notification) {
         if isOnManualEntry && entryField.isFirstResponder {return}
         if(isActive){
             donePressed(nil)

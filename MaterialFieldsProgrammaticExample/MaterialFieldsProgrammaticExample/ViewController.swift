@@ -24,6 +24,7 @@ class ViewController: UIViewController {
         field.placeholder = "This is an EntryField"
         field.delegate = self
         field.textColor = UIColor.blue
+        field.isUserInteractionEnabled = false
         return field
     }()
     
@@ -102,6 +103,12 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: EntryFieldDelegate {
+    
+    func entryFieldShouldEndEditing(_ view: EntryField) -> Bool {
+        view.resignFirstResponder()
+        return true
+    }
+    
     func entryFieldDidEndEditing(_ view: EntryField) {
         print(view.text as Any, " from entryField")
     }
@@ -124,6 +131,7 @@ extension ViewController: PickerFieldDelegate {
     }
     
     func pickerField(_ view: PickerField, didSelectRow row: Int) {
+        view.resignFirstResponder()
         if view.tag == 0 {
             print("value changed in pickerField: ", view.text as Any)
         }

@@ -317,9 +317,39 @@ public class DateField: Field {
         hasError = true
     }
     
-    override func removeErrorUI() {
+    public override func removeErrorUI() {
         entryField.removeErrorUI()
         hasError = false
+    }
+    
+    /**
+     Notifies the field that it has been asked to relinquish its status as first responder in its window.
+     This triggers the end callback from the field, closes the picker, and removes the editing state.
+     - Note: If it's in an error state it will keep its error UI.
+     - Returns: true
+     */
+    override public func resignFirstResponder() -> Bool {
+        donePressed(nil)
+        return true
+    }
+    
+    /**
+     Opens the picker.
+     - Returns: true
+     */
+    override public func becomeFirstResponder() -> Bool {
+        showDatePicker()
+        return true
+    }
+    
+    ///Returns isActive flag.
+    override public var isFirstResponder: Bool {
+        return isActive
+    }
+    
+    ///Returns true
+    public override var canBecomeFirstResponder: Bool {
+        return true
     }
     
     deinit {
