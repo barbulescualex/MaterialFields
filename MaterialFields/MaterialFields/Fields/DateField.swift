@@ -159,6 +159,12 @@ public class DateField: Field {
     //MARK:- VARS
     weak public var delegate : DateFieldDelegate?
     
+    public override var shakes: Bool {
+        didSet{
+            entryField.shakes = shakes
+        }
+    }
+    
     //MARK:- VIEW COMPONENTS
     private let verticalStack : UIStackView = {
         let stackView = UIStackView()
@@ -311,7 +317,7 @@ public class DateField: Field {
         hasError = true
     }
     
-    private func removeErrorUI(){
+    override func removeErrorUI() {
         entryField.removeErrorUI()
         hasError = false
     }

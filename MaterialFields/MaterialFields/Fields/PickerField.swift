@@ -227,6 +227,12 @@ public class PickerField: Field {
     //MARK: VARS
     weak public var delegate : PickerFieldDelegate?
     
+    public override var shakes: Bool {
+        didSet{
+            entryField.shakes = shakes
+        }
+    }
+    
     //MARK: VIEW COMPONENTS
     // vertical stack for EntryField and UIPickerView
     let verticalStack : UIStackView = {
@@ -366,7 +372,7 @@ public class PickerField: Field {
         hasError = true
     }
     
-    private func removeErrorUI(){
+    override func removeErrorUI() {
         entryField.removeErrorUI()
         hasError = false
     }

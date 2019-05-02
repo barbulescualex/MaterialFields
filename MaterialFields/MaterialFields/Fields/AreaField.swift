@@ -114,7 +114,6 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
         }
     }
     
-    public var shakes : Bool = true
     
     public var isViewAreaInteractable : Bool = true {
         didSet{
@@ -277,15 +276,14 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
         }
     }
     
-    func removeErrorUI(){
-        if(hasError){
-            textView.textColor = textColor
-            updateBorderColor(with: borderColor)
-            placeholderLabel.textColor = placeholderUpColor
-            hasError = false
-            errorLabel.text = nil
-            errorLabel.isHidden = false
-        }
+    override func removeErrorUI() {
+        if !hasError { return }
+        textView.textColor = textColor
+        updateBorderColor(with: borderColor)
+        placeholderLabel.textColor = placeholderUpColor
+        hasError = false
+        errorLabel.text = nil
+        errorLabel.isHidden = false
     }
     
     @objc func startEditing(_ sender: UIGestureRecognizer){

@@ -27,6 +27,9 @@ public class Field : UIView {
     /// Read only flag to check if the field is currently in a error state
     internal(set) public var hasError : Bool = false
     
+    /// Dictates if a field should shake if it has an error
+    public var shakes : Bool = false
+    
     /// The value in the text-based fields.
     public var text : String?
     
@@ -73,6 +76,17 @@ public class Field : UIView {
         - If you overrode the shakes property to false, the field does not shake during the transition animation the error state
     */
     public func setError(withText text: String?){
+        
+    }
+    
+    /**
+     Internal function to clear error flag and UI from fields
+     
+     - Parameter withText: String for the error text label that will show up under the field
+     - Note:
+     - Called automatically if the field becomes active again (EntryField, AreaField) or the values change (PickerField, DateField)
+     */
+    internal func removeErrorUI(){
         
     }
 }

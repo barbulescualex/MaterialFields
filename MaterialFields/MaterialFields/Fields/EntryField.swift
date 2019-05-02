@@ -97,9 +97,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
             }
         }
     }
-    
-    /// Defines if the field should shake upon setError() being called
-    public var shakes : Bool = true
+
     
     /// Defines the type of keyboard that comes up when the field is active
     /// - Note: Defaults to .asciiCapable
@@ -422,8 +420,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         textField.becomeFirstResponder()
     }
     
-    /// Removes the error UI.
-    internal func removeErrorUI(){
+    override func removeErrorUI() {
         if !hasError {return}
         textField.textColor = textColor
         updateBorderColor(with: borderColor)
