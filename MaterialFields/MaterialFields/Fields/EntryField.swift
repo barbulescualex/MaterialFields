@@ -468,6 +468,10 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         return textField.canBecomeFirstResponder
     }
     
+    /// Removes observers.
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 }
 
 //MARK:- TEXTFIELD DELEGATE

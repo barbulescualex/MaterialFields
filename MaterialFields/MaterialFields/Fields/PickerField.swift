@@ -8,7 +8,7 @@
 
 import UIKit
 
-/// PickerFieldDelegate protocol. Forwards some UIPickerView delegate methods and a method to notify you if the field has been cleared (only is isClearable = true).
+/// PickerFieldDelegate protocol. Forwards editing state changes and content changes.
 @objc public protocol PickerFieldDelegate : AnyObject {
     
     /// Asks the delegate if editing should begin in the specified PickerField.
@@ -268,8 +268,9 @@ public class PickerField: Field {
     }
     
     //MARK: VIEW COMPONENTS
-    // vertical stack for EntryField and UIPickerView
-    let verticalStack : UIStackView = {
+    
+    /// The stackview that encompasses the whole view
+    private let verticalStack : UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 10
@@ -278,9 +279,10 @@ public class PickerField: Field {
         return stackView
     }()
     
-    // entry field for text / label
-    var entryField = EntryField()
+    /// The EntryField behind this field class
+    private var entryField = EntryField()
     
+    /// The clear button for emptying contents of the field if isClearable is set to true.
     private lazy var clearButton : UIButton = {
         let button = UIButton()
         let attributes = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15), NSAttributedString.Key.foregroundColor : UIColor.white]
@@ -294,6 +296,7 @@ public class PickerField: Field {
         return button
     }()
     
+    /// The done button for closing the picker.
     private lazy var doneButton : UIButton = {
         let button = UIButton()
         let attributes = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15), NSAttributedString.Key.foregroundColor : UIColor.white]
@@ -307,8 +310,8 @@ public class PickerField: Field {
         return button
     }()
     
-    //pickerView
-    public lazy var pickerView : UIPickerView = {
+    /// The UIPickerView behind this field class
+    private lazy var pickerView : UIPickerView = {
         let pickerView = UIPickerView()
         pickerView.showsSelectionIndicator = true
         pickerView.delegate = self
@@ -320,18 +323,19 @@ public class PickerField: Field {
     public required init() {
         self.data = []
         super.init(frame: .zero)
-        setupView()
+        setup()
     }
     
     //initWithCode to init view from xib or storyboard
     required init?(coder aDecoder: NSCoder) {
         self.data = []
         super.init(coder: aDecoder)
-        setupView()
+        setup()
     }
     
     //MARK: SETUP FUNCTIONS
-    private func setupView() {
+    /// Sets up the view.
+    private func setup() {
         // entry field
         entryField.delegate = self
         

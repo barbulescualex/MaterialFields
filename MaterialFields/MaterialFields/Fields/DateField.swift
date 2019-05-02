@@ -8,18 +8,30 @@
 
 import UIKit
 
+/// PickerFieldDelegate protocol. Forwards editing state changes and content changes.
 @objc public protocol DateFieldDelegate : AnyObject {
+    /// Asks the delegate if editing should begin in the specified DateField.
+    /// - Parameter view: The DateField that called the delegate method.
     @objc optional func dateFieldShouldBeginEditing(_ view: DateField) -> Bool
     
+    /// Tells the delegate editing ended in the specified DateField.
+    /// - Parameter view: The DateField that called the delegate method.
     @objc func dateFieldDidEndEditing(_ view: DateField)
     
+    /// Tells the delegate that the contents have been cleared in the specified DateField.
+    /// - Parameter view: The DateField that called the delegate method.
     @objc optional func dateFieldCleared(_ view: DateField)
     
+    /// Tells the delegate that a row was selected in the specified DateField.
+    /// - Parameter view: The DateField that called the delegate method.
+    /// - Parameter row: The row that was selected.
     @objc optional func dateChanged(_ view: DateField)
 }
 
 public class DateField: Field {
     //MARK: UIDATEPICKER VARS
+    
+    /// Date value currently held by field.
     public var date : Date? {
         didSet{
             if let setDate = date {
@@ -35,6 +47,7 @@ public class DateField: Field {
         }
     }
     
+    /// The defualt date formatter to populate the entry field with.
     private let defaultFormatter : DateFormatter = {
         let df = DateFormatter()
         df.dateFormat = "MMM dd, yyyy"
@@ -42,32 +55,38 @@ public class DateField: Field {
         return df
     }()
     
+    /// The dateFormatter you want to use to display the date in the field. Defaults to "MMM dd, yyyy"
     public var dateFormatter : DateFormatter?
     
+    /// The date picker mode for the field.
     public var datePickerMode : UIDatePicker.Mode? {
         didSet{
             datePicker.datePickerMode = datePickerMode!
         }
     }
     
+    /// The timezone for the field.
     public var timeZone : TimeZone? {
         didSet{
             datePicker.timeZone = timeZone
         }
     }
     
+    /// The locale for the field.
     public var locale : Locale? {
         didSet{
             datePicker.locale = locale
         }
     }
     
+    /// The minimum date for the field.
     public var minimumDate : Date? {
         didSet{
             datePicker.minimumDate = minimumDate
         }
     }
     
+    /// The default date of the field.
     public var defaultDate : Date? {
         didSet{
             if let setDefault = defaultDate {
@@ -77,8 +96,10 @@ public class DateField: Field {
         }
     }
     
+    /// Private flag to check if default date has been displayed.
     private var defaultDone = false
     
+    /// The maximum date of the field.
     public var maximumDate : Date? {
         didSet{
             if let date = maximumDate {
@@ -90,8 +111,10 @@ public class DateField: Field {
         }
     }
     
+    /// Private flag to check if the max date has been set.
     private var maxDateSet = false
     
+    /// Setter for showing a clear button to eliminate the contents of the field.
     public var isClearable = false {
         didSet{
             clearButton.isHidden = !isClearable
@@ -157,6 +180,8 @@ public class DateField: Field {
     
     
     //MARK:- VARS
+    
+    /// The reciever's delegate
     weak public var delegate : DateFieldDelegate?
     
     public override var shakes: Bool {
@@ -166,6 +191,7 @@ public class DateField: Field {
     }
     
     //MARK:- VIEW COMPONENTS
+    /// The stackview that encompasses the whole view
     private let verticalStack : UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -175,8 +201,10 @@ public class DateField: Field {
         return stackView
     }()
     
+    /// The EntryField behind this field class
     private lazy var entryField = EntryField()
     
+    /// The clear button for emptying contents of the field if isClearable is set to true.
     private lazy var clearButton : UIButton = {
         let button = UIButton()
         let attributes = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15), NSAttributedString.Key.foregroundColor : UIColor.white]
@@ -190,6 +218,7 @@ public class DateField: Field {
         return button
     }()
     
+    /// The done button for closing the picker.
     private lazy var doneButton : UIButton = {
         let button = UIButton()
         let attributes = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15), NSAttributedString.Key.foregroundColor : UIColor.white]
@@ -203,7 +232,8 @@ public class DateField: Field {
         return button
     }()
     
-    public lazy var datePicker : UIDatePicker = {
+    /// The UIPickerView behind this field class
+    private lazy var datePicker : UIDatePicker = {
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .date
         datePicker.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
@@ -212,17 +242,18 @@ public class DateField: Field {
     
     public required init() {
         super.init(frame: .zero)
-        setupView()
+        setup()
     }
     
     //initWithCode to init view from xib or storyboard
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setupView()
+        setup()
     }
     
     //MARK: SETUP FUNCTIONS
-    private func setupView() {
+    /// Sets up the view.
+    private func setup() {
         //fake field
         entryField.delegate = self
         
@@ -244,21 +275,18 @@ public class DateField: Field {
         verticalStack.addArrangedSubview(entryField)
         verticalStack.addArrangedSubview(datePicker)
         datePicker.isHidden = true
+        
         addSubview(verticalStack)
-        
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(keyboardDidShow(_:)), name: UIResponder.keyboardDidShowNotification, object: nil)
-        
-        setupLayout()
-    }
-    
-    private func setupLayout(){
         verticalStack.topAnchor.constraint(equalTo: topAnchor).isActive = true
         verticalStack.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         verticalStack.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         verticalStack.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(keyboardDidShow(_:)), name: UIResponder.keyboardDidShowNotification, object: nil)
     }
     
+    // Callback function for the date being changed.
     @objc private func dateChanged(_ sender: UIDatePicker){
         if !defaultDone{
             defaultDone = true
@@ -271,6 +299,7 @@ public class DateField: Field {
     }
     
     //MARK: FUNCTIONS
+    /// Opens the picker. Clears any error state.
     private func showDatePicker(){
         if hasError{
             removeErrorUI()
@@ -287,7 +316,7 @@ public class DateField: Field {
         datePicker.isHidden = false
     }
     
-    
+    /// Callback for the done button being pressed. Is also called manaully. Closes the picker and resets the state to normal unless it is in an error state.
     @objc func donePressed(_ sender: UIButton?){
         entryField.isEditing(showHighlight: false)
         
@@ -299,7 +328,7 @@ public class DateField: Field {
         clearButton.isHidden = !isClearable
     }
     
-    
+    /// Callback for the clear button being pressed if isClearable is set to true.
     @objc func clearPressed(_ sender: UIButton){
         date = nil
         entryField.text = nil
@@ -352,6 +381,7 @@ public class DateField: Field {
         return true
     }
     
+    /// Removes observers.
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -377,7 +407,7 @@ extension DateField : EntryFieldDelegate {
 
 //MARK:- KEYBOARD LISTENER
 extension DateField {
-    //detect other field opening, means focus was lost on us so close the datePicker
+    /// Detects other fields opening, means focus was lost on us so it closes itself and triggers the endEditing callback.
     @objc func keyboardDidShow(_ notification: Notification) {
         if isActive {
             donePressed(nil)

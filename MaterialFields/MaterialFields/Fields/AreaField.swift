@@ -167,6 +167,7 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
     
     
     //MARK:- VIEW COMPONENTS
+    /// The stackview that encompasses the whole view
     private let stackView : UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -176,6 +177,7 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
         return stackView
     }()
     
+    /// Invisable placeholder for the placeholder (the "title") above the field
     private let placeholderPlaceholder : UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
@@ -184,6 +186,7 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
         return label
     }()
     
+    /// The placeholder label for the title
     public let placeholderLabel : UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -193,6 +196,7 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
         return label
     }()
     
+    /// The UITextView behind this field class
     public lazy var textView : UITextView = {
         let textView = UITextView()
         textView.textAlignment = .left
@@ -207,6 +211,7 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
         return textView
     }()
     
+    /// Top 1px line of the fake shadow underneath the field
     private let borderTop : UIView = {
         let view = UIView()
         view.backgroundColor = .lightGray
@@ -215,6 +220,7 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
         return view
     }()
     
+    /// Bottom 1px line of the fake shadow underneath the field
     private let borderBottom : UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
@@ -223,6 +229,7 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
         return view
     }()
     
+    /// The error label under the UITextField that appears on error being set
     public let errorLabel : UILabel = {
         let label = UILabel()
         label.textColor = .red
@@ -232,10 +239,19 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
     }()
     
     //MARK:- INIT
+    
+    //MARK:- INIT
+    
+    /**
+     Required initializer if doing programtically. You can manually set the frame after initialization. Otherwise it relies on auto layout and it's intrinsic content size.
+     - Warning: If you want to define a frame for it, make sure the height constant is a minimum of 41.
+     */
     public required init(){
         super.init(frame: .zero)
         setup()
     }
+    
+    /// Interface builder initializer
     required init?(coder aDecoder: NSCoder){
         super.init(coder: aDecoder)
         setup()
@@ -378,6 +394,11 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
     ///Returns a boolean indicating wether the EntryField can become the first responder
     public override var canBecomeFirstResponder: Bool {
         return textView.canBecomeFirstResponder
+    }
+    
+    /// Removes observers.
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
