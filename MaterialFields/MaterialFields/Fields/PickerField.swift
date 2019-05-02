@@ -296,12 +296,12 @@ public class PickerField: Field {
         entryField.delegate = self
         
         entryField.addSubview(clearButton)
-        clearButton.centerYAnchor.constraint(equalTo: entryField.centerYAnchor, constant: 5).isActive = true
+        clearButton.centerYAnchor.constraint(equalTo: entryField.textField.centerYAnchor, constant: -3.5).isActive = true
         clearButton.trailingAnchor.constraint(equalTo: entryField.trailingAnchor, constant: 0).isActive = true
         clearButton.isHidden = true
         
         entryField.addSubview(doneButton)
-        doneButton.centerYAnchor.constraint(equalTo: entryField.centerYAnchor, constant: 5).isActive = true
+        doneButton.centerYAnchor.constraint(equalTo: entryField.textField.centerYAnchor, constant: -3.5).isActive = true
         doneButton.trailingAnchor.constraint(equalTo: entryField.trailingAnchor, constant: 0).isActive = true
         doneButton.isHidden = true
         
