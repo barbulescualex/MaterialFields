@@ -125,13 +125,10 @@ extension ViewController: PickerFieldDelegate {
     
     func pickerField(_ view: PickerField, didSelectRow row: Int) {
         if view.tag == 0 {
-            print("value changed in pickerField: ", view.data[row])
+            print("value changed in pickerField: ", view.text as Any)
         }
         if view.tag == 1 {
-            print("value changed in pickerFieldManual: ", view.data[row])
-        }
-        if view.text == "haa" {
-                        view.setError(withText: "lol")
+            print("value changed in pickerFieldManual: ", view.text as Any)
         }
     }
     
@@ -162,6 +159,7 @@ extension ViewController: AreaFieldDelegate{
 extension ViewController: DateFieldDelegate {
     func dateFieldDidEndEditing(_ view: DateField) {
         print(view.date as Any, " from dateField")
+        view.setError(withText: "wrong date chump")
     }
     
     func dateChanged(_ view: DateField){

@@ -373,6 +373,9 @@ public class PickerField: Field {
     
     @objc func clearPressed(_ sender: UIButton){
         text = nil
+        if hasError {
+            removeErrorUI()
+        }
         delegate?.pickerFieldCleared?(self)
     }
     

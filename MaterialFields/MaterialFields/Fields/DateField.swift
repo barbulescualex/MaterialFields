@@ -221,12 +221,12 @@ public class DateField: Field {
         entryField.delegate = self
         
         entryField.addSubview(clearButton)
-        clearButton.centerYAnchor.constraint(equalTo: entryField.centerYAnchor, constant: 5).isActive = true
+        clearButton.centerYAnchor.constraint(equalTo: entryField.textField.centerYAnchor, constant: -3.5).isActive = true
         clearButton.trailingAnchor.constraint(equalTo: entryField.trailingAnchor, constant: 0).isActive = true
         clearButton.isHidden = true
         
         entryField.addSubview(doneButton)
-        doneButton.centerYAnchor.constraint(equalTo: entryField.centerYAnchor, constant: 5).isActive = true
+        doneButton.centerYAnchor.constraint(equalTo: entryField.textField.centerYAnchor, constant: -3.5).isActive = true
         doneButton.trailingAnchor.constraint(equalTo: entryField.trailingAnchor, constant: 0).isActive = true
         doneButton.isHidden = true
         
@@ -258,11 +258,17 @@ public class DateField: Field {
             defaultDone = true
         }
         date = sender.date
+        if hasError {
+            removeErrorUI()
+        }
         delegate?.dateChanged?(self)
     }
     
     //MARK: FUNCTIONS
     private func showDatePicker(){
+        if hasError{
+            removeErrorUI()
+        }
         if let defaultDate = defaultDate, !defaultDone {
             date = defaultDate
         } else {
@@ -294,11 +300,20 @@ public class DateField: Field {
         if let defaultDate = defaultDate {
             datePicker.date = defaultDate
         }
+        if hasError {
+            removeErrorUI()
+        }
         delegate?.dateFieldCleared?(self)
     }
     
     override public func setError(withText text: String?) {
         entryField.setError(withText: text)
+        hasError = true
+    }
+    
+    private func removeErrorUI(){
+        entryField.removeErrorUI()
+        hasError = false
     }
     
     deinit {
