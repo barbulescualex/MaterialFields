@@ -29,7 +29,7 @@ import UIKit
     @objc optional func pickerField(_ view: PickerField, didSelectRow row: Int)
 }
 
-/// Material version of the UIPickerView (supports manual entry)
+/// Material version of the UIPickerView (single column only, supports manual entry)
 public class PickerField: Field {
     //MARK:- UIPICKER VARS
     /// Setter for showing a clear button to eliminate the contents of the field.
@@ -82,11 +82,14 @@ public class PickerField: Field {
         }
     }
     
-    /// Changes index in PickerField. If value is below 0, it defualts to 0.
+    /// Changes index in PickerField. If value is below the lower bound (0), it defualts to 0. If the value is over the upper bound, it defaults to to the upper bound.
     public var setIndexTo : Int = 0 {
         didSet{
             if setIndexTo < 0 {
                 setIndexTo = 0
+            }
+            if setIndexTo > (data.count - 1) {
+                setIndexTo = data.count - 1
             }
             pickerView.selectRow(setIndexTo, inComponent: 0, animated: true)
             indexSelected = setIndexTo

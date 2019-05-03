@@ -12,23 +12,25 @@ import MaterialFields
 class ViewControllerFrame: UIViewController {
 
     @IBAction func frame(_ sender: Any) {
-        print(entryField.frame)
+        print(field.frame)
     }
     
-    @IBOutlet weak var entryField: PickerField!
+    @IBOutlet weak var field: PickerField!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        entryField.text = "Hello"
-        entryField.placeholder = "Hello World"
-        entryField.delegate = self
+        field.text = "Hello"
+        field.placeholder = "Hello World"
+        field.delegate = self
+        field.data = ["pee", "pee", "poo", "poo"]
+        field.setIndexTo = 0
     }
     
 }
 
 extension ViewControllerFrame: EntryFieldDelegate {
-    func entryFieldShouldReturn(_ view: EntryField) -> Bool {
+    func fieldShouldReturn(_ view: EntryField) -> Bool {
         _ = view.resignFirstResponder()
         view.setError(withText: "WRONG")
         return true
@@ -47,6 +49,10 @@ extension ViewControllerFrame: AreaFieldDelegate {
 
 extension ViewControllerFrame: PickerFieldDelegate {
     func pickerFieldDidEndEditing(_ view: PickerField) {
+        view.setError(withText: "WRONG")
+    }
+    
+    func pickerField(_ view: PickerField, didSelectRow row: Int) {
         view.setError(withText: "WRONG")
     }
 }
