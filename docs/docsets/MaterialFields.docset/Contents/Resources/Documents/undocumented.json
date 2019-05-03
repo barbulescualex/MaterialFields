@@ -1,0 +1,152 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/AreaField.swift",
+      "line": 406,
+      "symbol": "AreaField.textViewShouldBeginEditing(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/AreaField.swift",
+      "line": 410,
+      "symbol": "AreaField.textViewDidBeginEditing(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/AreaField.swift",
+      "line": 418,
+      "symbol": "AreaField.textViewShouldEndEditing(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/AreaField.swift",
+      "line": 422,
+      "symbol": "AreaField.textViewDidEndEditing(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/AreaField.swift",
+      "line": 431,
+      "symbol": "AreaField.textView(_:shouldChangeTextIn:replacementText:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/DateField.swift",
+      "line": 170,
+      "symbol": "DateField.clearButtonColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/DateField.swift",
+      "line": 176,
+      "symbol": "DateField.doneButtonColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/DateField.swift",
+      "line": 244,
+      "symbol": "DateField.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/EntryField.swift",
+      "line": 481,
+      "symbol": "EntryField.textFieldShouldBeginEditing(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/EntryField.swift",
+      "line": 488,
+      "symbol": "EntryField.textFieldDidBeginEditing(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/EntryField.swift",
+      "line": 497,
+      "symbol": "EntryField.textFieldShouldEndEditing(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/EntryField.swift",
+      "line": 504,
+      "symbol": "EntryField.textFieldDidEndEditing(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/EntryField.swift",
+      "line": 514,
+      "symbol": "EntryField.textFieldShouldReturn(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/EntryField.swift",
+      "line": 521,
+      "symbol": "EntryField.textFieldShouldClear(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/PickerField.swift",
+      "line": 254,
+      "symbol": "PickerField.clearButtonColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/PickerField.swift",
+      "line": 260,
+      "symbol": "PickerField.doneButtonColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/PickerField.swift",
+      "line": 330,
+      "symbol": "PickerField.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/PickerField.swift",
+      "line": 484,
+      "symbol": "PickerField.numberOfComponents(in:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/PickerField.swift",
+      "line": 488,
+      "symbol": "PickerField.pickerView(_:numberOfRowsInComponent:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/PickerField.swift",
+      "line": 492,
+      "symbol": "PickerField.pickerView(_:titleForRow:forComponent:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/PickerField.swift",
+      "line": 496,
+      "symbol": "PickerField.pickerView(_:didSelectRow:inComponent:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/alex/Desktop/MaterialFields/MaterialFields"
+}
