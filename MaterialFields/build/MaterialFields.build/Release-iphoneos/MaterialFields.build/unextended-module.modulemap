@@ -1,0 +1,10 @@
+framework module MaterialFields {
+  umbrella header "MaterialFields.h"
+
+  export *
+  module * { export * }
+}
+
+module MaterialFields.__Swift {
+    exclude header "MaterialFields-Swift.h"
+}
