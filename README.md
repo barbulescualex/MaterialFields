@@ -1,6 +1,6 @@
 # MaterialFields [WIP]
 
-A UI driven text entry and value selection framework for better UI and modular validation layers.
+A Material Guidelines UI driven text entry and value selection framework for better UI and modular validation layers.
 
 ---
 
