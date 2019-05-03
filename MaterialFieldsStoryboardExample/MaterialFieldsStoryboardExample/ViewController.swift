@@ -90,11 +90,11 @@ extension ViewController: PickerFieldDelegate {
     
     func pickerField(_ view: PickerField, didSelectRow row: Int) {
         if view.tag == 0 {
-            print("value changed in pickerField: ", view.data[row])
+            print("value changed in pickerField: ", view.text)
         }
         
         if view.tag == 1 {
-            print("value changed in pickerFieldManual: ", view.data[row])
+            print("value changed in pickerFieldManual: ", view.text)
         }
         
     }

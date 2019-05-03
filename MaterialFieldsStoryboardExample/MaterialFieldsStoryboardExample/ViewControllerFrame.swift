@@ -23,7 +23,7 @@ class ViewControllerFrame: UIViewController {
         field.text = "Hello"
         field.placeholder = "Hello World"
         field.delegate = self
-        field.data = ["pee", "pee", "poo", "poo"]
+        field.data = ["one", "two", "three", "four"]
         field.setIndexTo = 0
     }
     

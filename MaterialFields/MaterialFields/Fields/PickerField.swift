@@ -184,7 +184,10 @@ public class PickerField: Field {
     private var isOnManualEntry = false {
         didSet{
             if !isOnManualEntry {
-                _ = entryField.resignFirstResponder()
+                if entryField.isFirstResponder {
+                    _ = entryField.resignFirstResponder()
+                    entryField.isEditing(showHighlight: true)
+                }
             }
         }
     }
@@ -395,6 +398,7 @@ public class PickerField: Field {
     
     /// Opens the picker. Clears any error state. If it was last on manual entry it opens the keyboard.
     private func showPickerView(){
+        print("SHOW PICKER")
         if isActive {return}
         if data.count == 0 {return}
         if hasError {
@@ -418,6 +422,7 @@ public class PickerField: Field {
     }
     
     public override func removeErrorUI() {
+        print("REMOVE ERROR UI")
         entryField.removeErrorUI()
         hasError = false
     }
@@ -506,35 +511,35 @@ extension PickerField: UIPickerViewDelegate, UIPickerViewDataSource {
 //MARK:- ENTRY FIELD DELEGATE
 extension PickerField : EntryFieldDelegate {
     public func entryFieldShouldBeginEditing(_ view: EntryField) -> Bool {
-        //print("entry field should begin editing")
+        print("entry field should begin editing")
         if let shouldBegin = delegate?.pickerFieldShouldBeginEditing?(self) {
             if !shouldBegin {
                 return false
             }
         }
         if isOnManualEntry {
-            // print("IS ON MANUAL ENTRY")
+            print("IS ON MANUAL ENTRY")
             showPickerView()
-            // print("entry field should begin editing answer: true")
+            print("entry field should begin editing answer: true")
             return true
         } else {
-            // print("IS NOT ON MANUAL ENTRY")
+             print("IS NOT ON MANUAL ENTRY")
             UIApplication.shared.sendAction(#selector(resignFirstResponder), to: nil, from: nil, for: nil)
             showPickerView()
-            // print("entry field should begin editing answer: false")
+             print("entry field should begin editing answer: false")
             return false
         }
-        // print("entry field should begin editing answer: false")
+        print("entry field should begin editing answer: false")
     }
     
     public func entryFieldShouldReturn(_ view: EntryField) -> Bool {
-        // print("entry field should return")
+        print("entry field should return")
         view.endEditing(true)
         return true
     }
     
     public func entryFieldDidEndEditing(_ view: EntryField) {
-        // print("entry field did end editing")
+        print("entry field did end editing")
         if isOnManualEntry {
             text = view.text
             donePressed(nil)

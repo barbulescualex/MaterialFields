@@ -241,8 +241,6 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
     
     //MARK:- INIT
     
-    //MARK:- INIT
-    
     /**
      Required initializer if doing programtically. You can manually set the frame after initialization. Otherwise it relies on auto layout and it's intrinsic content size.
      - Warning: If you want to define a frame for it, make sure the height constant is a minimum of 41.
