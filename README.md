@@ -2,7 +2,7 @@
 
 A UI driven text entry and value selection framework for better UI and modular validation layers.
 
-----------------
+---
 
 
 |         | Main Features  |
@@ -18,7 +18,7 @@ A UI driven text entry and value selection framework for better UI and modular v
 
 ### Adding MaterialFields To Your Project
 
------------------
+---
 
 Open your podfile and add MaterialFields under your target
 
@@ -38,7 +38,7 @@ Save then in your project directory run
 
 ### Getting Started
 
------------------
+---
 
 Getting started with MaterialFields is very easy! There are 2 example projects, one programmatic and one using storyboards showing you the implementation.
 
