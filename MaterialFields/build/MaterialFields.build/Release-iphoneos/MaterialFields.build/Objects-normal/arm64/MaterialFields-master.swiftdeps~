@@ -1,0 +1,10 @@
+version: "Apple Swift version 5.0.1 (swiftlang-1001.0.82.4 clang-1001.0.46.5)"
+options: "16f73628371d16412d700cdef17d5fc1"
+build_time: [1556915872, 321420000]
+inputs:
+  "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/Extensions.swift": [9223372036, 854775807]
+  "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/DateField.swift": [9223372036, 854775807]
+  "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/Field.swift": [9223372036, 854775807]
+  "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/EntryField.swift": [9223372036, 854775807]
+  "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/PickerField.swift": [9223372036, 854775807]
+  "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/AreaField.swift": [9223372036, 854775807]

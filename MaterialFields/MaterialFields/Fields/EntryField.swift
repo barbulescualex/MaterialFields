@@ -38,7 +38,7 @@ import UIKit
 }
 
 
-/// Material version of the UITextField (single line, for multiline capability use the AreaField class)
+/// Material version of the UITextField (single line, for multiline capability use the `AreaField` class)
 public class EntryField: Field, UIGestureRecognizerDelegate {
     //MARK:- TEXTFIELD VARS
     
@@ -122,7 +122,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         }
     }
     
-    //COLORS
+    //MARK: Colors
     public override var borderColor: UIColor {
         didSet{
             if !isActive && !hasError {
@@ -198,8 +198,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         }
     }
     
-    //MARK:- VARS
-    
+    //MARK: Delegate
     /// The reciever's delegate
     weak public var delegate : EntryFieldDelegate?
     
@@ -210,7 +209,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
     private var placeholderUp = false
     
     
-    //MARK:- VIEW COMPONENTS
+    //MARK: View Components
     /// The stackview that encompasses the whole view
     private let stackView : UIStackView = {
         let stackView = UIStackView()
@@ -231,7 +230,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
     }()
     
     /// The placeholder label for the title
-    public let placeholderLabel : UILabel = {
+    private let placeholderLabel : UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .gray
@@ -241,7 +240,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
     }()
     
     /// The UITextField behind this field class
-    public lazy var textField : UITextField = {
+    internal lazy var textField : UITextField = {
         let textField = UITextField()
         textField.borderStyle = .none
         textField.font = UIFont.systemFont(ofSize: 18)
@@ -301,7 +300,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
     //MARK:- INIT
     
     /**
-    Required initializer if doing programtically. You can manually set the frame after initialization. Otherwise it relies on auto layout and it's intrinsic content size.
+    Required initializer if doing programtically. You can manually set the frame after initialization. Otherwise it relies on auto layout and its intrinsic content size.
      - Warning: If you want to define a frame for it, make sure the height constant is a minimum of 41.
     */
     public required init(){

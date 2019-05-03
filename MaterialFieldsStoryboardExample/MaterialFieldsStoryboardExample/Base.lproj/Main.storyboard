@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Tfo-Mn-U0N">
     <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -76,6 +76,44 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="137.68115942028987" y="135.9375"/>
+        </scene>
+        <!--View Controller Frame-->
+        <scene sceneID="ICm-xu-jjv">
+            <objects>
+                <viewController id="Tfo-Mn-U0N" customClass="ViewControllerFrame" customModule="MaterialFieldsStoryboardExample" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dUn-P9-QGI">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E36-5o-KXh" customClass="PickerField" customModule="MaterialFields">
+                                <rect key="frame" x="5" y="427.5" width="404" height="41"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZkR-J7-tFh">
+                                <rect key="frame" x="184" y="194" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="frame:" destination="Tfo-Mn-U0N" eventType="touchUpInside" id="6V1-u6-3GE"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="E36-5o-KXh" firstAttribute="centerX" secondItem="dUn-P9-QGI" secondAttribute="centerX" id="AGv-2R-Hwg"/>
+                            <constraint firstItem="leQ-Qf-hIP" firstAttribute="trailing" secondItem="E36-5o-KXh" secondAttribute="trailing" constant="5" id="SD9-eM-sUy"/>
+                            <constraint firstItem="E36-5o-KXh" firstAttribute="leading" secondItem="leQ-Qf-hIP" secondAttribute="leading" constant="5" id="Z3k-C2-EqQ"/>
+                            <constraint firstItem="E36-5o-KXh" firstAttribute="centerY" secondItem="dUn-P9-QGI" secondAttribute="centerY" id="gz5-fR-LeB"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="leQ-Qf-hIP"/>
+                    </view>
+                    <connections>
+                        <outlet property="entryField" destination="E36-5o-KXh" id="ELq-6U-4lq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="I5z-VM-Bij" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="807" y="136"/>
         </scene>
     </scenes>
 </document>

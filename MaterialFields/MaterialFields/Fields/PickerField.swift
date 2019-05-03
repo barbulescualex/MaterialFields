@@ -29,6 +29,7 @@ import UIKit
     @objc optional func pickerField(_ view: PickerField, didSelectRow row: Int)
 }
 
+/// Material version of the UIPickerView (supports manual entry)
 public class PickerField: Field {
     //MARK:- UIPICKER VARS
     /// Setter for showing a clear button to eliminate the contents of the field.
@@ -392,6 +393,7 @@ public class PickerField: Field {
     /// Opens the picker. Clears any error state. If it was last on manual entry it opens the keyboard.
     private func showPickerView(){
         if isActive {return}
+        if data.count == 0 {return}
         if hasError {
             removeErrorUI()
         }

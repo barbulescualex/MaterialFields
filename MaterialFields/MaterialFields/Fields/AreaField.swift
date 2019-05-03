@@ -37,6 +37,7 @@ import UIKit
     @objc optional func areaField(_ view: AreaField, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool
 }
 
+/// Material version of the UITextView (multiline capable)
 public class AreaField: Field, UIGestureRecognizerDelegate {
     //MARK:- TEXTVIEW VARS
     public override var placeholder : String? {
@@ -206,7 +207,7 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
         textView.autocorrectionType = .no
         textView.isEditable = true
         textView.isScrollEnabled = false
-        textView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 1, right: 0)
+        textView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0.5, right: 0)
         textView.textContainer.lineFragmentPadding = 0
         return textView
     }()

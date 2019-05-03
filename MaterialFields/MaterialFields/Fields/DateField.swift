@@ -28,6 +28,7 @@ import UIKit
     @objc optional func dateChanged(_ view: DateField)
 }
 
+/// Material version of the UIDatePicker
 public class DateField: Field {
     //MARK: UIDATEPICKER VARS
     

@@ -14,7 +14,7 @@ Wrapper class for all fields. Offers wrapper functionality for all text-based fi
      - DateField subclasses this but does not override the text variable as it holds a Date value type
 */
 public class Field : UIView {
-    //MARK:- String value
+    //MARK: Vars
     
     /// The value in the text-based fields.
     public var text : String?
@@ -26,7 +26,7 @@ public class Field : UIView {
     /// - Note: Defualts to false
     public var isOptional : Bool = false
     
-    //MARK:- State Vars
+    //MARK: State Vars
     
     /// Read only flag to check if the field is currently active
     internal(set) public var isActive : Bool = false
@@ -35,9 +35,9 @@ public class Field : UIView {
     internal(set) public var hasError : Bool = false
     
     /// Dictates if a field should shake if it has an error
-    public var shakes : Bool = false
+    public var shakes : Bool = true
     
-    //MARK:- Keyboard Functionality
+    //MARK: Keyboard Functionality
     
     /// Defines the type of keyboard that comes up when the field is active
     /// - Note: Defaults to .asciiCapable
@@ -56,7 +56,7 @@ public class Field : UIView {
     public var isSecureTextEntry : Bool = false
     
     
-    //MARK:- COLORS
+    //MARK: Colors
     
     /// Border color
     /// - Note: Defaults to UIColor.lightGray
@@ -90,6 +90,7 @@ public class Field : UIView {
     /// - Note: Defaults to UIColor.black.withAlphaComponent(0.5)
     public var cursorColor: UIColor = UIColor.black.withAlphaComponent(0.5)
     
+    //MARK: Error Functions
     /**
     Error setter for text-based fields.
     
