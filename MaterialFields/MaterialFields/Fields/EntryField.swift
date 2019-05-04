@@ -57,6 +57,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
             return textField.text
         }
         set{
+            print("text set to ", newValue)
             //populate the textfield
             textField.text = newValue
             
@@ -66,8 +67,12 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
                     animatePlaceholder(up: true)
                 }
             } else {
-                if placeholderUp {
-                    animatePlaceholder(up: false)
+                if !keepPlaceholderUp {
+                    if placeholderUp {
+                         animatePlaceholder(up: false)
+                    }
+                } else {
+                    keepPlaceholderUp = false
                 }
             }
         }
@@ -205,7 +210,13 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
     private var placeholderYAnchorConstraint: NSLayoutConstraint!
     
     /// Flag to check if the placeholder is up to avoid unecessary animations
-    private var placeholderUp = false
+    private var placeholderUp = false {
+        didSet{
+            print("placeholder set to: ", placeholderUp)
+        }
+    }
+    
+    internal var keepPlaceholderUp = false
     
     
     //MARK: View Components
@@ -375,6 +386,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         textField.textColor = borderErrorColor
         
         if(!placeholderUp){
+            print("coloring placeholder label with error text")
             placeholderLabel.textColor = errorTextColor
         }
         
@@ -504,7 +516,11 @@ extension EntryField : UITextFieldDelegate {
     public func textFieldDidEndEditing(_ textField: UITextField) {
         //print("text field did end editing")
         if(textField.text.isNotComplete()){
-            animatePlaceholder(up: false)
+            if !keepPlaceholderUp {
+                animatePlaceholder(up: false)
+            } else {
+                keepPlaceholderUp = false
+            }
         }
         delegate?.entryFieldDidEndEditing?(self)
         isEditing(showHighlight: false)
