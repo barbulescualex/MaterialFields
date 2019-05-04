@@ -118,6 +118,9 @@ Their colors are also overridable using `monetaryColor` or `unitColor`
 
 ---
 
+![AreaFieldDemo](assets/AreaField/1.gif)
+![AreaFieldDemoError](assets/AreaField/2.gif)
+
 This is your UITextView with only the text-entry functionality, so a multiline EntryField. Unlike the EntryField this does not support `isMonetary` or `units`.
 
 **AreaFieldDelegate**
