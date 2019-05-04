@@ -12,27 +12,24 @@ import MaterialFields
 class ViewControllerFrame: UIViewController {
 
     @IBAction func frame(_ sender: Any) {
-        print(field.frame)
+        field.becomeFirstResponder()
     }
     
-    @IBOutlet weak var field: PickerField!
+    @IBOutlet weak var field: EntryField!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        field.text = "Hello"
-        field.placeholder = "Hello World"
+        field.placeholder = "EntryField"
         field.delegate = self
-        field.data = ["one", "two", "three", "four"]
-        field.setIndexTo = 0
     }
     
 }
 
 extension ViewControllerFrame: EntryFieldDelegate {
-    func fieldShouldReturn(_ view: EntryField) -> Bool {
+    func entryFieldShouldReturn(_ view: EntryField) -> Bool {
+        print("Should return")
         _ = view.resignFirstResponder()
-        view.setError(withText: "WRONG")
         return true
     }
 }

@@ -486,7 +486,7 @@ extension EntryField : UITextFieldDelegate {
     }
     
     public func textFieldDidBeginEditing(_ textField: UITextField) {
-        print("text field did begin editing")
+        //print("text field did begin editing")
         isActive = true
         removeErrorUI()
         animatePlaceholder(up: true)
@@ -502,7 +502,7 @@ extension EntryField : UITextFieldDelegate {
     }
     
     public func textFieldDidEndEditing(_ textField: UITextField) {
-        print("text field did end editing")
+        //print("text field did end editing")
         if(textField.text.isNotComplete()){
             animatePlaceholder(up: false)
         }
