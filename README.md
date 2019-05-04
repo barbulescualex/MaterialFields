@@ -135,6 +135,9 @@ All of the text-entry relevant delegates have been rebranded as an [AreaFieldDel
 ![PickerFieldDemo](assets/PickerField/1.gif)
 ![PickerFieldDemo](assets/PickerField/2.gif)
 
+![PickerFieldDemo](assets/PickerField/3.gif)
+![PickerFieldDemo](assets/PickerField/4.gif)
+
 This is your UIPickerView which only supports 1 column. Most of the setup work has been extracted away, leaving little implementation logic needed. All you need to do is set its `data` array to your string array and the rest is handled for you.
 
 **PickerFieldDelegate**
