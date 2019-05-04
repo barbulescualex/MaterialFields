@@ -15,14 +15,15 @@ class ViewControllerFrame: UIViewController {
         field.becomeFirstResponder()
     }
     
-    @IBOutlet weak var field: EntryField!
+    @IBAction func close(_ sender: Any) {
+        field.resignFirstResponder()
+    }
+    @IBOutlet weak var field: AreaField!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        field.placeholder = "Cost"
-        field.unit = "CAD"
-        field.isMonetary = true
+        field.placeholder = "AreaField"
         field.delegate = self
     }
     
@@ -44,11 +45,16 @@ extension ViewControllerFrame: EntryFieldDelegate {
 
 extension ViewControllerFrame: AreaFieldDelegate {
     func areaField(_ view: AreaField, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if text == "\n" {
-            view.setError(withText: "WRONG")
-            _ = view.resignFirstResponder()
+//        if text == "\n" {
+//            _ = view.resignFirstResponder()
+//        }
+        return true
+    }
+    
+    func areaFieldDidEndEditing(_ view: AreaField) {
+        if view.text == "Wrong text?" {
+            view.setError(withText: "yup, try again")
         }
-        return false
     }
 }
 
