@@ -193,6 +193,10 @@ You have:
 MaterialFields is fully documented [here](https://barbulescualex.github.io/MaterialFields/index.html) with Jazzy
 
 
+## Validation Layers
+
+Since all the fields conform to the Field class, validation layers tied directly to the Fields has never been easier!
+
 
 
 
