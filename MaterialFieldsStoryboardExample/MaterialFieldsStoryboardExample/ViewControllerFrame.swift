@@ -18,17 +18,17 @@ class ViewControllerFrame: UIViewController {
     @IBAction func close(_ sender: Any) {
         field.resignFirstResponder()
     }
-    @IBOutlet weak var field: PickerField!
+    @IBOutlet weak var field: DateField!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        field.placeholder = "PickerField"
-        field.data = ["option 1","option 2","option 3","option 4","option 5"]
+        field.placeholder = "DateField"
         field.delegate = self
-        field.isManualEntryCapable = true
         field.isClearable = true
     }
+    
+    var wrong = true
     
 }
 
@@ -78,5 +78,14 @@ extension ViewControllerFrame: PickerFieldDelegate {
     func pickerField(_ view: PickerField, didSelectRow row: Int) {
         print("select")
 //        view.setError(withText: "WRONG")
+    }
+}
+
+extension ViewControllerFrame: DateFieldDelegate {
+    func dateFieldDidEndEditing(_ view: DateField) {
+        if wrong {
+            view.setError(withText: "The developer didn't set min and max dates")
+            wrong = false
+        }
     }
 }
