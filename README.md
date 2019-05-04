@@ -166,6 +166,11 @@ You can observe the current index using `indexSelected` set an index using `setI
 
 ---
 
+![DateFieldDemo](assets/DateField/1.gif)
+![DateFieldDemo](assets/DateField/2.gif)
+
+![DateFieldDemo](assets/DateField/3.gif)
+
 This is your UIDatePicker. You can do all the things you can do with the UIDatePicker you're used to, the property names are the same.
 
 **DateFieldDelegate**
