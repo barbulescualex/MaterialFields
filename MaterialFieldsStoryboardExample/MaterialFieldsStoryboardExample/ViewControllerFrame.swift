@@ -20,7 +20,9 @@ class ViewControllerFrame: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        field.placeholder = "EntryField"
+        field.placeholder = "Cost"
+        field.unit = "CAD"
+        field.isMonetary = true
         field.delegate = self
     }
     
@@ -31,6 +33,12 @@ extension ViewControllerFrame: EntryFieldDelegate {
         print("Should return")
         _ = view.resignFirstResponder()
         return true
+    }
+    
+    func entryFieldDidEndEditing(_ view: EntryField) {
+        if view.text == "Hello Kitty?" {
+            view.setError(withText: "please enter a decimal!")
+        }
     }
 }
 
