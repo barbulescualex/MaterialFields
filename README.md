@@ -98,6 +98,7 @@ Since all fields look the same they all have the exact same color properties (wi
 ---
 
 ![EntryFieldDemo](assets/EntryField/1.gif)
+![EntryFieldDemoCost](assets/EntryField/2.gif)
 
 This is your UITextField. Most of the UITextField functionality has been forwarded to the EntryField.
 
