@@ -18,13 +18,16 @@ class ViewControllerFrame: UIViewController {
     @IBAction func close(_ sender: Any) {
         field.resignFirstResponder()
     }
-    @IBOutlet weak var field: AreaField!
+    @IBOutlet weak var field: PickerField!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        field.placeholder = "AreaField"
+        field.placeholder = "PickerField"
+        field.data = ["option 1","option 2","option 3","option 4","option 5"]
         field.delegate = self
+        field.isManualEntryCapable = true
+        field.isClearable = true
     }
     
 }
@@ -59,11 +62,21 @@ extension ViewControllerFrame: AreaFieldDelegate {
 }
 
 extension ViewControllerFrame: PickerFieldDelegate {
+    
+    func pickerFieldShouldBeginEditing(_ view: PickerField) -> Bool {
+        print("should begin")
+        return true
+    }
     func pickerFieldDidEndEditing(_ view: PickerField) {
-        view.setError(withText: "WRONG")
+        print("end")
+        if view.text == "Wrong text?" {
+            view.setError(withText: "yup, try again")
+        }
+//        view.setError(withText: "WRONG")
     }
     
     func pickerField(_ view: PickerField, didSelectRow row: Int) {
-        view.setError(withText: "WRONG")
+        print("select")
+//        view.setError(withText: "WRONG")
     }
 }
