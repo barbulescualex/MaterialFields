@@ -298,6 +298,12 @@ We now have tightly coupled our Fields (in a good way!) with our validation laye
 
 MaterialFields is fully documented [here](https://barbulescualex.github.io/MaterialFields/index.html) with Jazzy.
 
+To regenerate the documentation run
+
+`jazzy --source-directory 'MaterialFields/' --documentation=Guides/*.md`
+
+in the project root directory
+
 
 ## License
 
