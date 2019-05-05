@@ -47,7 +47,7 @@ Essentially there are only 4 things you need to do to get the basic functionalit
 3. Set its delegate
 4. Implement the didEndEditing delegate method to get the value when the users done!
 
-### Field
+### [Field](https://barbulescualex.github.io/MaterialFields/Classes/Field.html)
 
 ---
 
@@ -93,7 +93,7 @@ DateField | 43.5 | 63.0 | 269.5 | 289 |
 
 Since all fields look the same they all have the exact same color properties (with small differences given the features).
 
-### EntryField
+### [EntryField](https://barbulescualex.github.io/MaterialFields/Classes/EntryField.html)
 
 ---
 
@@ -102,9 +102,9 @@ Since all fields look the same they all have the exact same color properties (wi
 
 This is your UITextField. Most of the UITextField functionality has been forwarded to the EntryField.
 
-**EntryFieldDelegate**
+**[EntryFieldDelegate](https://barbulescualex.github.io/MaterialFields/Protocols/EntryFieldDelegate.html)**
 
-All of the UITextField delegates are there, just rebranded as an [EntryFieldDelegate](https://barbulescualex.github.io/MaterialFields/Protocols/EntryFieldDelegate.html) protocol.
+All of the UITextField delegates are here, just rebranded.
 
 **Extra Features**
 
@@ -114,7 +114,7 @@ All of the UITextField delegates are there, just rebranded as an [EntryFieldDele
 Their colors are also overridable using `monetaryColor` or `unitColor`
 
 
-### AreaField
+### [AreaField](https://barbulescualex.github.io/MaterialFields/Classes/AreaField.html)
 
 ---
 
@@ -123,12 +123,12 @@ Their colors are also overridable using `monetaryColor` or `unitColor`
 
 This is your UITextView with only the text-entry functionality, so a multiline EntryField. Unlike the EntryField this does not support `isMonetary` or `units`.
 
-**AreaFieldDelegate**
+**[AreaFieldDelegate](https://barbulescualex.github.io/MaterialFields/Protocols/AreaFieldDelegate.html)**
 
-All of the text-entry relevant delegates have been rebranded as an [AreaFieldDelegate](https://barbulescualex.github.io/MaterialFields/Protocols/AreaFieldDelegate.html) protocol.
+All of the text-entry relevant delegates are here.
 
 
-### PickerField
+### [PickerField](https://barbulescualex.github.io/MaterialFields/Classes/PickerField.html)
 
 ---
 
@@ -140,7 +140,7 @@ All of the text-entry relevant delegates have been rebranded as an [AreaFieldDel
 
 This is your UIPickerView which only supports 1 column. Most of the setup work has been extracted away, leaving little implementation logic needed. All you need to do is set its `data` array to your string array and the rest is handled for you.
 
-**PickerFieldDelegate**
+**[PickerFieldDelegate](https://barbulescualex.github.io/MaterialFields/Protocols/PickerFieldDelegate.html)**
 
 This will be a little different than you're used to as you no longer need to implement the data source protocol.
 
@@ -162,7 +162,7 @@ You have:
 You can observe the current index using `indexSelected` set an index using `setIndexTo` and set the index to manual entry using `setIndexToManual()`.
 
 
-### DateField
+### [DateField](https://barbulescualex.github.io/MaterialFields/Classes/DateField.html)
 
 ---
 
@@ -173,7 +173,7 @@ You can observe the current index using `indexSelected` set an index using `setI
 
 This is your UIDatePicker. You can do all the things you can do with the UIDatePicker you're used to, the property names are the same.
 
-**DateFieldDelegate**
+**[DateFieldDelegate](https://barbulescualex.github.io/MaterialFields/Protocols/DateFieldDelegate.html)**
 
 This mirrors the PickerField delegate.
 
