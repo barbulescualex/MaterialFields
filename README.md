@@ -188,11 +188,6 @@ You have:
 * dateChanged : user selected a different date
 
 
-## Docs
-
-MaterialFields is fully documented [here](https://barbulescualex.github.io/MaterialFields/index.html) with Jazzy
-
-
 ## Validation Layers
 
 Since all the fields conform to the Field class, validation layers tied directly to the Fields has never been easier!
@@ -278,3 +273,13 @@ func pickerFieldDidEndEditing(_ view: PickerField){
 ```
 
 We now have tightly coupled our Fields (in a good way!) with our validation layer for both our data model and UI feedback!
+
+
+## Docs
+
+MaterialFields is fully documented [here](https://barbulescualex.github.io/MaterialFields/index.html) with Jazzy.
+
+
+## License
+
+MaterialFields is open under the MIT license.
