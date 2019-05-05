@@ -413,6 +413,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
     
     /// Called from tap gesture recognizer on the field
     @objc func startEditing(_ sender: UIGestureRecognizer){
+        print("tapped on field")
         textField.becomeFirstResponder()
     }
     
@@ -496,9 +497,9 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
 //MARK: UITextField Delegate
 extension EntryField : UITextFieldDelegate {
     public func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        // print("text field should begin editing")
+        print("text field should begin editing")
         let answer = delegate?.entryFieldShouldBeginEditing?(self) ?? true
-        // print("text field should begin editing answer: ", answer)
+        print("text field should begin editing answer: ", answer)
         return answer
     }
     

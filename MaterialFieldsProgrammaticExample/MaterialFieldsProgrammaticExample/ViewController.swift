@@ -22,26 +22,25 @@ class ViewController: UIViewController {
     
     lazy var entryField : EntryField = {
         let field = EntryField()
-        field.placeholder = "This is an EntryField"
+        field.placeholder = "EntryField"
         field.delegate = self
-        field.textColor = UIColor.blue
-        field.isUserInteractionEnabled = false
         return field
     }()
     
     lazy var areaField : AreaField = {
         let field = AreaField()
-        field.placeholder = "This is an AreaField"
+        field.placeholder = "AreaField"
         field.delegate = self
         return field
     }()
     
     lazy var pickerField : PickerField = {
         let field = PickerField()
-        field.placeholder = "This is a PickerField"
+        field.placeholder = "PickerField"
         field.delegate = self
-        field.data = ["hee","hee","haa","haa"]
+        field.data = ["Welcome","To","MaterialFields"]
         field.tag = 0
+        field.isClearable = true
         return field
     }()
     
@@ -57,7 +56,12 @@ class ViewController: UIViewController {
     
     lazy var dateField : DateField = {
         let field = DateField()
-        field.placeholder = "This is a DateField"
+        let df = DateFormatter()
+        df.dateFormat = "YYYY"
+        let date = Date(timeIntervalSince1970: 1432233446145.0/1000.0)
+        field.defaultDate = date
+        field.dateFormatter = df
+        field.placeholder = "DateField"
         field.delegate = self
         field.isClearable = true
         return field
@@ -90,12 +94,12 @@ class ViewController: UIViewController {
         pickerStack.distribution = .fillEqually
         pickerStack.alignment = .top
         pickerStack.addArrangedSubview(pickerField)
-        pickerStack.addArrangedSubview(pickerFieldManual)
+        pickerStack.addArrangedSubview(dateField)
         
         stackView.addArrangedSubview(textStack)
         stackView.addArrangedSubview(pickerStack)
         
-        stackView.addArrangedSubview(dateField)
+        //stackView.addArrangedSubview(dateField)
         
         textStack.spacing = 5
         pickerStack.spacing = 5
@@ -132,7 +136,6 @@ extension ViewController: PickerFieldDelegate {
     }
     
     func pickerField(_ view: PickerField, didSelectRow row: Int) {
-        _ = view.resignFirstResponder()
         if view.tag == 0 {
             print("value changed in pickerField: ", view.text as Any)
         }
@@ -168,7 +171,6 @@ extension ViewController: AreaFieldDelegate{
 extension ViewController: DateFieldDelegate {
     func dateFieldDidEndEditing(_ view: DateField) {
         print(view.date as Any, " from dateField")
-        view.setError(withText: "wrong date chump")
     }
     
     func dateChanged(_ view: DateField){
