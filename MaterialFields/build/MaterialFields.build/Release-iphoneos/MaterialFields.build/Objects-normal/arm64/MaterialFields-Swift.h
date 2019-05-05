@@ -234,10 +234,15 @@ SWIFT_CLASS("_TtC14MaterialFields9AreaField")
 @class UITextView;
 
 @interface AreaField (SWIFT_EXTENSION(MaterialFields)) <UITextViewDelegate>
+/// Forwards to areaFieldShouldBeginEditing
 - (BOOL)textViewShouldBeginEditing:(UITextView * _Nonnull)textView SWIFT_WARN_UNUSED_RESULT;
+/// Forwards to areaFieldDidBeginEditing, handles state UI
 - (void)textViewDidBeginEditing:(UITextView * _Nonnull)textView;
+/// Forwards to areaFieldShouldEndEditing
 - (BOOL)textViewShouldEndEditing:(UITextView * _Nonnull)textView SWIFT_WARN_UNUSED_RESULT;
+/// Forwards to areaFieldDidEndEditing
 - (void)textViewDidEndEditing:(UITextView * _Nonnull)textView;
+/// Forwards to shouldChangeTextIn
 - (BOOL)textView:(UITextView * _Nonnull)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString * _Nonnull)text SWIFT_WARN_UNUSED_RESULT;
 @end
 
@@ -337,6 +342,7 @@ SWIFT_PROTOCOL("_TtP14MaterialFields18EntryFieldDelegate_")
 
 
 @interface DateField (SWIFT_EXTENSION(MaterialFields)) <EntryFieldDelegate>
+/// Forwards to dateFieldShouldBeginEditing, opens date picker
 - (BOOL)entryFieldShouldBeginEditing:(EntryField * _Nonnull)view SWIFT_WARN_UNUSED_RESULT;
 @end
 
@@ -349,12 +355,10 @@ SWIFT_PROTOCOL("_TtP14MaterialFields17DateFieldDelegate_")
 /// \param view The DateField that called the delegate method.
 ///
 - (BOOL)dateFieldShouldBeginEditing:(DateField * _Nonnull)view SWIFT_WARN_UNUSED_RESULT;
-@required
 /// Tells the delegate editing ended in the specified DateField.
 /// \param view The DateField that called the delegate method.
 ///
 - (void)dateFieldDidEndEditing:(DateField * _Nonnull)view;
-@optional
 /// Tells the delegate that the contents have been cleared in the specified DateField.
 /// \param view The DateField that called the delegate method.
 ///
@@ -403,11 +407,17 @@ SWIFT_CLASS("_TtC14MaterialFields10EntryField")
 @class UITextField;
 
 @interface EntryField (SWIFT_EXTENSION(MaterialFields)) <UITextFieldDelegate>
+/// Forwards to entryFieldShouldBeginEditing
 - (BOOL)textFieldShouldBeginEditing:(UITextField * _Nonnull)textField SWIFT_WARN_UNUSED_RESULT;
+/// Forwards to entryFieldDidBeginEditing, handles state UI
 - (void)textFieldDidBeginEditing:(UITextField * _Nonnull)textField;
+/// Forwards to entryFieldShouldEndEditing
 - (BOOL)textFieldShouldEndEditing:(UITextField * _Nonnull)textField SWIFT_WARN_UNUSED_RESULT;
+/// Forwards to entryFieldDidEndEditing, handles state UI
 - (void)textFieldDidEndEditing:(UITextField * _Nonnull)textField;
+/// Forwards to entryFieldShouldReturn
 - (BOOL)textFieldShouldReturn:(UITextField * _Nonnull)textField SWIFT_WARN_UNUSED_RESULT;
+/// Forwards to entryFieldShouldClear
 - (BOOL)textFieldShouldClear:(UITextField * _Nonnull)textField SWIFT_WARN_UNUSED_RESULT;
 @end
 
@@ -448,17 +458,24 @@ SWIFT_CLASS("_TtC14MaterialFields11PickerField")
 
 
 @interface PickerField (SWIFT_EXTENSION(MaterialFields)) <EntryFieldDelegate>
+/// Opens picker or keyboard depending on picker index
 - (BOOL)entryFieldShouldBeginEditing:(EntryField * _Nonnull)view SWIFT_WARN_UNUSED_RESULT;
+/// Ends editing of entryField if isManualEntryCapable and is on manual entry
 - (BOOL)entryFieldShouldReturn:(EntryField * _Nonnull)view SWIFT_WARN_UNUSED_RESULT;
+/// closes picker if is on manual entry
 - (void)entryFieldDidEndEditing:(EntryField * _Nonnull)view;
 @end
 
 @class UIPickerView;
 
 @interface PickerField (SWIFT_EXTENSION(MaterialFields)) <UIPickerViewDataSource, UIPickerViewDelegate>
+/// Returns 1 since single column picker only
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView * _Nonnull)pickerView SWIFT_WARN_UNUSED_RESULT;
+/// Returns data.count of string array passed in
 - (NSInteger)pickerView:(UIPickerView * _Nonnull)pickerView numberOfRowsInComponent:(NSInteger)component SWIFT_WARN_UNUSED_RESULT;
+/// Returns value in data[row] of string array passed in
 - (NSString * _Nullable)pickerView:(UIPickerView * _Nonnull)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component SWIFT_WARN_UNUSED_RESULT;
+/// Forwards didSelectRow, handles state UI
 - (void)pickerView:(UIPickerView * _Nonnull)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component;
 @end
 
@@ -471,12 +488,10 @@ SWIFT_PROTOCOL("_TtP14MaterialFields19PickerFieldDelegate_")
 /// \param view The PickerField that called the delegate method.
 ///
 - (BOOL)pickerFieldShouldBeginEditing:(PickerField * _Nonnull)view SWIFT_WARN_UNUSED_RESULT;
-@required
 /// Tells the delegate editing ended in the specified PickerField.
 /// \param view The PickerField that called the delegate method.
 ///
 - (void)pickerFieldDidEndEditing:(PickerField * _Nonnull)view;
-@optional
 /// Tells the delegate that the contents have been cleared in the specified PickerField.
 /// \param view The PickerField that called the delegate method.
 ///

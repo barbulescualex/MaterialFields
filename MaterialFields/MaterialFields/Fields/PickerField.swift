@@ -17,7 +17,7 @@ import UIKit
     
     /// Tells the delegate editing ended in the specified PickerField.
     /// - Parameter view: The PickerField that called the delegate method.
-    @objc func pickerFieldDidEndEditing(_ view: PickerField)
+    @objc optional func pickerFieldDidEndEditing(_ view: PickerField)
     
     /// Tells the delegate that the contents have been cleared in the specified PickerField.
     /// - Parameter view: The PickerField that called the delegate method.
@@ -400,7 +400,7 @@ public class PickerField: Field {
             text = data[indexSelected]
         }
         entryField.endEditing(true)
-        delegate?.pickerFieldDidEndEditing(self)
+        delegate?.pickerFieldDidEndEditing?(self)
         isActive = false
         entryField.isEditing(showHighlight: false)
         doneButton.isHidden = true
@@ -492,18 +492,22 @@ public class PickerField: Field {
 
 //MARK: UIPickerViewDelegate
 extension PickerField: UIPickerViewDelegate, UIPickerViewDataSource {
+    /// Returns 1 since single column picker only
     public func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
+    /// Returns data.count of string array passed in
     public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return data.count
     }
     
+    /// Returns value in data[row] of string array passed in
     public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return data[row]
     }
     
+    /// Forwards didSelectRow, handles state UI
     public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.indexSelected = row
         if isOnManualEntry {
@@ -522,6 +526,7 @@ extension PickerField: UIPickerViewDelegate, UIPickerViewDataSource {
 
 //MARK: EntryFieldDelegate
 extension PickerField : EntryFieldDelegate {
+    /// Opens picker or keyboard depending on picker index
     public func entryFieldShouldBeginEditing(_ view: EntryField) -> Bool {
 //        print("entry field should begin editing")
         if let shouldBegin = delegate?.pickerFieldShouldBeginEditing?(self) {
@@ -544,12 +549,14 @@ extension PickerField : EntryFieldDelegate {
 //        print("entry field should begin editing answer: false")
     }
     
+    /// Ends editing of entryField if isManualEntryCapable and is on manual entry
     public func entryFieldShouldReturn(_ view: EntryField) -> Bool {
 //        print("entry field should return")
         view.endEditing(true)
         return true
     }
     
+    /// closes picker if is on manual entry
     public func entryFieldDidEndEditing(_ view: EntryField) {
 //        print("entry field did end editing")
         if isOnManualEntry {

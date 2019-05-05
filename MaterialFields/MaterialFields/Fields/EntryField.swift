@@ -496,6 +496,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
 
 //MARK: UITextField Delegate
 extension EntryField : UITextFieldDelegate {
+    /// Forwards to entryFieldShouldBeginEditing
     public func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         print("text field should begin editing")
         let answer = delegate?.entryFieldShouldBeginEditing?(self) ?? true
@@ -503,6 +504,7 @@ extension EntryField : UITextFieldDelegate {
         return answer
     }
     
+    /// Forwards to entryFieldDidBeginEditing, handles state UI
     public func textFieldDidBeginEditing(_ textField: UITextField) {
         //print("text field did begin editing")
         isActive = true
@@ -512,6 +514,7 @@ extension EntryField : UITextFieldDelegate {
         isEditing(showHighlight: true)
     }
     
+    /// Forwards to entryFieldShouldEndEditing
     public func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
         //print("text field should end editing")
         let answer = delegate?.entryFieldShouldEndEditing?(self) ?? true
@@ -519,6 +522,7 @@ extension EntryField : UITextFieldDelegate {
         return answer
     }
     
+    /// Forwards to entryFieldDidEndEditing, handles state UI
     public func textFieldDidEndEditing(_ textField: UITextField) {
         //print("text field did end editing")
         if(textField.text.isNotComplete()){
@@ -533,6 +537,7 @@ extension EntryField : UITextFieldDelegate {
         isActive = false
     }
     
+    /// Forwards to entryFieldShouldReturn
     public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         //print("text field should return")
         let answer = delegate?.entryFieldShouldReturn?(self) ?? true
@@ -540,6 +545,7 @@ extension EntryField : UITextFieldDelegate {
         return answer
     }
     
+    /// Forwards to entryFieldShouldClear
     public func textFieldShouldClear(_ textField: UITextField) -> Bool {
         //print("text field should clear")
         let answer = delegate?.entryFieldShouldClear?(self) ?? true

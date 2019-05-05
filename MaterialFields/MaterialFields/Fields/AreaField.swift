@@ -406,10 +406,12 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
 
 //MARK: UITextView Delegate
 extension AreaField : UITextViewDelegate {
+    /// Forwards to areaFieldShouldBeginEditing
     public func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         return delegate?.areaFieldShouldBeginEditing?(self) ?? true
     }
     
+    /// Forwards to areaFieldDidBeginEditing, handles state UI
     public func textViewDidBeginEditing(_ textView: UITextView) {
         isActive = true
         removeErrorUI()
@@ -418,10 +420,12 @@ extension AreaField : UITextViewDelegate {
         delegate?.areaFieldDidBeginEditing?(self)
     }
     
+    /// Forwards to areaFieldShouldEndEditing
     public func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
         return delegate?.areaFieldShouldEndEditing?(self) ?? true
     }
     
+    /// Forwards to areaFieldDidEndEditing
     public func textViewDidEndEditing(_ textView: UITextView) {
         if(textView.text.isNotComplete()){
             animatePlaceholder(up: false)
@@ -431,6 +435,7 @@ extension AreaField : UITextViewDelegate {
         isActive = false
     }
     
+    /// Forwards to shouldChangeTextIn
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         return delegate?.areaField?(self, shouldChangeTextIn: range, replacementText: text) ?? true
     }

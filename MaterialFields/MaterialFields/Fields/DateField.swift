@@ -16,7 +16,7 @@ import UIKit
     
     /// Tells the delegate editing ended in the specified DateField.
     /// - Parameter view: The DateField that called the delegate method.
-    @objc func dateFieldDidEndEditing(_ view: DateField)
+    @objc optional func dateFieldDidEndEditing(_ view: DateField)
     
     /// Tells the delegate that the contents have been cleared in the specified DateField.
     /// - Parameter view: The DateField that called the delegate method.
@@ -326,7 +326,7 @@ public class DateField: Field {
         entryField.isEditing(showHighlight: false)
         
         datePicker.isHidden = true
-        delegate?.dateFieldDidEndEditing(self)
+        delegate?.dateFieldDidEndEditing?(self)
         isActive = false
         
         doneButton.isHidden = true
@@ -396,6 +396,7 @@ public class DateField: Field {
 
 //MARK: EntryField Delegate
 extension DateField : EntryFieldDelegate {
+    /// Forwards to dateFieldShouldBeginEditing, opens date picker
     public func entryFieldShouldBeginEditing(_ view: EntryField) -> Bool {
         if(isActive){
             return false

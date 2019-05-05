@@ -22,25 +22,24 @@ class ViewController: UIViewController {
     
     lazy var entryField : EntryField = {
         let field = EntryField()
-        field.placeholder = "EntryField"
+        field.placeholder = "This is an EntryField"
         field.delegate = self
         return field
     }()
     
     lazy var areaField : AreaField = {
         let field = AreaField()
-        field.placeholder = "AreaField"
+        field.placeholder = "This is an AreaField"
         field.delegate = self
         return field
     }()
     
     lazy var pickerField : PickerField = {
         let field = PickerField()
-        field.placeholder = "PickerField"
+        field.placeholder = "This is a PickerField"
         field.delegate = self
-        field.data = ["Welcome","To","MaterialFields"]
+        field.data = ["one","two","three","four"]
         field.tag = 0
-        field.isClearable = true
         return field
     }()
     
@@ -51,17 +50,13 @@ class ViewController: UIViewController {
         field.data = ["hee","hee","haa","haa"]
         field.isManualEntryCapable = true
         field.tag = 1
+        field.isClearable = true
         return field
     }()
     
     lazy var dateField : DateField = {
         let field = DateField()
-        let df = DateFormatter()
-        df.dateFormat = "YYYY"
-        let date = Date(timeIntervalSince1970: 1432233446145.0/1000.0)
-        field.defaultDate = date
-        field.dateFormatter = df
-        field.placeholder = "DateField"
+        field.placeholder = "This is a DateField"
         field.delegate = self
         field.isClearable = true
         return field
@@ -94,12 +89,12 @@ class ViewController: UIViewController {
         pickerStack.distribution = .fillEqually
         pickerStack.alignment = .top
         pickerStack.addArrangedSubview(pickerField)
-        pickerStack.addArrangedSubview(dateField)
+        pickerStack.addArrangedSubview(pickerFieldManual)
         
         stackView.addArrangedSubview(textStack)
         stackView.addArrangedSubview(pickerStack)
         
-        //stackView.addArrangedSubview(dateField)
+        stackView.addArrangedSubview(dateField)
         
         textStack.spacing = 5
         pickerStack.spacing = 5
@@ -108,11 +103,6 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: EntryFieldDelegate {
-    
-    func entryFieldShouldEndEditing(_ view: EntryField) -> Bool {
-        _ = view.resignFirstResponder()
-        return true
-    }
     
     func entryFieldDidEndEditing(_ view: EntryField) {
         print(view.text as Any, " from entryField")
@@ -160,10 +150,10 @@ extension ViewController: AreaFieldDelegate{
         print(view.text as Any, " from areaField")
     }
     func areaField(_ view: AreaField, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if text == "\n" {
-            _ = view.resignFirstResponder()
-            return false
-        }
+//        if text == "\n" {
+//            _ = view.resignFirstResponder()
+//            return false
+//        }
         return true
     }
 }
