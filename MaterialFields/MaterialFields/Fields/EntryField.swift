@@ -40,7 +40,7 @@ import UIKit
 
 /// Material version of the UITextField (single line, for multiline capability use the `AreaField` class)
 public class EntryField: Field, UIGestureRecognizerDelegate {
-    //MARK:- TEXTFIELD VARS
+    //MARK: Vars
     
     public override var placeholder : String? {
         didSet{
@@ -102,6 +102,8 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
             }
         }
     }
+    
+    //MARK: Keyboard Vars
 
     public override var keyboardType: UIKeyboardType {
         didSet{
@@ -307,11 +309,11 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         return view
     }()
     
-    //MARK:- INIT
+    //MARK: Init
     
     /**
     Required initializer if doing programtically. You can manually set the frame after initialization. Otherwise it relies on auto layout and its intrinsic content size.
-     - Warning: If you want to define a frame for it, make sure the height constant is a minimum of 41.
+     - Warning: Refer to the Field Guide in the online documentation if you want to define height constraints.
     */
     public required init(){
         super.init(frame: .zero)
@@ -324,6 +326,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         setup()
     }
     
+    //MARK: Setup
     ///Sets up the view
     fileprivate func setup(){
         textField.delegate = self
@@ -379,7 +382,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         self.addGestureRecognizer(tap)
     }
     
-    //MARK:- FUNCTIONS
+    //MARK: Error Functions
     override public func setError(withText text: String?) {
         hasError = true
         updateBorderColor(with: borderErrorColor)
@@ -448,6 +451,8 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         }
     }
     
+    //MARK: Responder Functions/Vars
+    
     /**
      Notifies the field that it has been asked to relinquish its status as first responder in its window.
      This triggers the end callback from the field, closes the keyboard, and removes the editing state.
@@ -488,7 +493,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
     }
 }
 
-//MARK:- TEXTFIELD DELEGATE
+//MARK: UITextField Delegate
 extension EntryField : UITextFieldDelegate {
     public func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         // print("text field should begin editing")
@@ -542,7 +547,7 @@ extension EntryField : UITextFieldDelegate {
     }
 }
 
-//MARK:- ANIMATIONS
+//MARK:  Animations
 extension EntryField {
     /**
      Animates the placeholder label upon a value being entered in the field

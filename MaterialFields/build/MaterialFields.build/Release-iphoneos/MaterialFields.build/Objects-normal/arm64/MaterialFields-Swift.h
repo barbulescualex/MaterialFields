@@ -188,14 +188,10 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 @class NSCoder;
 
-/// Wrapper class for all fields. Offers wrapper functionality for all text-based fields.
+/// Wrapper class for all fields. Makes data model validation and UI feedback a breeze.
 /// attention:
 ///
-/// <ul>
-///   <li>
-///     DateField subclasses this but does not override the text variable as it holds a Date value type
-///   </li>
-/// </ul>
+/// DateField subclasses this but does not override the text variable as it holds a Date value type
 SWIFT_CLASS("_TtC14MaterialFields5Field")
 @interface Field : UIView
 - (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
@@ -280,6 +276,9 @@ SWIFT_PROTOCOL("_TtP14MaterialFields17AreaFieldDelegate_")
 /// Material version of the UIDatePicker
 SWIFT_CLASS("_TtC14MaterialFields9DateField")
 @interface DateField : Field
+/// Required initializer if doing programtically. You can manually set the frame after initialization. Otherwise it relies on auto layout and its intrinsic content size.
+/// warning:
+/// Refer to the Field Guide in the online documentation if you want to define height constraints.
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder SWIFT_UNAVAILABLE;
 /// Notifies the field that it has been asked to relinquish its status as first responder in its window.
@@ -374,7 +373,7 @@ SWIFT_CLASS("_TtC14MaterialFields10EntryField")
 @interface EntryField : Field <UIGestureRecognizerDelegate>
 /// Required initializer if doing programtically. You can manually set the frame after initialization. Otherwise it relies on auto layout and its intrinsic content size.
 /// warning:
-/// If you want to define a frame for it, make sure the height constant is a minimum of 41.
+/// Refer to the Field Guide in the online documentation if you want to define height constraints.
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 /// Interface builder initializer
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder SWIFT_UNAVAILABLE;
@@ -418,6 +417,9 @@ SWIFT_CLASS("_TtC14MaterialFields10EntryField")
 /// Material version of the UIPickerView (single column only, supports manual entry)
 SWIFT_CLASS("_TtC14MaterialFields11PickerField")
 @interface PickerField : Field
+/// Required initializer if doing programtically. You can manually set the frame after initialization. Otherwise it relies on auto layout and its intrinsic content size.
+/// warning:
+/// Refer to the Field Guide in the online documentation if you want to define height constraints.
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder SWIFT_UNAVAILABLE;
 /// Notifies the field that it has been asked to relinquish its status as first responder in its window.

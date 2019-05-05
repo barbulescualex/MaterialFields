@@ -31,13 +31,7 @@ import UIKit
 
 /// Material version of the UIPickerView (single column only, supports manual entry)
 public class PickerField: Field {
-    //MARK:- UIPICKER VARS
-    /// Setter for showing a clear button to eliminate the contents of the field.
-    public var isClearable = false {
-        didSet{
-            clearButton.isHidden = !isClearable
-        }
-    }
+    //MARK: Vars
     
     /// Picker data source.
     public var data : [String] {
@@ -70,18 +64,45 @@ public class PickerField: Field {
         }
     }
     
-    public override var isOptional : Bool {
-        didSet{
-            entryField.isOptional = isOptional
-        }
-    }
-    
     override public var text: String? {
         didSet{
             entryField.text = text
         }
     }
     
+    public override var isOptional : Bool {
+        didSet{
+            entryField.isOptional = isOptional
+        }
+    }
+    
+    /// Setter for showing a clear button to eliminate the contents of the field.
+    public var isClearable = false {
+        didSet{
+            clearButton.isHidden = !isClearable
+        }
+    }
+    
+    /// Specifies if the PickerField supports manual entry which will show up as the last option in the picker.
+    public var isManualEntryCapable : Bool = false {
+        didSet{
+            if isManualEntryCapable {
+                manualEntrySet = true
+                data.append(manualEntryOptionName)
+                manualEntryIndex = data.count - 1
+            } else {
+                manualEntrySet = false
+                guard let index = manualEntryIndex else {return}
+                data.remove(at: index)
+                manualEntryIndex = nil
+                isOnManualEntry = false
+            }
+            pickerView.reloadAllComponents()
+        }
+    }
+    
+    
+    //Mark: Index Vars/Functions
     /// Changes index in PickerField. If value is below the lower bound (0), it defualts to 0. If the value is over the upper bound, it defaults to to the upper bound.
     public var setIndexTo : Int = 0 {
         didSet{
@@ -108,47 +129,6 @@ public class PickerField: Field {
         }
     }
     
-    /// Specifies if the PickerField supports manual entry which will show up as the last option in the picker.
-    public var isManualEntryCapable : Bool = false {
-        didSet{
-            if isManualEntryCapable {
-                manualEntrySet = true
-                data.append(manualEntryOptionName)
-                manualEntryIndex = data.count - 1
-            } else {
-                manualEntrySet = false
-                guard let index = manualEntryIndex else {return}
-                data.remove(at: index)
-                manualEntryIndex = nil
-                isOnManualEntry = false
-            }
-            pickerView.reloadAllComponents()
-        }
-    }
-    
-    public override var keyboardType: UIKeyboardType {
-        didSet{
-            entryField.keyboardType = keyboardType
-        }
-    }
-    
-    public override var autocapitalizationType : UITextAutocapitalizationType {
-        didSet{
-            entryField.autocapitalizationType = autocapitalizationType
-        }
-    }
-    
-    public override var autocorrectionType : UITextAutocorrectionType {
-        didSet{
-            entryField.autocorrectionType = autocorrectionType
-        }
-    }
-    
-    public override var isSecureTextEntry: Bool {
-        didSet{
-            entryField.isSecureTextEntry = isSecureTextEntry
-        }
-    }
     /// Specifies the manual entry option name if isManualEntryCapable is set to true
     /// - Note: Defaults to "Manual Entry".
     public var manualEntryOptionName = "Manual Entry" {
@@ -201,7 +181,33 @@ public class PickerField: Field {
         }
     }
     
-    //COLORS
+    
+    //MARK: Keyboard Vars
+    public override var keyboardType: UIKeyboardType {
+        didSet{
+            entryField.keyboardType = keyboardType
+        }
+    }
+    
+    public override var autocapitalizationType : UITextAutocapitalizationType {
+        didSet{
+            entryField.autocapitalizationType = autocapitalizationType
+        }
+    }
+    
+    public override var autocorrectionType : UITextAutocorrectionType {
+        didSet{
+            entryField.autocorrectionType = autocorrectionType
+        }
+    }
+    
+    public override var isSecureTextEntry: Bool {
+        didSet{
+            entryField.isSecureTextEntry = isSecureTextEntry
+        }
+    }
+
+    //MARK: Colors
     //entryfield
     public override var borderColor: UIColor {
         didSet{
@@ -264,7 +270,7 @@ public class PickerField: Field {
         }
     }
     
-    //MARK: VARS
+    //MARK: Delegate
     
     /// The reciever's delegate
     weak public var delegate : PickerFieldDelegate?
@@ -275,7 +281,7 @@ public class PickerField: Field {
         }
     }
     
-    //MARK: VIEW COMPONENTS
+    //MARK: View Compoenents
     
     /// The stackview that encompasses the whole view
     private let verticalStack : UIStackView = {
@@ -327,7 +333,11 @@ public class PickerField: Field {
         return pickerView
     }()
     
-    //MARK:- INIT
+    //MARK: Init
+    /**
+     Required initializer if doing programtically. You can manually set the frame after initialization. Otherwise it relies on auto layout and its intrinsic content size.
+     - Warning: Refer to the Field Guide in the online documentation if you want to define height constraints.
+     */
     public required init() {
         self.data = []
         super.init(frame: .zero)
@@ -341,7 +351,7 @@ public class PickerField: Field {
         setup()
     }
     
-    //MARK: SETUP FUNCTIONS
+    //MARK: Setup Functions
     /// Sets up the view.
     private func setup() {
         // entry field
@@ -382,7 +392,7 @@ public class PickerField: Field {
         notificationCenter.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
     }
     
-    //MARK:- FUNCTIONS
+    //MARK: Error Functions
     /// Callback for the done button being pressed. Is also called manaully. Closes the picker and keyboard if it was on manual entry and resets the state to normal unless it is in an error state.
     @objc internal func donePressed(_ sender: UIButton?){
         pickerView.isHidden = true
@@ -435,6 +445,7 @@ public class PickerField: Field {
         delegate?.pickerFieldCleared?(self)
     }
     
+    //MARK: Responder Functions/Vars
     /**
      Notifies the field that it has been asked to relinquish its status as first responder in its window.
      This triggers the end callback from the field, closes the picker, and removes the editing state.
@@ -472,13 +483,14 @@ public class PickerField: Field {
         return entryField.canBecomeFirstResponder
     }
     
+    //MARK: Deinit
     /// Removes observers.
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
 }
 
-//MARK:- UIPICKERDELEGATE
+//MARK: UIPickerViewDelegate
 extension PickerField: UIPickerViewDelegate, UIPickerViewDataSource {
     public func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -508,7 +520,7 @@ extension PickerField: UIPickerViewDelegate, UIPickerViewDataSource {
     }
 }
 
-//MARK:- ENTRY FIELD DELEGATE
+//MARK: EntryFieldDelegate
 extension PickerField : EntryFieldDelegate {
     public func entryFieldShouldBeginEditing(_ view: EntryField) -> Bool {
 //        print("entry field should begin editing")
@@ -547,7 +559,7 @@ extension PickerField : EntryFieldDelegate {
     }
 }
 
-//MARK:- KEYBOARD LISTENER
+//MARK: Keyboard Listener
 extension PickerField {
     /// Detects other fields opening, means focus was lost on us so it closes itself and triggers the endEditing callback.
     @objc private func keyboardWillShow(_ notification: Notification) {

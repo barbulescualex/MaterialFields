@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Validation Layer  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a title="Validation Layer  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">MaterialFields Docs</a> (89% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html">MaterialFields Reference</a>
+        <img id="carat" src="img/carat.png" />
+        Validation Layer  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Guides.html">Guides</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="areafield.html">AreaField</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="datefield.html">DateField</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="entryfield.html">EntryField</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="field.html">Field</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="getting-started.html">Getting Started</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="pickerfield.html">PickerField</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="validation-layer.html">Validation Layer</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/AreaField.html">AreaField</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/DateField.html">DateField</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/EntryField.html">EntryField</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/Field.html">Field</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/PickerField.html">PickerField</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/AreaFieldDelegate.html">AreaFieldDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/DateFieldDelegate.html">DateFieldDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/EntryFieldDelegate.html">EntryFieldDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/PickerFieldDelegate.html">PickerFieldDelegate</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            
+            <h1 id='validation-layers' class='heading'>Validation Layers</h1>
+
+<p>Since all the fields conform to the Field class, validation layers tied directly to the Fields has never been easier!</p>
+
+<p>Lets define 3 fields, an EntryField, an AreaField, and a PickerField</p>
+<pre class="highlight plaintext"><code>let entryField = EntryField()
+let areaField = AreaField()
+let pickerField = PickerField()
+</code></pre>
+
+<p>Lets also define a CaseIterable enum:</p>
+<pre class="highlight plaintext"><code>extension CaseIterable where AllCases.Element: Equatable {
+    static func make(index: Int) -&gt; Self { //get the key from the case index
+        let a = Self.allCases
+        return a[a.index(a.startIndex, offsetBy: index)]
+    }
+
+    func index() -&gt; Int { //get the index from the case
+        let a = Self.allCases
+        return a.distance(from: a.startIndex, to: a.firstIndex(of: self)!)
+    }
+}
+
+enum FieldKeys : String, CaseIterable {
+  case entry
+  case area
+  case picker
+}
+
+</code></pre>
+
+<p>With our CaseIterable enum we can use the validation keys as tags for the fields!</p>
+<pre class="highlight plaintext"><code>entryField.tag = FieldKeys.entry.index()
+areaField.tag = FieldKeys.area.index()
+pickerField.tag = FieldKeys.picker.index()
+
+</code></pre>
+
+<p>Lets say we need to validate a generic string before commiting changes to our Core Data model using an extension on NSManagedObject.</p>
+<pre class="highlight plaintext"><code>extension NSManagedObject {
+  func validateString(view: Field, key: String?){
+      var value = view.text as AnyObject?
+       do {
+            try self.validateValue(&amp;(value), forKey: key)
+       } catch {
+            view.setError(errorText: "please try again")
+            print(error)
+            return
+        }
+        self.setValue(value, forKey: key)
+  }
+</code></pre>
+
+<p>Now on any of the fields didEndEditing delegate methods we only need to 2 lines to validate our entry.</p>
+<pre class="highlight plaintext"><code>//EntryFieldDelegates
+func entryFieldDidEndEditing(_ view: EntryField){
+  let key = FieldKeys.make(index: view.tag) //the key reconstructed from our enum used for the field tags
+  ourNSManagedObject.validateString(view,key)
+}
+
+//AreaFieldDelegates
+func areaFieldDidEndEditing(_ view: AreaField){
+  let key = FieldKeys.make(index: view.tag) //the key reconstructed from our enum used for the field tags
+  ourNSManagedObject.validateString(view,key)
+}
+
+//PickerFieldDelegates
+func pickerFieldDidEndEditing(_ view: PickerField){
+  let key = FieldKeys.make(index: view.tag) //the key reconstructed from our enum used for the field tags
+  ourNSManagedObject.validateString(view,key)
+}
+</code></pre>
+
+<p>We now have tightly coupled our Fields (in a good way!) with our validation layer for both our data model and UI feedback!</p>
+
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2019 <a class="link" href="https://github.com/barbulescualex/MaterialFields" target="_blank" rel="external">Alexandru Barbulescu</a>. All rights reserved. (Last updated: 2019-05-04)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

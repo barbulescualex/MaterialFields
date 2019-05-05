@@ -9,9 +9,9 @@
 import UIKit
 
 /**
-Wrapper class for all fields. Offers wrapper functionality for all text-based fields.
+Wrapper class for all fields. Makes data model validation and UI feedback a breeze.
 - Attention:
-     - DateField subclasses this but does not override the text variable as it holds a Date value type
+      DateField subclasses this but does not override the text variable as it holds a Date value type
 */
 public class Field : UIView {
     //MARK: Vars

@@ -39,7 +39,7 @@ import UIKit
 
 /// Material version of the UITextView (multiline capable)
 public class AreaField: Field, UIGestureRecognizerDelegate {
-    //MARK:- TEXTVIEW VARS
+    //MARK: Vars
     public override var placeholder : String? {
         didSet{
             if (isOptional && placeholder.isComplete()) {
@@ -63,7 +63,15 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
         }
     }
     
-    //COLORS
+    public override var isOptional : Bool {
+        didSet{
+            if let placeholder = placeholder {
+                placeholderLabel.text = placeholder + " (Optional)"
+            }
+        }
+    }
+    
+    //MARK: Colors
     public override var borderColor: UIColor {
         didSet{
             if !isActive && !hasError {
@@ -123,15 +131,7 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
     }
     
     
-    //OPTIONALS
-    public override var isOptional : Bool {
-        didSet{
-            if let placeholder = placeholder {
-                placeholderLabel.text = placeholder + " (Optional)"
-            }
-        }
-    }
-    
+    //MARK: Keyboard Vars
     public override var keyboardType: UIKeyboardType {
         didSet{
             textView.keyboardType = keyboardType
@@ -156,7 +156,7 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
         }
     }
     
-    //MARK:- VARS
+    //MARK: Delegate
     /// The reciever's delegate
     weak public var delegate : AreaFieldDelegate?
     
@@ -167,7 +167,7 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
     private var placeholderUp = false
     
     
-    //MARK:- VIEW COMPONENTS
+    //MARK: View Components
     /// The stackview that encompasses the whole view
     private let stackView : UIStackView = {
         let stackView = UIStackView()
@@ -239,7 +239,7 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
         return label
     }()
     
-    //MARK:- INIT
+    //MARK: Init
     
     /**
      Required initializer if doing programtically. You can manually set the frame after initialization. Otherwise it relies on auto layout and it's intrinsic content size.
@@ -256,6 +256,7 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
         setup()
     }
     
+    //MARK: Setup
     ///Sets up the view
     fileprivate func setup(){
         translatesAutoresizingMaskIntoConstraints = false
@@ -320,6 +321,7 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
         }
     }
     
+    //MARK: Error Functions
     public override func removeErrorUI() {
         if !hasError { return }
         textView.textColor = textColor
@@ -362,6 +364,7 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
         }
     }
     
+    //Mark: Responder Functions/Vars
     /**
      Notifies the field that it has been asked to relinquish its status as first responder in its window.
      This triggers the end callback from the field and closes the keyboard, removes the editing state.
@@ -401,7 +404,7 @@ public class AreaField: Field, UIGestureRecognizerDelegate {
     }
 }
 
-//MARK:- TEXTVIEW DELEGATE
+//MARK: UITextView Delegate
 extension AreaField : UITextViewDelegate {
     public func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         return delegate?.areaFieldShouldBeginEditing?(self) ?? true
@@ -433,7 +436,7 @@ extension AreaField : UITextViewDelegate {
     }
 }
 
-//MARK:- ANIMATIONS
+//MARK: Animations
 extension AreaField {
     /**
      Animates the placeholder label upon a value being entered in the field

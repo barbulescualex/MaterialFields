@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>PickerField  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a title="PickerField  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">MaterialFields Docs</a> (89% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html">MaterialFields Reference</a>
+        <img id="carat" src="img/carat.png" />
+        PickerField  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Guides.html">Guides</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="areafield.html">AreaField</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="datefield.html">DateField</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="entryfield.html">EntryField</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="field.html">Field</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="getting-started.html">Getting Started</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="pickerfield.html">PickerField</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="validation-layer.html">Validation Layer</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/AreaField.html">AreaField</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/DateField.html">DateField</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/EntryField.html">EntryField</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/Field.html">Field</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/PickerField.html">PickerField</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/AreaFieldDelegate.html">AreaFieldDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/DateFieldDelegate.html">DateFieldDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/EntryFieldDelegate.html">EntryFieldDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/PickerFieldDelegate.html">PickerFieldDelegate</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            
+            <h1 id='pickerfield' class='heading'>PickerField</h1>
+
+<hr>
+
+<p><img src="assets/PickerField/1.gif" alt="PickerFieldDemo">
+<img src="assets/PickerField/2.gif" alt="PickerFieldDemo"></p>
+
+<p><img src="assets/PickerField/3.gif" alt="PickerFieldDemo">
+<img src="assets/PickerField/4.gif" alt="PickerFieldDemo"></p>
+
+<p>This is your UIPickerView which only supports 1 column. Most of the setup work has been extracted away, leaving little implementation logic needed. All you need to do is set its <code>data</code> array to your string array and the rest is handled for you.
+The PickerField holds an EntryField that is used to display the contents of the picker.</p>
+
+<p><strong><a href="https://barbulescualex.github.io/MaterialFields/Protocols/PickerFieldDelegate.html">PickerFieldDelegate</a></strong></p>
+
+<p>This will be a little different than you&rsquo;re used to as you no longer need to implement the data source protocol.</p>
+
+<p>You have:</p>
+
+<ul>
+<li><p>shouldBeginEditing : wether it should open or not</p></li>
+<li><p>didEndEditing: user closed the field by tapping on the done button</p></li>
+<li><p>cleared : user tapped the clear button (only if <code>isClearable = true</code>)</p></li>
+<li><p>selectedRowForIndexPath : user selected a different value in the picker</p></li>
+</ul>
+
+<p><strong>Extra Features</strong></p>
+
+<ul>
+<li><code>isManualEntryCapable</code> this appends a <q>Manual Entry</q> option to the end of your data source which brings up the keyboard if selected and activates the EntryField embedded inside the PickerField. The manual entry row label is overridable using <code>manualEntryOptionName</code>.</li>
+</ul>
+
+<p>You can observe the current index using <code>indexSelected</code> set an index using <code>setIndexTo</code> and set the index to manual entry using <code>setIndexToManual()</code>.</p>
+
+<p><strong>Responder Behaviour</strong></p>
+
+<ul>
+<li><code>becomeFirstResponder()</code> will activate and open up the picker / EntryField if it&rsquo;s on manual entry</li>
+<li><code>closeFirstResponder()</code> will deactivate and close the picker / EntryField if it&rsquo;s on manual entry</li>
+</ul>
+
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2019 <a class="link" href="https://github.com/barbulescualex/MaterialFields" target="_blank" rel="external">Alexandru Barbulescu</a>. All rights reserved. (Last updated: 2019-05-04)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

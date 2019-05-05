@@ -30,7 +30,7 @@ import UIKit
 
 /// Material version of the UIDatePicker
 public class DateField: Field {
-    //MARK: UIDATEPICKER VARS
+    //MARK: Vars
     
     /// Date value currently held by field.
     public var date : Date? {
@@ -134,7 +134,7 @@ public class DateField: Field {
         }
     }
     
-    //COLORS
+    //MARK: Colors
     //entryfield
     public override var borderColor: UIColor {
         didSet{
@@ -180,8 +180,7 @@ public class DateField: Field {
     }
     
     
-    //MARK:- VARS
-    
+    //MARK: Delegate
     /// The reciever's delegate
     weak public var delegate : DateFieldDelegate?
     
@@ -191,7 +190,7 @@ public class DateField: Field {
         }
     }
     
-    //MARK:- VIEW COMPONENTS
+    //MARK: View Components
     /// The stackview that encompasses the whole view
     private let verticalStack : UIStackView = {
         let stackView = UIStackView()
@@ -241,6 +240,11 @@ public class DateField: Field {
         return datePicker
     }()
     
+    //MARK: Init
+    /**
+     Required initializer if doing programtically. You can manually set the frame after initialization. Otherwise it relies on auto layout and its intrinsic content size.
+     - Warning: Refer to the Field Guide in the online documentation if you want to define height constraints.
+     */
     public required init() {
         super.init(frame: .zero)
         setup()
@@ -252,7 +256,7 @@ public class DateField: Field {
         setup()
     }
     
-    //MARK: SETUP FUNCTIONS
+    //MARK: Setup Functions
     /// Sets up the view.
     private func setup() {
         //fake field
@@ -299,7 +303,7 @@ public class DateField: Field {
         delegate?.dateChanged?(self)
     }
     
-    //MARK: FUNCTIONS
+    //MARK: Error Functions
     /// Opens the picker. Clears any error state.
     private func showDatePicker(){
         if hasError{
@@ -352,6 +356,7 @@ public class DateField: Field {
         hasError = false
     }
     
+    //MARK: Responder Functions/Vars
     /**
      Notifies the field that it has been asked to relinquish its status as first responder in its window.
      This triggers the end callback from the field, closes the picker, and removes the editing state.
@@ -382,13 +387,14 @@ public class DateField: Field {
         return true
     }
     
+    //MARK: Deinit
     /// Removes observers.
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
 }
 
-//MARK:- ENTRYFIELD DELEGATE
+//MARK: EntryField Delegate
 extension DateField : EntryFieldDelegate {
     public func entryFieldShouldBeginEditing(_ view: EntryField) -> Bool {
         if(isActive){
@@ -406,7 +412,7 @@ extension DateField : EntryFieldDelegate {
     }
 }
 
-//MARK:- KEYBOARD LISTENER
+//MARK: Keyboard Listener
 extension DateField {
     /// Detects other fields opening, means focus was lost on us so it closes itself and triggers the endEditing callback.
     @objc func keyboardDidShow(_ notification: Notification) {

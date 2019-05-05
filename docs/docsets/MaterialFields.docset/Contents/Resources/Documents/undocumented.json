@@ -2,35 +2,35 @@
   "warnings": [
     {
       "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/AreaField.swift",
-      "line": 406,
+      "line": 409,
       "symbol": "AreaField.textViewShouldBeginEditing(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/AreaField.swift",
-      "line": 410,
+      "line": 413,
       "symbol": "AreaField.textViewDidBeginEditing(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/AreaField.swift",
-      "line": 418,
+      "line": 421,
       "symbol": "AreaField.textViewShouldEndEditing(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/AreaField.swift",
-      "line": 422,
+      "line": 425,
       "symbol": "AreaField.textViewDidEndEditing(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/AreaField.swift",
-      "line": 431,
+      "line": 434,
       "symbol": "AreaField.textView(_:shouldChangeTextIn:replacementText:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -50,99 +50,85 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/DateField.swift",
-      "line": 244,
-      "symbol": "DateField.init()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/EntryField.swift",
-      "line": 481,
+      "line": 498,
       "symbol": "EntryField.textFieldShouldBeginEditing(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/EntryField.swift",
-      "line": 488,
+      "line": 505,
       "symbol": "EntryField.textFieldDidBeginEditing(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/EntryField.swift",
-      "line": 497,
+      "line": 514,
       "symbol": "EntryField.textFieldShouldEndEditing(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/EntryField.swift",
-      "line": 504,
+      "line": 521,
       "symbol": "EntryField.textFieldDidEndEditing(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/EntryField.swift",
-      "line": 514,
+      "line": 535,
       "symbol": "EntryField.textFieldShouldReturn(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/EntryField.swift",
-      "line": 521,
+      "line": 542,
       "symbol": "EntryField.textFieldShouldClear(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/PickerField.swift",
-      "line": 254,
+      "line": 261,
       "symbol": "PickerField.clearButtonColor",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/PickerField.swift",
-      "line": 260,
+      "line": 267,
       "symbol": "PickerField.doneButtonColor",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/PickerField.swift",
-      "line": 330,
-      "symbol": "PickerField.init()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/PickerField.swift",
-      "line": 484,
+      "line": 495,
       "symbol": "PickerField.numberOfComponents(in:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/PickerField.swift",
-      "line": 488,
+      "line": 499,
       "symbol": "PickerField.pickerView(_:numberOfRowsInComponent:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/PickerField.swift",
-      "line": 492,
+      "line": 503,
       "symbol": "PickerField.pickerView(_:titleForRow:forComponent:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/PickerField.swift",
-      "line": 496,
+      "line": 507,
       "symbol": "PickerField.pickerView(_:didSelectRow:inComponent:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
