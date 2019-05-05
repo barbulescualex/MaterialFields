@@ -106,7 +106,7 @@ class ViewController: UIViewController {
 extension ViewController: EntryFieldDelegate {
     
     func entryFieldShouldEndEditing(_ view: EntryField) -> Bool {
-        view.resignFirstResponder()
+        _ = view.resignFirstResponder()
         return true
     }
     
@@ -132,7 +132,7 @@ extension ViewController: PickerFieldDelegate {
     }
     
     func pickerField(_ view: PickerField, didSelectRow row: Int) {
-        view.resignFirstResponder()
+        _ = view.resignFirstResponder()
         if view.tag == 0 {
             print("value changed in pickerField: ", view.text as Any)
         }
