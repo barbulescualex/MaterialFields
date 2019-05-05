@@ -137,6 +137,10 @@ The PickerField holds an EntryField that is used to display the contents of the 
 <li><code>closeFirstResponder()</code> will deactivate and close the picker / EntryField if it&rsquo;s on manual entry</li>
 </ul>
 
+<p><strong>Keyboard Behaviour</strong></p>
+
+<p>PickerFields register for keyboardDidShow notifications. If they are not on manual entry, they will close themselves and trigger their didEndEditing delegate upon the keyboard coming up.</p>
+
           </section>
         </section>
         <section id="footer">

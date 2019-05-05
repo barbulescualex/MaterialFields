@@ -36,3 +36,7 @@ You can observe the current index using `indexSelected` set an index using `setI
 
 * `becomeFirstResponder()` will activate and open up the picker / EntryField if it's on manual entry
 * `closeFirstResponder()` will deactivate and close the picker / EntryField if it's on manual entry
+
+**Keyboard Behaviour**
+
+PickerFields register for keyboardDidShow notifications. If they are not on manual entry, they will close themselves and trigger their didEndEditing delegate upon the keyboard coming up.

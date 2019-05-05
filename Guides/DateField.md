@@ -27,3 +27,7 @@ You have:
 
 * `becomeFirstResponder()` will activate and open up the picker
 * `closeFirstResponder()` will deactivate and close the picker
+
+**Keyboard Behaviour**
+
+DateFields register for keyboardDidShow notifications. They will close themselves and trigger their didEndEditing delegate upon the keyboard coming up.
