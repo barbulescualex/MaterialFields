@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "MaterialFields"
-  spec.version      = "0.0.6"
+  spec.version      = "0.0.7"
   spec.summary      = "A Material Guidelines UI driven text entry and value selection framework for better UI and modular validation layers."
 
   # This description is used to generate tags and improve search results.
@@ -24,7 +24,7 @@ Pod::Spec.new do |spec|
   #   * Try to keep it short, snappy and to the point.
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
-  spec.description  = "Lightweight library containing UITextFields, UITextViews, UIPickerViews and UIDatePickers following the Material Design Guidelines. They support colors and individual usability features. All conform to a wrapper Field class allowing for modular and scalable validation layers"
+  spec.description  = "Lightweight library containing UITextFields, UITextViews, UIPickerViews and UIDatePickers following the Material Design Guidelines. They support colors and individual usability features. All conform to a wrapper Field class allowing for modular and scalable validation layers."
 
   spec.homepage     = "https://github.com/barbulescualex/MaterialFields"
   # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
