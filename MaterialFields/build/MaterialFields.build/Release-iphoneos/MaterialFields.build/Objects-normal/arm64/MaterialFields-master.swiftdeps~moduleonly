@@ -1,6 +1,6 @@
 version: "Apple Swift version 5.0.1 (swiftlang-1001.0.82.4 clang-1001.0.46.5)"
 options: "16f73628371d16412d700cdef17d5fc1"
-build_time: [1557093513, 448579000]
+build_time: [1557096901, 648338000]
 inputs:
   "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/Extensions.swift": [9223372036, 854775807]
   "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/DateField.swift": [9223372036, 854775807]
