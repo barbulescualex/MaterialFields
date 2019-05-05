@@ -47,7 +47,7 @@ Essentially there are only 4 things you need to do to get the basic functionalit
 3. Set its delegate
 4. Implement the didEndEditing delegate method to get the value when the users done!
 
-### Field
+### [Field](https://barbulescualex.github.io/MaterialFields/Classes/Field.html)
 
 ---
 
@@ -93,7 +93,7 @@ DateField | 43.5 | 63.0 | 269.5 | 289 |
 
 Since all fields look the same they all have the exact same color properties (with small differences given the features).
 
-### EntryField
+### [EntryField](https://barbulescualex.github.io/MaterialFields/Classes/EntryField.html)
 
 ---
 
@@ -102,9 +102,9 @@ Since all fields look the same they all have the exact same color properties (wi
 
 This is your UITextField. Most of the UITextField functionality has been forwarded to the EntryField.
 
-**EntryFieldDelegate**
+**[EntryFieldDelegate](https://barbulescualex.github.io/MaterialFields/Protocols/EntryFieldDelegate.html)**
 
-All of the UITextField delegates are there, just rebranded as an [EntryFieldDelegate](https://barbulescualex.github.io/MaterialFields/Protocols/EntryFieldDelegate.html) protocol.
+All of the UITextField delegates are here, just rebranded.
 
 **Extra Features**
 
@@ -113,8 +113,12 @@ All of the UITextField delegates are there, just rebranded as an [EntryFieldDele
 
 Their colors are also overridable using `monetaryColor` or `unitColor`
 
+**Responder Behaviour**
 
-### AreaField
+EntryFields behave the same way that UITextFields behave, `becomeFirstResponder()` will activate the field and `resignFirstResponder()` will deactivate the field.
+
+
+### [AreaField](https://barbulescualex.github.io/MaterialFields/Classes/AreaField.html)
 
 ---
 
@@ -123,12 +127,16 @@ Their colors are also overridable using `monetaryColor` or `unitColor`
 
 This is your UITextView with only the text-entry functionality, so a multiline EntryField. Unlike the EntryField this does not support `isMonetary` or `units`.
 
-**AreaFieldDelegate**
+**[AreaFieldDelegate](https://barbulescualex.github.io/MaterialFields/Protocols/AreaFieldDelegate.html)**
 
-All of the text-entry relevant delegates have been rebranded as an [AreaFieldDelegate](https://barbulescualex.github.io/MaterialFields/Protocols/AreaFieldDelegate.html) protocol.
+All of the text-entry relevant delegates are here.
+
+**Responder Behaviour**
+
+AreaFields behave the same way that UITextViews behave, `becomeFirstResponder()` will activate the field and `resignFirstResponder()` will deactivate the field.
 
 
-### PickerField
+### [PickerField](https://barbulescualex.github.io/MaterialFields/Classes/PickerField.html)
 
 ---
 
@@ -139,8 +147,9 @@ All of the text-entry relevant delegates have been rebranded as an [AreaFieldDel
 ![PickerFieldDemo](assets/PickerField/4.gif)
 
 This is your UIPickerView which only supports 1 column. Most of the setup work has been extracted away, leaving little implementation logic needed. All you need to do is set its `data` array to your string array and the rest is handled for you.
+The PickerField holds an EntryField that is used to display the contents of the picker.
 
-**PickerFieldDelegate**
+**[PickerFieldDelegate](https://barbulescualex.github.io/MaterialFields/Protocols/PickerFieldDelegate.html)**
 
 This will be a little different than you're used to as you no longer need to implement the data source protocol.
 
@@ -161,14 +170,24 @@ You have:
 
 You can observe the current index using `indexSelected` set an index using `setIndexTo` and set the index to manual entry using `setIndexToManual()`.
 
+**Responder Behaviour**
 
-### DateField
+* `becomeFirstResponder()` will activate and open up the picker / EntryField if it's on manual entry
+* `closeFirstResponder()` will deactivate and close the picker / EntryField if it's on manual entry
+
+
+### [DateField](https://barbulescualex.github.io/MaterialFields/Classes/DateField.html)
 
 ---
 
+![DateFieldDemo](assets/DateField/1.gif)
+![DateFieldDemo](assets/DateField/2.gif)
+
+![DateFieldDemo](assets/DateField/3.gif)
+
 This is your UIDatePicker. You can do all the things you can do with the UIDatePicker you're used to, the property names are the same.
 
-**DateFieldDelegate**
+**[DateFieldDelegate](https://barbulescualex.github.io/MaterialFields/Protocols/DateFieldDelegate.html)**
 
 This mirrors the PickerField delegate.
 
@@ -182,12 +201,104 @@ You have:
 
 * dateChanged : user selected a different date
 
+**Responder Behaviour**
+
+* `becomeFirstResponder()` will activate and open up the picker
+* `closeFirstResponder()` will deactivate and close the picker
+
+
+## Validation Layers
+
+Since all the fields conform to the Field class, validation layers tied directly to the Fields has never been easier!
+
+
+Lets define 3 fields, an EntryField, an AreaField, and a PickerField
+
+```
+let entryField = EntryField()
+let areaField = AreaField()
+let pickerField = PickerField()
+```
+
+Lets also define a CaseIterable enum:
+
+```
+extension CaseIterable where AllCases.Element: Equatable {
+    static func make(index: Int) -> Self { //get the key from the case index
+        let a = Self.allCases
+        return a[a.index(a.startIndex, offsetBy: index)]
+    }
+    
+    func index() -> Int { //get the index from the case
+        let a = Self.allCases
+        return a.distance(from: a.startIndex, to: a.firstIndex(of: self)!)
+    }
+}
+
+enum FieldKeys : String, CaseIterable {
+  case entry
+  case area
+  case picker
+}
+
+```
+
+With our CaseIterable enum we can use the validation keys as tags for the fields!
+
+```
+entryField.tag = FieldKeys.entry.index()
+areaField.tag = FieldKeys.area.index()
+pickerField.tag = FieldKeys.picker.index()
+
+```
+
+Lets say we need to validate a generic string before commiting changes to our Core Data model using an extension on NSManagedObject.
+
+```
+extension NSManagedObject {
+  func validateString(view: Field, key: String?){
+      var value = view.text as AnyObject?
+       do {
+            try self.validateValue(&(value), forKey: key)
+       } catch {
+            view.setError(errorText: "please try again")
+            print(error)
+            return
+        }
+        self.setValue(value, forKey: key)
+  }
+```
+
+Now on any of the fields didEndEditing delegate methods we only need to 2 lines to validate our entry.
+
+```
+//EntryFieldDelegates
+func entryFieldDidEndEditing(_ view: EntryField){
+  let key = FieldKeys.make(index: view.tag) //the key reconstructed from our enum used for the field tags
+  ourNSManagedObject.validateString(view,key)
+}
+
+//AreaFieldDelegates
+func areaFieldDidEndEditing(_ view: AreaField){
+  let key = FieldKeys.make(index: view.tag) //the key reconstructed from our enum used for the field tags
+  ourNSManagedObject.validateString(view,key)
+}
+
+//PickerFieldDelegates
+func pickerFieldDidEndEditing(_ view: PickerField){
+  let key = FieldKeys.make(index: view.tag) //the key reconstructed from our enum used for the field tags
+  ourNSManagedObject.validateString(view,key)
+}
+```
+
+We now have tightly coupled our Fields (in a good way!) with our validation layer for both our data model and UI feedback!
+
 
 ## Docs
 
-MaterialFields is fully documented [here](https://barbulescualex.github.io/MaterialFields/index.html) with Jazzy
+MaterialFields is fully documented [here](https://barbulescualex.github.io/MaterialFields/index.html) with Jazzy.
 
 
+## License
 
-
-
+MaterialFields is open under the MIT license.
