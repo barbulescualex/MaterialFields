@@ -51,42 +51,42 @@
     },
     {
       "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/EntryField.swift",
-      "line": 498,
+      "line": 499,
       "symbol": "EntryField.textFieldShouldBeginEditing(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/EntryField.swift",
-      "line": 505,
+      "line": 506,
       "symbol": "EntryField.textFieldDidBeginEditing(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/EntryField.swift",
-      "line": 514,
+      "line": 515,
       "symbol": "EntryField.textFieldShouldEndEditing(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/EntryField.swift",
-      "line": 521,
+      "line": 522,
       "symbol": "EntryField.textFieldDidEndEditing(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/EntryField.swift",
-      "line": 535,
+      "line": 536,
       "symbol": "EntryField.textFieldShouldReturn(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/Fields/EntryField.swift",
-      "line": 542,
+      "line": 543,
       "symbol": "EntryField.textFieldShouldClear(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"

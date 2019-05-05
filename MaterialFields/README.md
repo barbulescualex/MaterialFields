@@ -2,6 +2,8 @@
 
 A Material Guidelines UI driven text entry and value selection framework for better UI and modular validation layers.
 
+![promoGif](https://github.com/barbulescualex/MaterialFields/blob/master/assets/promo.gif?raw=true)
+
 ---
 
 
