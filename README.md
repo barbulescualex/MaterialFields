@@ -300,7 +300,7 @@ MaterialFields is fully documented [here](https://barbulescualex.github.io/Mater
 
 To regenerate the documentation run
 
-`jazzy --source-directory 'MaterialFields/' --documentation=Guides/*.md`
+`jazzy --source-directory 'MaterialFields/' --documentation=Guides/*.md -g 'https://github.com/barbulescualex/MaterialFields' -m 'MaterialFields'`
 
 in the project root directory
 
