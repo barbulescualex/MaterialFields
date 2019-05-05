@@ -113,6 +113,10 @@ All of the UITextField delegates are here, just rebranded.
 
 Their colors are also overridable using `monetaryColor` or `unitColor`
 
+**Responder Behaviour**
+
+EntryFields behave the same way that UITextFields behave, `becomeFirstResponder()` will activate the field and `resignFirstResponder()` will deactivate the field.
+
 
 ### [AreaField](https://barbulescualex.github.io/MaterialFields/Classes/AreaField.html)
 
@@ -127,6 +131,10 @@ This is your UITextView with only the text-entry functionality, so a multiline E
 
 All of the text-entry relevant delegates are here.
 
+**Responder Behaviour**
+
+AreaFields behave the same way that UITextViews behave, `becomeFirstResponder()` will activate the field and `resignFirstResponder()` will deactivate the field.
+
 
 ### [PickerField](https://barbulescualex.github.io/MaterialFields/Classes/PickerField.html)
 
@@ -139,6 +147,7 @@ All of the text-entry relevant delegates are here.
 ![PickerFieldDemo](assets/PickerField/4.gif)
 
 This is your UIPickerView which only supports 1 column. Most of the setup work has been extracted away, leaving little implementation logic needed. All you need to do is set its `data` array to your string array and the rest is handled for you.
+The PickerField holds an EntryField that is used to display the contents of the picker.
 
 **[PickerFieldDelegate](https://barbulescualex.github.io/MaterialFields/Protocols/PickerFieldDelegate.html)**
 
@@ -160,6 +169,11 @@ You have:
 * `isManualEntryCapable` this appends a "Manual Entry" option to the end of your data source which brings up the keyboard if selected and activates the EntryField embedded inside the PickerField. The manual entry row label is overridable using `manualEntryOptionName`.
 
 You can observe the current index using `indexSelected` set an index using `setIndexTo` and set the index to manual entry using `setIndexToManual()`.
+
+**Responder Behaviour**
+
+* `becomeFirstResponder()` will activate and open up the picker / EntryField if it's on manual entry
+* `closeFirstResponder()` will deactivate and close the picker / EntryField if it's on manual entry
 
 
 ### [DateField](https://barbulescualex.github.io/MaterialFields/Classes/DateField.html)
@@ -186,6 +200,11 @@ You have:
 * cleared : user tapped the clear button (only if `isClearable = true`)
 
 * dateChanged : user selected a different date
+
+**Responder Behaviour**
+
+* `becomeFirstResponder()` will activate and open up the picker
+* `closeFirstResponder()` will deactivate and close the picker
 
 
 ## Validation Layers
