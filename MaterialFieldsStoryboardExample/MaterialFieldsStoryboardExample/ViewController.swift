@@ -90,11 +90,11 @@ extension ViewController: PickerFieldDelegate {
     
     func pickerField(_ view: PickerField, didSelectRow row: Int) {
         if view.tag == 0 {
-            print("value changed in pickerField: ", view.text)
+            print("value changed in pickerField: ", view.text as Any)
         }
         
         if view.tag == 1 {
-            print("value changed in pickerFieldManual: ", view.text)
+            print("value changed in pickerFieldManual: ", view.text as Any)
         }
         
     }
@@ -115,10 +115,10 @@ extension ViewController: AreaFieldDelegate{
         print(view.text as Any, " from areaField!")
     }
     func areaField(_ view: AreaField, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if text == "\n" {
-            _ = view.resignFirstResponder()
-            return false
-        }
+//        if text == "\n" {
+//            _ = view.resignFirstResponder()
+//            return false
+//        }
         return true
     }
 }

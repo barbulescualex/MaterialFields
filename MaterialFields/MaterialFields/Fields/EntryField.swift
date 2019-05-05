@@ -57,7 +57,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
             return textField.text
         }
         set{
-            print("text set to ", newValue)
+            //print("text set to ", newValue)
             //populate the textfield
             textField.text = newValue
             
@@ -498,9 +498,9 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
 extension EntryField : UITextFieldDelegate {
     /// Forwards to entryFieldShouldBeginEditing
     public func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        print("text field should begin editing")
+       // print("text field should begin editing")
         let answer = delegate?.entryFieldShouldBeginEditing?(self) ?? true
-        print("text field should begin editing answer: ", answer)
+       // print("text field should begin editing answer: ", answer)
         return answer
     }
     
