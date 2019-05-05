@@ -13,6 +13,7 @@ A Material Guidelines UI driven text entry and value selection framework for bet
 💜 | Material UIPickerViews and UIDatePickers
 💪 | Field wrapper class allowing for simple, modular validation
 ❌ | Error functionality to let your users know something was wrong with the input
+🔥 | Internal UI state management
 👍 | Modular and customizable
 😍 | Fully Swift
 ✅ | Easy to implement
