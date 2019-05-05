@@ -2,8 +2,8 @@
 
 ---
 
-![EntryFieldDemo](assets/EntryField/1.gif)
-![EntryFieldDemoCost](assets/EntryField/2.gif)
+![EntryFieldDemo](https://github.com/barbulescualex/MaterialFields/blob/master/assets/EntryField/1.gif?raw=true)
+![EntryFieldDemoCost](https://github.com/barbulescualex/MaterialFields/blob/master/assets/EntryField/2.gif?raw=true)
 
 This is your UITextField. Most of the UITextField functionality has been forwarded to the EntryField.
 

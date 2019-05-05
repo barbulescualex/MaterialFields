@@ -2,10 +2,10 @@
 
 ---
 
-![DateFieldDemo](assets/DateField/1.gif)
-![DateFieldDemo](assets/DateField/2.gif)
+![DateFieldDemo](https://github.com/barbulescualex/MaterialFields/blob/master/assets/DateField/1.gif?raw=true)
+![DateFieldDemo](https://github.com/barbulescualex/MaterialFields/blob/master/assets/DateField/2.gif?raw=true)
 
-![DateFieldDemo](assets/DateField/3.gif)
+![DateFieldDemo](https://github.com/barbulescualex/MaterialFields/blob/master/assets/DateField/3.gif?raw=true)
 
 This is your UIDatePicker. You can do all the things you can do with the UIDatePicker you're used to, the property names are the same.
 

@@ -2,6 +2,8 @@
 
 Getting started with MaterialFields is very easy! There are 2 example projects, one programmatic and one using storyboards showing you the implementation.
 
+You can check out the repo [here](https://github.com/barbulescualex/MaterialFields)
+
 Essentially there are only 4 things you need to do to get the basic functionality going:
 
 1. Instantiate the field

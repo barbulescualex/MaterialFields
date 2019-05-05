@@ -2,8 +2,8 @@
 
 ---
 
-![AreaFieldDemo](assets/AreaField/1.gif)
-![AreaFieldDemoError](assets/AreaField/2.gif)
+![AreaFieldDemo](https://github.com/barbulescualex/MaterialFields/blob/master/assets/AreaField/1.gif?raw=true)
+![AreaFieldDemoError](https://github.com/barbulescualex/MaterialFields/blob/master/assets/AreaField/2.gif?raw=true)
 
 This is your UITextView with only the text-entry functionality, so a multiline EntryField. Unlike the EntryField this does not support `isMonetary` or `units`.
 

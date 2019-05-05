@@ -2,11 +2,11 @@
 
 ---
 
-![PickerFieldDemo](assets/PickerField/1.gif)
-![PickerFieldDemo](assets/PickerField/2.gif)
+![PickerFieldDemo](https://github.com/barbulescualex/MaterialFields/blob/master/assets/PickerField/1.gif?raw=true)
+![PickerFieldDemo](https://github.com/barbulescualex/MaterialFields/blob/master/assets/PickerField/2.gif?raw=true)
 
-![PickerFieldDemo](assets/PickerField/3.gif)
-![PickerFieldDemo](assets/PickerField/4.gif)
+![PickerFieldDemo](https://github.com/barbulescualex/MaterialFields/blob/master/assets/PickerField/3.gif?raw=true)
+![PickerFieldDemo](https://github.com/barbulescualex/MaterialFields/blob/master/assets/PickerField/4.gif?raw=true)
 
 This is your UIPickerView which only supports 1 column. Most of the setup work has been extracted away, leaving little implementation logic needed. All you need to do is set its `data` array to your string array and the rest is handled for you.
 The PickerField holds an EntryField that is used to display the contents of the picker.
