@@ -274,7 +274,7 @@ extension NSManagedObject {
        do {
             try self.validateValue(&(value), forKey: key)
        } catch {
-            view.setError(errorText: "please try again")
+            view.setError(withText: "please try again")
             print(error)
             return
         }
