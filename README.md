@@ -280,6 +280,7 @@ extension NSManagedObject {
         }
         self.setValue(value, forKey: key)
   }
+}
 ```
 
 Now on any of the fields didEndEditing delegate methods we only need to 2 lines to validate our entry.
