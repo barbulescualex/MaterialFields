@@ -269,7 +269,7 @@ Lets say we need to validate a generic string before commiting changes to our Co
 
 ``` swift
 extension NSManagedObject {
-  func validateString(view: Field, key: String?){
+  func validateString(view: Field, key: String){
       var value = view.text as AnyObject?
        do {
             try self.validateValue(&(value), forKey: key)
