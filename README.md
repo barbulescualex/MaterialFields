@@ -25,7 +25,7 @@ A Material Guidelines UI driven text entry and value selection framework for bet
 
 Open your podfile and add MaterialFields under your target
 
-```
+``` ruby
 target 'Your Project' do
 
   use_frameworks!
@@ -37,7 +37,9 @@ end
 
 Save then in your project directory run
 
-``` pod install ```
+``` ruby
+pod install 
+```
 
 ## Getting Started
 
@@ -225,7 +227,7 @@ Since all the fields conform to the Field class, validation layers tied directly
 
 Lets define 3 fields, an EntryField, an AreaField, and a PickerField
 
-```
+``` swift
 let entryField = EntryField()
 let areaField = AreaField()
 let pickerField = PickerField()
@@ -233,7 +235,7 @@ let pickerField = PickerField()
 
 Lets also define a CaseIterable enum:
 
-```
+``` swift
 extension CaseIterable where AllCases.Element: Equatable {
     static func make(index: Int) -> Self { //get the key from the case index
         let a = Self.allCases
@@ -256,7 +258,7 @@ enum FieldKeys : String, CaseIterable {
 
 With our CaseIterable enum we can use the validation keys as tags for the fields!
 
-```
+``` swift
 entryField.tag = FieldKeys.entry.index()
 areaField.tag = FieldKeys.area.index()
 pickerField.tag = FieldKeys.picker.index()
@@ -265,7 +267,7 @@ pickerField.tag = FieldKeys.picker.index()
 
 Lets say we need to validate a generic string before commiting changes to our Core Data model using an extension on NSManagedObject.
 
-```
+``` swift
 extension NSManagedObject {
   func validateString(view: Field, key: String?){
       var value = view.text as AnyObject?
@@ -282,7 +284,7 @@ extension NSManagedObject {
 
 Now on any of the fields didEndEditing delegate methods we only need to 2 lines to validate our entry.
 
-```
+``` swift
 //EntryFieldDelegates
 func entryFieldDidEndEditing(_ view: EntryField){
   let key = FieldKeys.make(index: view.tag) //the key reconstructed from our enum used for the field tags
@@ -311,7 +313,9 @@ MaterialFields is fully documented [here](https://barbulescualex.github.io/Mater
 
 To regenerate the documentation run
 
-`jazzy --source-directory 'MaterialFields/' --documentation=Guides/*.md -g 'https://github.com/barbulescualex/MaterialFields' -m 'MaterialFields'`
+``` ruby
+jazzy --source-directory 'MaterialFields/' --documentation=Guides/*.md -g 'https://github.com/barbulescualex/MaterialFields' -m 'MaterialFields'
+```
 
 in the project root directory
 
