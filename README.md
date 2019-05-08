@@ -305,7 +305,7 @@ func pickerFieldDidEndEditing(_ view: PickerField){
 }
 ```
 
-We now have tightly coupled our Fields (in a good way!) with our validation layer for both our data model and UI feedback!
+We now have a validation layer capable of both data model validation and UI feedback!
 
 
 ## Docs
