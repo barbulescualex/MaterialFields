@@ -265,7 +265,7 @@ pickerField.tag = FieldKeys.picker.index()
 
 ```
 
-Lets say we need to validate a generic string before commiting changes to our Core Data model using an extension on NSManagedObject.
+Lets say we need to validate a generic string (with the regex set in our core data model) before commiting changes to our Core Data model using an extension on NSManagedObject.
 
 ``` swift
 extension NSManagedObject {
