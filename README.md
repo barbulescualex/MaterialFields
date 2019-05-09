@@ -1,6 +1,6 @@
 # MaterialFields
 
-![PromoGif](/assets/promo.gif)
+![PromoGif](https://github.com/barbulescualex/MaterialFields/raw/master/assets/promo.gif)
 
 A material UI driven text entry and value selection framework for modular validation layers.
 
@@ -102,8 +102,8 @@ Since all fields look the same they all have the exact same color properties (wi
 
 ---
 
-![EntryFieldDemo](assets/EntryField/1.gif)
-![EntryFieldDemoCost](assets/EntryField/2.gif)
+![EntryFieldDemo](https://github.com/barbulescualex/MaterialFields/raw/master/assets/EntryField/1.gif)
+![EntryFieldDemoCost](https://github.com/barbulescualex/MaterialFields/raw/master/assets/EntryField/2.gif)
 
 This is your UITextField. Most of the UITextField functionality has been forwarded to the EntryField.
 
@@ -127,8 +127,8 @@ EntryFields behave the same way that UITextFields behave, `becomeFirstResponder(
 
 ---
 
-![AreaFieldDemo](assets/AreaField/1.gif)
-![AreaFieldDemoError](assets/AreaField/2.gif)
+![AreaFieldDemo](https://github.com/barbulescualex/MaterialFields/raw/master/assets/AreaField/1.gif)
+![AreaFieldDemoError](https://github.com/barbulescualex/MaterialFields/raw/master/assets/AreaField/2.gif)
 
 This is your UITextView with only the text-entry functionality, so a multiline EntryField. Unlike the EntryField this does not support `isMonetary` or `units`.
 
@@ -145,11 +145,11 @@ AreaFields behave the same way that UITextViews behave, `becomeFirstResponder()`
 
 ---
 
-![PickerFieldDemo](assets/PickerField/1.gif)
-![PickerFieldDemo](assets/PickerField/2.gif)
+![PickerFieldDemo](https://github.com/barbulescualex/MaterialFields/raw/master/assets/PickerField/1.gif)
+![PickerFieldDemo](https://github.com/barbulescualex/MaterialFields/raw/master/assets/PickerField/2.gif)
 
-![PickerFieldDemo](assets/PickerField/3.gif)
-![PickerFieldDemo](assets/PickerField/4.gif)
+![PickerFieldDemo](https://github.com/barbulescualex/MaterialFields/raw/master/assets/PickerField/3.gif)
+![PickerFieldDemo](https://github.com/barbulescualex/MaterialFields/raw/master/assets/PickerField/4.gif)
 
 This is your UIPickerView which only supports 1 column. Most of the setup work has been extracted away, leaving little implementation logic needed. All you need to do is set its `data` array to your string array and the rest is handled for you.
 The PickerField holds an EntryField that is used to display the contents of the picker.
@@ -189,10 +189,10 @@ PickerFields register for keyboardDidShow notifications. If they are not on manu
 
 ---
 
-![DateFieldDemo](assets/DateField/1.gif)
-![DateFieldDemo](assets/DateField/2.gif)
+![DateFieldDemo](https://github.com/barbulescualex/MaterialFields/raw/master/assets/DateField/1.gif)
+![DateFieldDemo](https://github.com/barbulescualex/MaterialFields/raw/master/assets/DateField/2.gif)
 
-![DateFieldDemo](assets/DateField/3.gif)
+![DateFieldDemo](https://github.com/barbulescualex/MaterialFields/raw/master/assets/DateField/3.gif)
 
 This is your UIDatePicker. You can do all the things you can do with the UIDatePicker you're used to, the property names are the same.
 
