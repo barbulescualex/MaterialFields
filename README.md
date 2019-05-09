@@ -2,7 +2,7 @@
 
 ![PromoGif](/assets/promo.gif)
 
-A Material Guidelines UI driven text entry and value selection framework for better UI and modular validation layers.
+A material UI driven text entry and value selection framework for modular validation layers.
 
 ---
 
@@ -25,7 +25,7 @@ A Material Guidelines UI driven text entry and value selection framework for bet
 
 Open your podfile and add MaterialFields under your target
 
-```
+``` ruby
 target 'Your Project' do
 
   use_frameworks!
@@ -35,9 +35,11 @@ target 'Your Project' do
 end
 ```
 
-Save then in your project directory run
+Save, then in your project directory run
 
-``` pod install ```
+``` ruby
+pod install 
+```
 
 ## Getting Started
 
@@ -54,7 +56,7 @@ Essentially there are only 4 things you need to do to get the basic functionalit
 
 ---
 
-First we define a Field. This is the wrapper class that all the fields conform to. This allows all of them to share implemenation and functionality and also leads to an easier validation layer
+First we define a Field. This is the wrapper class that all the fields conform to. This allows all of them to share implemenation and functionality and also leads to an easier validation layer.
 
 **2 Types Of Fields**
 
@@ -62,15 +64,15 @@ First we define a Field. This is the wrapper class that all the fields conform t
 
 2. Picker type fields. This comprises of [PickerField](https://barbulescualex.github.io/MaterialFields/Classes/PickerField.html) and [DateField](https://barbulescualex.github.io/MaterialFields/Classes/DateField.html)
 
-They all look the exact same in their normal state but each offer their own unique functionality in different states. Picker type fields hold entry fields with pickers that drop down below them. They have done buttons to close themselves and optional clear buttons (set by `isClearable = true`).
+They all resemble each other in their normal state but each offer their own unique functionality in their active states. Picker type fields hold entry fields with pickers that drop down below them. They have done buttons to close themselves and optional clear buttons (set by `isClearable = true`).
 
 **States**
 
-A Field has **3 states**: 
+A Field has **3 states** with read-only flags: 
 
-* Not active : `isActive = false`
-* Active, highlight visible : `isActive = true`
-* Error : `hasError = true`
+* Not active : `isActive == false`
+* Active, highlight visible : `isActive == true`
+* Error : `hasError == true`
 
 All the state logic and UI is handled internally. You can set the error state using [setError(withText:)](https://barbulescualex.github.io/MaterialFields/Classes/Field.html#/s:14MaterialFields5FieldC8setError8withTextySSSg_tF) and also remove it manually (the fields handle it on their own automatically, see specific field for details) using [removeErrorUI()](https://barbulescualex.github.io/MaterialFields/Classes/Field.html#/s:14MaterialFields5FieldC13removeErrorUIyyF)
 
@@ -160,7 +162,7 @@ You have:
 
 * shouldBeginEditing : wether it should open or not
 
-* didEndEditing: user closed the field by tapping on the done button
+* didEndEditing: user closed the field by tapping on the done button or keyboard came up (see Keyboard Behaviour)
 
 * cleared : user tapped the clear button (only if `isClearable = true`)
 
@@ -202,7 +204,7 @@ You have:
 
 * shouldBeginEditing : wether it should open or not
 
-* didEndEditing: user closed the field by tapping on the done button
+* didEndEditing: user closed the field by tapping on the done button or keyboard came up (see Keyboard Behaviour)
 
 * cleared : user tapped the clear button (only if `isClearable = true`)
 
@@ -225,7 +227,7 @@ Since all the fields conform to the Field class, validation layers tied directly
 
 Lets define 3 fields, an EntryField, an AreaField, and a PickerField
 
-```
+``` swift
 let entryField = EntryField()
 let areaField = AreaField()
 let pickerField = PickerField()
@@ -233,7 +235,7 @@ let pickerField = PickerField()
 
 Lets also define a CaseIterable enum:
 
-```
+``` swift
 extension CaseIterable where AllCases.Element: Equatable {
     static func make(index: Int) -> Self { //get the key from the case index
         let a = Self.allCases
@@ -256,33 +258,34 @@ enum FieldKeys : String, CaseIterable {
 
 With our CaseIterable enum we can use the validation keys as tags for the fields!
 
-```
+``` swift
 entryField.tag = FieldKeys.entry.index()
 areaField.tag = FieldKeys.area.index()
 pickerField.tag = FieldKeys.picker.index()
 
 ```
 
-Lets say we need to validate a generic string before commiting changes to our Core Data model using an extension on NSManagedObject.
+Lets say we need to validate a generic string (with the regex set in our core data model) before commiting changes to our model using an extension on NSManagedObject.
 
-```
+``` swift
 extension NSManagedObject {
-  func validateString(view: Field, key: String?){
+  func validateString(view: Field, key: String){
       var value = view.text as AnyObject?
        do {
             try self.validateValue(&(value), forKey: key)
        } catch {
-            view.setError(errorText: "please try again")
+            view.setError(withText: "please try again")
             print(error)
             return
         }
         self.setValue(value, forKey: key)
   }
+}
 ```
 
-Now on any of the fields didEndEditing delegate methods we only need to 2 lines to validate our entry.
+Now on any of the fields' didEndEditing delegate methods we only need to 2 lines to validate our entry.
 
-```
+``` swift
 //EntryFieldDelegates
 func entryFieldDidEndEditing(_ view: EntryField){
   let key = FieldKeys.make(index: view.tag) //the key reconstructed from our enum used for the field tags
@@ -302,7 +305,7 @@ func pickerFieldDidEndEditing(_ view: PickerField){
 }
 ```
 
-We now have tightly coupled our Fields (in a good way!) with our validation layer for both our data model and UI feedback!
+We now have a validation layer capable of both data model validation and UI feedback!
 
 
 ## Docs
@@ -311,7 +314,9 @@ MaterialFields is fully documented [here](https://barbulescualex.github.io/Mater
 
 To regenerate the documentation run
 
-`jazzy --source-directory 'MaterialFields/' --documentation=Guides/*.md -g 'https://github.com/barbulescualex/MaterialFields' -m 'MaterialFields'`
+``` ruby
+jazzy --source-directory 'MaterialFields/' --documentation=Guides/*.md -g 'https://github.com/barbulescualex/MaterialFields' -m 'MaterialFields'
+```
 
 in the project root directory
 
