@@ -27,8 +27,8 @@ Pod::Spec.new do |spec|
   spec.description  = "Lightweight library containing UITextFields, UITextViews, UIPickerViews and UIDatePickers following the Material Design Guidelines. They each have the same UI states (inactive, active and error) supporting colors and individual usability features. All conform to a wrapper Field class allowing for modular and scalable validation layers."
 
   spec.homepage     = "https://github.com/barbulescualex/MaterialFields"
-  spec.documentation_url = 'https://barbulescualex.github.io/MaterialFields/'
-  # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
+  spec.documentation_url = "https://barbulescualex.github.io/MaterialFields/"
+  # spec.screenshots  = "https://github.com/barbulescualex/MaterialFields/raw/master/assets/promo.gif"
 
 
   # ―――  Spec License  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
