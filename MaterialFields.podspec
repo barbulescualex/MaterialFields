@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "MaterialFields"
-  spec.version      = "1.0.0"
+  spec.version      = "1.0.1"
   spec.summary      = "A material UI driven text entry and value selection framework for modular validation layers."
 
   # This description is used to generate tags and improve search results.
