@@ -212,11 +212,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
     private var placeholderYAnchorConstraint: NSLayoutConstraint!
     
     /// Flag to check if the placeholder is up to avoid unecessary animations
-    private var placeholderUp = false {
-        didSet{
-            print("placeholder set to: ", placeholderUp)
-        }
-    }
+    private var placeholderUp = false
     
     internal var keepPlaceholderUp = false
     
@@ -389,7 +385,6 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         textField.textColor = borderErrorColor
         
         if(!placeholderUp){
-            print("coloring placeholder label with error text")
             placeholderLabel.textColor = errorTextColor
         }
         
@@ -413,12 +408,10 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
     
     /// Called from tap gesture recognizer on the field
     @objc func startEditing(_ sender: UIGestureRecognizer){
-        print("tapped on field")
         textField.becomeFirstResponder()
     }
     
     public override func removeErrorUI() {
-        print("remove error ui")
         if !hasError {return}
         textField.textColor = textColor
         updateBorderColor(with: borderColor)
@@ -433,7 +426,6 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
      - Parameter color: Color to set the border to
     */
     fileprivate func updateBorderColor(with color: UIColor){
-        print("Update border color with: ", color.description)
         borderTop.backgroundColor = color
         borderBottom.backgroundColor = color.withAlphaComponent(0.5)
     }
@@ -444,7 +436,6 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
      */
     internal func isEditing(showHighlight val: Bool){
         if hasError {return}
-        print("IS EDITING")
         if val {
             updateBorderColor(with: borderHighlightColor)
         } else {
@@ -462,7 +453,6 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
      */
     override public func resignFirstResponder() -> Bool {
         textField.resignFirstResponder()
-        print("resign first responder")
         isEditing(showHighlight: false)
         return true
     }

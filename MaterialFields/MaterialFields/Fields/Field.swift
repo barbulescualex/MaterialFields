@@ -55,6 +55,9 @@ public class Field : UIView {
     /// - Note: Defaults to false
     public var isSecureTextEntry : Bool = false
     
+    /// A second tag element on the field
+    public var tag2 : Int = 0
+    
     
     //MARK: Colors
     

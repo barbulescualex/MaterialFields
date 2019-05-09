@@ -2,7 +2,7 @@
 
 ---
 
-First we define a Field. This is the wrapper class that all the fields conform to. This allows all of them to share implemenation and functionality and also leads to an easier validation layer
+First we define a Field. This is the wrapper class that all the fields conform to. This allows all of them to share implemenation and functionality and also leads to an easier validation layer.
 
 **2 Types Of Fields**
 
@@ -10,15 +10,15 @@ First we define a Field. This is the wrapper class that all the fields conform t
 
 2. Picker type fields. This comprises of [PickerField](https://barbulescualex.github.io/MaterialFields/Classes/PickerField.html) and [DateField](https://barbulescualex.github.io/MaterialFields/Classes/DateField.html)
 
-They all look the exact same in their normal state but each offer their own unique functionality in different states. Picker type fields hold entry fields with pickers that drop down below them. They have done buttons to close themselves and optional clear buttons (set by `isClearable = true`).
+They all resemble each other in their normal state but each offer their own unique functionality in their active states. Picker type fields hold entry fields with pickers that drop down below them. They have done buttons to close themselves and optional clear buttons (set by `isClearable = true`).
 
 **States**
 
-A Field has **3 states**: 
+A Field has **3 states** with read-only flags: 
 
-* Not active : `isActive = false`
-* Active, highlight visible : `isActive = true`
-* Error : `hasError = true`
+* Not active : `isActive == false`
+* Active, highlight visible : `isActive == true`
+* Error : `hasError == true`
 
 All the state logic and UI is handled internally. You can set the error state using [setError(withText:)](https://barbulescualex.github.io/MaterialFields/Classes/Field.html#/s:14MaterialFields5FieldC8setError8withTextySSSg_tF) and also remove it manually (the fields handle it on their own automatically, see specific field for details) using [removeErrorUI()](https://barbulescualex.github.io/MaterialFields/Classes/Field.html#/s:14MaterialFields5FieldC13removeErrorUIyyF)
 

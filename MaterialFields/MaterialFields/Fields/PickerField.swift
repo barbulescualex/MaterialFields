@@ -150,7 +150,7 @@ public class PickerField: Field {
     private var manualEntryIndex : Int?
     
     /// Read-only integer value for the current index the picker is on
-    private(set) var indexSelected : Int = 0 {
+    private(set) public var indexSelected : Int = 0 {
         didSet{
             if let manualEntryIndex = manualEntryIndex, indexSelected == manualEntryIndex {
                 isOnManualEntry = true

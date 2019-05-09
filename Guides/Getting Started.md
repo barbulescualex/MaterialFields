@@ -10,3 +10,5 @@ Essentially there are only 4 things you need to do to get the basic functionalit
 2. Set its placeholder (this is the title label) and data array (if PickerField)
 3. Set its delegate
 4. Implement the didEndEditing delegate method to get the value when the users done!
+
+You should start by looking at the guide for the [Field](https://barbulescualex.github.io/MaterialFields/field.html) class. This is the class that all the field components subclass.

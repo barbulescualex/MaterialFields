@@ -1,0 +1,11 @@
+framework module MaterialFields {
+  umbrella header "MaterialFields.h"
+
+  export *
+  module * { export * }
+}
+
+module MaterialFields.Swift {
+    header "MaterialFields-Swift.h"
+    requires objc
+}

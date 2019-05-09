@@ -1,0 +1,33 @@
+{
+  'version': 0,
+  'case-sensitive': 'false',
+  'roots': [
+    {
+      'type': 'directory',
+      'name': "/Users/alex/Desktop/MaterialFields/MaterialFields/build/Release-iphoneos/MaterialFields.framework/Headers",
+      'contents': [
+        {
+          'type': 'file',
+          'name': "MaterialFields-Swift.h",
+          'external-contents': "/Users/alex/Desktop/MaterialFields/MaterialFields/build/Release-iphoneos/MaterialFields.framework/Headers/MaterialFields-Swift.h"
+        },
+        {
+          'type': 'file',
+          'name': "MaterialFields.h",
+          'external-contents': "/Users/alex/Desktop/MaterialFields/MaterialFields/MaterialFields/MaterialFields.h"
+        }
+      ]
+    },
+    {
+      'type': 'directory',
+      'name': "/Users/alex/Desktop/MaterialFields/MaterialFields/build/Release-iphoneos/MaterialFields.framework/Modules",
+      'contents': [
+        {
+          'type': 'file',
+          'name': "module.modulemap",
+          'external-contents': "/Users/alex/Desktop/MaterialFields/MaterialFields/build/MaterialFields.build/Release-iphoneos/MaterialFields.build/module.modulemap"
+        }
+      ]
+    }
+  ]
+}

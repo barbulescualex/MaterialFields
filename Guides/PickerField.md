@@ -19,7 +19,7 @@ You have:
 
 * shouldBeginEditing : wether it should open or not
 
-* didEndEditing: user closed the field by tapping on the done button
+* didEndEditing: user closed the field by tapping on the done button or keyboard came up (see Keyboard Behaviour)
 
 * cleared : user tapped the clear button (only if `isClearable = true`)
 

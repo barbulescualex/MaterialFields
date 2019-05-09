@@ -58,6 +58,7 @@ class ViewController: UIViewController {
         pickerFieldManual.data = ["hee","hee","haa","haa"]
         pickerFieldManual.isManualEntryCapable = true
         pickerFieldManual.tag = 1
+    
         
         dateField.placeholder = "This is a DateField"
         dateField.delegate = self
