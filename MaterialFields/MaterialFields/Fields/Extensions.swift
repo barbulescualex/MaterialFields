@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension Optional where Wrapped == String {
+public extension Optional where Wrapped == String {
     /**
     Checks if string is not complete meaning nil or ""
     - Note:

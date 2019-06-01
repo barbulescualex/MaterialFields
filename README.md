@@ -237,8 +237,9 @@ Lets also define a CaseIterable enum:
 
 ``` swift
 extension CaseIterable where AllCases.Element: Equatable {
-    static func make(index: Int) -> Self { //get the key from the case index
+    static func make(index: Int) -> Self? { //get the key from the case index
         let a = Self.allCases
+        if (index > a.count - 1) { return nil } //out of range
         return a[a.index(a.startIndex, offsetBy: index)]
     }
     
@@ -288,20 +289,23 @@ Now on any of the fields' didEndEditing delegate methods we only need to 2 lines
 ``` swift
 //EntryFieldDelegates
 func entryFieldDidEndEditing(_ view: EntryField){
-  let key = FieldKeys.make(index: view.tag) //the key reconstructed from our enum used for the field tags
-  ourNSManagedObject.validateString(view,key)
+  //the key reconstructed from our enum used for the field tags
+  gaurd let key = FieldKeys.make(index: view.tag) else {return}
+  ourNSManagedObject.validateString(view,key.rawValue)
 }
 
 //AreaFieldDelegates
 func areaFieldDidEndEditing(_ view: AreaField){
-  let key = FieldKeys.make(index: view.tag) //the key reconstructed from our enum used for the field tags
-  ourNSManagedObject.validateString(view,key)
+  //the key reconstructed from our enum used for the field tags
+  gaurd let key = FieldKeys.make(index: view.tag) else {return}
+  ourNSManagedObject.validateString(view,key.rawValue)
 }
 
 //PickerFieldDelegates
 func pickerFieldDidEndEditing(_ view: PickerField){
-  let key = FieldKeys.make(index: view.tag) //the key reconstructed from our enum used for the field tags
-  ourNSManagedObject.validateString(view,key)
+  //the key reconstructed from our enum used for the field tags
+  gaurd let key = FieldKeys.make(index: view.tag) else {return}
+  ourNSManagedObject.validateString(view,key.rawValue)
 }
 ```
 

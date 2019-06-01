@@ -57,7 +57,6 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
             return textField.text
         }
         set{
-            //print("text set to ", newValue)
             //populate the textfield
             textField.text = newValue
             
