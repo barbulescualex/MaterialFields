@@ -35,7 +35,7 @@ You can observe the current index using `indexSelected` set an index using `setI
 **Responder Behaviour**
 
 * `becomeFirstResponder()` will activate and open up the picker / EntryField if it's on manual entry
-* `closeFirstResponder()` will deactivate and close the picker / EntryField if it's on manual entry
+* `resignFirstResponder()` will deactivate and close the picker / EntryField if it's on manual entry
 
 **Keyboard Behaviour**
 

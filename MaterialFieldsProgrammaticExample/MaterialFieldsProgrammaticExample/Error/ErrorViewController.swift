@@ -64,7 +64,8 @@ class ErrorViewController: UIViewController {
         field.delegate = self
         field.data = PersonData.consoles
         field.tag = PersonKeys.console.index()
-        //field.isManualEntryCapable = true
+        field.isManualEntryCapable = true
+        field.isClearable = true
         return field
     }()
     

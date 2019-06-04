@@ -435,7 +435,7 @@ extension AreaField : UITextViewDelegate {
         isActive = false
     }
     
-    /// Forwards to shouldChangeTextIn
+    /// Forwards to shouldChangeTextIn 
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         return delegate?.areaField?(self, shouldChangeTextIn: range, replacementText: text) ?? true
     }

@@ -84,20 +84,13 @@ class ViewController: UIViewController {
         textStack.addArrangedSubview(entryField)
         textStack.addArrangedSubview(areaField)
         
-        let pickerStack = UIStackView()
-        pickerStack.axis = .horizontal
-        pickerStack.distribution = .fillEqually
-        pickerStack.alignment = .top
-        pickerStack.addArrangedSubview(pickerField)
-        pickerStack.addArrangedSubview(pickerFieldManual)
-        
         stackView.addArrangedSubview(textStack)
-        stackView.addArrangedSubview(pickerStack)
         
+        stackView.addArrangedSubview(pickerField)
+        stackView.addArrangedSubview(pickerFieldManual)
         stackView.addArrangedSubview(dateField)
         
         textStack.spacing = 5
-        pickerStack.spacing = 5
     }
 
 }

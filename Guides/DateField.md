@@ -26,7 +26,7 @@ You have:
 **Responder Behaviour**
 
 * `becomeFirstResponder()` will activate and open up the picker
-* `closeFirstResponder()` will deactivate and close the picker
+* `resignFirstResponder()` will deactivate and close the picker
 
 **Keyboard Behaviour**
 

@@ -100,9 +100,9 @@
 		FAAE993922790D1E002246A9 /* MaterialFieldsProgrammaticExample */ = {
 			isa = PBXGroup;
 			children = (
+				FAAE993A22790D1E002246A9 /* AppDelegate.swift */,
 				FA5C4CD022A2E24600570447 /* Error */,
 				FA5C4CCF22A2E24000570447 /* Basic */,
-				FAAE993A22790D1E002246A9 /* AppDelegate.swift */,
 				FAAE994122790D1F002246A9 /* Assets.xcassets */,
 				FAAE994322790D1F002246A9 /* LaunchScreen.storyboard */,
 				FAAE994622790D1F002246A9 /* Info.plist */,

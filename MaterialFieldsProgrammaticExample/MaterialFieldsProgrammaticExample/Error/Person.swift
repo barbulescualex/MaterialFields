@@ -57,7 +57,7 @@ extension Person {
         }
     }
     
-    //Validates, but lets the controller handle updating the model and fieldstate
+    //Validates, but lets the controller handle updating the model and viewstate
     func validateName(field: Field, key: String) -> Bool? {
         guard let value = field.text, value != "" else {return nil}
         

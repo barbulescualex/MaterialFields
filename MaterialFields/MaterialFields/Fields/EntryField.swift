@@ -414,7 +414,7 @@ public class EntryField: Field, UIGestureRecognizerDelegate {
         if !hasError {return}
         textField.textColor = textColor
         updateBorderColor(with: borderColor)
-        placeholderLabel.textColor = placeholderUpColor
+        placeholderLabel.textColor = placeholderDownColor
         hasError = false
         errorLabel.text = nil
         errorLabel.isHidden = true
